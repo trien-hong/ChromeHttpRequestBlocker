@@ -5,22 +5,15 @@ function blockRequest(details) {
   };
 }
 
-function isValidPattern(urlPattern) {
-  var validPattern = /^(file:\/\/.+)|(https?|ftp|\*):\/\/(\*|\*\.([^\/*]+)|([^\/*]+))\//g;
-  return !!urlPattern.match(validPattern);
-}
-
 function updateFilters(urls) {
   if (chrome.webRequest.onBeforeRequest.hasListener(blockRequest)) {
     chrome.webRequest.onBeforeRequest.removeListener(blockRequest);
   }
 
-  var validPatterns = patterns.filter(isValidPattern);
-
   if (patterns.length) {
     try{
       chrome.webRequest.onBeforeRequest.addListener(blockRequest, {
-        urls: validPatterns
+        urls: patterns
       }, ['blocking']);
     } catch (e) {
       console.error(e);
@@ -29,14 +22,14 @@ function updateFilters(urls) {
 }
 
 function load(callback) {
-  chrome.storage.sync.get('blocked_patterns', function(data) {
+  chrome.storage.local.get('blocked_patterns', function(data) {
     callback(data['blocked_patterns'] || []);
   });
 }
 
 function save(newPatterns, callback) {
   patterns = newPatterns;
-  chrome.storage.sync.set({
+  chrome.storage.local.set({
     'blocked_patterns': newPatterns
   }, function() {
     updateFilters();
@@ -48,6 +41,3 @@ load(function(p) {
   patterns = p;
   updateFilters();
 });
-
-
-
