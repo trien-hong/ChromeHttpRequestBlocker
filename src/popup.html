@@ -7,30 +7,31 @@
     <script src="lib/bootstrap/bootstrap.min.js"></script>
     <script src="lib/angular.min.js"></script>
     <script src="popup.js"></script>
+    <link href="static/style.css" rel="stylesheet"/>
   </head>
-  <style>
-    hr {
-      margin-top: 0em;
-      margin-bottom: 0em;
-      border: 1px solid gray;
-    }
-    .table {
-      border: 2px solid gray;
-      margin-bottom: 0em;
-    }
-  </style>
   <body ng-app="RequestBlockerApp">
     <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 500px;">
       <h1><b>HTTP Request Blocker</b></h1>
-      <h3><u>{{patterns.length}}</u> Pattern(s)</h3>
+      <table style="width: 100%;">
+        <tr>
+          <td>
+            <h3><u>{{patterns.length}}</u> Pattern(s)</h3>
+          </td>
+          <td>
+            <button class="btn btn-default pull-right" ng-click="scrollDown()" title="{{'Scroll Down'}}">
+              <i class="glyphicon glyphicon-arrow-down" style="color: black;"></i>&nbsp;SCROLL DOWN
+            </button>
+          </td>
+        <tr>
+      </table>
       {{message}}
       <table class="table table-hover">
         <tr ng-repeat="u in patterns">
           <td>
-              <input type="text" class="form-control" ng-model="u.pattern"/>
+              <input type="text" class="form-control" ng-model="u.pattern" title="{{'Add/Edit Pattern'}}"/>
           </td>
           <td style="width: 20px;">
-            <button class="btn btn-default" ng-click="remove(u)">
+            <button class="btn btn-default" ng-click="remove(u)" title="{{'Delete Pattern'}}">
               <i class="glyphicon glyphicon-remove" style="color: #A94442;"></i>
             </button>
           </td>
@@ -39,13 +40,13 @@
       <table>
         <tr>
           <td>
-            <h4><button class="btn btn-primary" ng-click="add()">Add new site</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
+            <h4><button class="btn btn-primary" ng-click="add()" title="{{'Manually enter site'}}">Add new site</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
           </td>
           <td>
-            <h4><button class="btn btn-primary" ng-click="addCurrentSite()">Add current site</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
+            <h4><button class="btn btn-primary" ng-click="addCurrentSite()" title="{{'Automatically enter site'}}">Add current site</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
           </td>
           <td>
-            <button class="btn btn-primary" ng-click="save()">Save</button>
+            <button class="btn btn-primary" ng-click="save()" title="{{'Save your newly added/edited site(s)'}}">Save</button>
           </td>
         </tr>
       </table>
@@ -53,10 +54,10 @@
       <table>
         <tr>
           <td>
-            <h4><button class="btn btn-primary" ng-click="exportPatterns()">Export Patterns</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
+            <h4><button class="btn btn-primary" ng-click="exportPatterns()" title="{{'Download your patterns'}}">Export Patterns</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
           </td>
           <td>
-            <button class="btn btn-primary" ng-click="clearPatterns()">Clear Patterns</button>
+            <button class="btn btn-primary" ng-click="clearPatterns()" title="{{'Clear your patterns'}}">Clear Patterns</button>
           </td>
         <tr>
       </table>
@@ -64,10 +65,10 @@
       <table>
         <tr>
           <td>
-            <h4><button class="btn btn-primary" ng-click="upload()">Upload File (.txt)</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
+            <h4><button class="btn btn-primary" ng-click="uploadFile()" title="{{'Upload selected file'}}">Upload File (.txt)</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
           </td>
           <td>
-            <input id="file" type="file" accept="text/plain" name="file"/>
+            <input class="form-control" id="file" type="file" accept="text/plain" title="{{'Choose a file (.txt)'}}">
           </td>
         </tr>
       </table>
@@ -75,14 +76,14 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <button type="button" class="close" data-dismiss="modal" title="{{'CLOSE ALERT'}}"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
               <h4 class="modal-title"><u><b>{{modalTitle}}</b></u></h4>
             </div>
             <div class="modal-body">
               <h4 ng-class="modalClass">{{modalMessage}}</h4>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" title="{{'CLOSE ALERT'}}">CLOSE</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

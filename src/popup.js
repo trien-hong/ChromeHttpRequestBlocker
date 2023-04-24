@@ -17,7 +17,7 @@ app.controller('PopupController', function($scope) {
                 pattern: ''
             });
 
-            window.scrollTo({top: document.body.scrollHeight, behavior: "smooth" });
+            $scope.scrollDown();
         } else {
             $scope.patterns.push({
                 index: $scope.patterns.length,
@@ -42,6 +42,8 @@ app.controller('PopupController', function($scope) {
                     index: $scope.patterns.length,
                     pattern: website[2]
                 });
+
+                $scope.scrollDown();
             }
         }
     });
@@ -121,7 +123,7 @@ app.controller('PopupController', function($scope) {
             if (confirm("Are you sure you want to clear your current patterns?\n\nDepending on the size of your patterns, it make take some time to load.") === true) {
                 length = $scope.patterns.length;
 
-                for (var i = 0; i < length; i++ ) {
+                for (var i = 0; i < length; i++) {
                     $scope.patterns.splice(0, 1);
                 }
 
@@ -130,13 +132,13 @@ app.controller('PopupController', function($scope) {
         } else {
             length = $scope.patterns.length;
 
-            for (var i = 0; i < length; i++ ) {
+            for (var i = 0; i < length; i++) {
                 $scope.patterns.splice(0, 1);
             }
         }
     };
 
-    $scope.upload = function() {
+    $scope.uploadFile = function() {
         if (confirm("Importing a patterns from a file will overwrite your current patterns.\n\nDepending on the size of your patterns, it make take some time to load.") === true) {
             try {
                 var file = document.getElementById('file').files[0];
@@ -152,7 +154,7 @@ app.controller('PopupController', function($scope) {
                         for (var i = 0; i < patterns.length; i++) {
                             $scope.add(patterns[i]);
                         }
-                                
+
                         $scope.save("Your new patterns has been imported.");
                     }
 
@@ -164,6 +166,10 @@ app.controller('PopupController', function($scope) {
                 $scope.error("You did not choose a file to upload or there seems to be an error with uploading and/or reading your file. Please try a different file or try again.");
             }
         }
+    };
+
+    $scope.scrollDown = function() {
+        window.scrollTo({top: document.body.scrollHeight, behavior: "smooth" });
     };
 
     $scope.success = function(message, title) {

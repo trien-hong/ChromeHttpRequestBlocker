@@ -1,0 +1,20 @@
+/* This will overwrite any Bootstrap CSS */
+
+body {
+    background-color: #C6E8E8;
+}
+
+hr {
+    margin-top: 0em;
+    margin-bottom: 0em;
+    border: 1px solid gray;
+}
+
+.table {
+    border: 2px solid gray;
+    margin-bottom: 0em;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    border-top: 2px solid gray;
+}

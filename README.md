@@ -6,7 +6,7 @@ Chrome extension that will block certain HTTP requests, based on configurable UR
 This is a fork from the original [https://github.com/clupasq/ChromeHttpRequestBlocker](https://chrome.google.com/webstore/detail/http-request-blocker/eckpjmeijpoipmldfbckahppeonkoeko) by [clupasq](https://github.com/clupasq/).
 
 Changes from the original fork
-=============================
+==============================
 
 * Removed valid matching patterns
     * I might put it back but for now it's removed.
@@ -23,7 +23,6 @@ Changes from the original fork
     * I am aware there are more types of patterns but this is the most useful for me
 * Added a way to click on a button to add the current site with just one click
     * Added a check to see if it's a valid site first before adding
-        * Not exactly sure if it's 100% fail proof
 * Added a way to export your patterns as a simple text (.txt) file
     * Added check to see if there are any patterns before exporting
 * Added a way to import that same text file
@@ -32,3 +31,9 @@ Changes from the original fork
 * Added a way to clear your entire pattterns
     * Added confirmation to see if the user really wants to clear their patterns
 * Change some of the styling and layout
+    * Moved the majority of buttons to the bottom
+    * Added a scroll down when adding new sites
+    * Added titles when hovering over certain elements
+    * Added "borders" to better help seperate different elements
+    * Removed some of the unnecessary or extra padding/margin from Bootstrap
+    * Moved custom CSS to a different file
