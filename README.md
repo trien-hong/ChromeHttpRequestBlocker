@@ -3,7 +3,7 @@ Chrome Request Blocker Extension
 
 Chrome extension that will block certain HTTP requests, based on configurable URL patterns.
 
-This is a fork from the original [https://github.com/clupasq/ChromeHttpRequestBlocker](https://chrome.google.com/webstore/detail/http-request-blocker/eckpjmeijpoipmldfbckahppeonkoeko) by [clupasq](https://github.com/clupasq/).
+This is a fork from the original [https://github.com/clupasq/ChromeHttpRequestBlocker](https://github.com/clupasq/ChromeHttpRequestBlocker) by [clupasq](https://github.com/clupasq/).
 
 Changes from the original fork
 ==============================
@@ -16,10 +16,10 @@ Changes from the original fork
     * In the background, when you click save the extension will automatically add in the correct patterns to be able to block request
     * The patterns are `*://*.` for prefix and `/*` for suffix
     * It will look something like `*://*.google.com/*` or `*://*.yahoo.com/*` or `*://*.ads.twitter.com/*`
-        * Note that blocking a subdomain will not block the actual domain
+        * Note that blocking subdomain(s) will not block the actual domain
         * For example, blocking `ads.twitter.com` will not block `twitter.com`
         * Note that blocking the actual domain will block all subdomains
-        * For example, blocking `google.com` will also block `store.google.com`
+        * For example, blocking `google.com` will also block `ads.google.com`
     * I am aware there are more types of patterns but this is the most useful for me
 * Added a way to click on a button to add the current site with just one click
     * Added a check to see if it's a valid site first before adding
@@ -32,8 +32,8 @@ Changes from the original fork
     * Added confirmation to see if the user really wants to clear their patterns
 * Change some of the styling and layout
     * Moved the majority of buttons to the bottom
+    * Moved some of the custom CSS to a seperate file
     * Added a scroll down when adding new sites
     * Added titles when hovering over certain elements
     * Added "borders" to better help seperate different elements
     * Removed some of the unnecessary or extra padding/margin from Bootstrap
-    * Moved custom CSS to a different file
