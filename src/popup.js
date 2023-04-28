@@ -6,8 +6,38 @@ app.controller('PopupController', function($scope) {
     $scope.patterns = $scope.backgroundPage.patterns.map(function(x, i) {
         return {
             index: i,
-            pattern: x,
+            pattern: x
         };
+    });
+
+    $scope.is_pause = $scope.backgroundPage.is_pause;
+
+    chrome.storage.local.get("is_pause", function (data) {
+        var is_pause = data.is_pause;
+
+        $scope.pause = function() {
+            if (is_pause === undefined || is_pause === false) {
+                chrome.storage.local.set({'is_pause': true}, function () {
+                
+                });
+                $scope.is_pause = "Pause Extension";
+                $scope.alert("Extension is now UNPAUSED. All patterns will be blocked.");
+                chrome.storage.local.get("is_pause", function (data) {
+                    is_pause = data.is_pause;
+                });
+                chrome.runtime.sendMessage({type: "reload"});
+            } else {
+                chrome.storage.local.set({'is_pause': false}, function () {
+                
+                });
+                $scope.is_pause = "Unpause Extension";
+                $scope.alert("Extension is now PAUSED. All patterns will not be blocked.");
+                chrome.storage.local.get("is_pause", function (data) {
+                    is_pause = data.is_pause;
+                });
+                chrome.runtime.sendMessage({type: "reload"});
+            }
+        }
     });
 
     $scope.add = function(site) {
@@ -36,7 +66,7 @@ app.controller('PopupController', function($scope) {
 
         $scope.addCurrentSite = function() {
             if (url === undefined) {
-                $scope.error("This site doesn't seem to be a valid website.");
+                $scope.error("This site you are trying to add doesn't seem to be a valid website.");
             } else {
                 $scope.patterns.push({
                     index: $scope.patterns.length,
@@ -170,6 +200,10 @@ app.controller('PopupController', function($scope) {
 
     $scope.scrollDown = function() {
         window.scrollTo({top: document.body.scrollHeight, behavior: "smooth" });
+    };
+
+    $scope.alert = function(message, title) {
+        $scope.modal(message, title || "ALERT", "text-info");
     };
 
     $scope.success = function(message, title) {

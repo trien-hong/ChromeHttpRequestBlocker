@@ -21,8 +21,10 @@ Changes from the original fork
         * Note that blocking the actual domain will block all subdomains
         * For example, blocking `google.com` will also block `ads.google.com`
     * I am aware there are more types of patterns but this is the most useful for me
+    * Please do remember to save after adding your site(s)
 * Added a way to click on a button to add the current site with just one click
     * Added a check to see if it's a valid site first before adding
+    * Please do remember to save after adding your site(s)
 * Added a way to export your patterns as a simple text (.txt) file
     * Added check to see if there are any patterns before exporting
 * Added a way to import that same text file
@@ -30,10 +32,14 @@ Changes from the original fork
     * Added check to see if the uploaded file is indeed a text file
 * Added a way to clear your entire pattterns
     * Added confirmation to see if the user really wants to clear their patterns
+* Added a pause feature to temporarily not block sites
+* When you right click on a webpage, a context menu will now appear for you to block the current site
+    * This can be useful when you want to quickly block the current site
+    * The more patterns you have (thousands if not more) will increase the popup load time
 * Change some of the styling and layout
     * Moved the majority of buttons to the bottom
     * Moved some of the custom CSS to a seperate file
     * Added a scroll down when adding new sites
     * Added titles when hovering over certain elements
-    * Added "borders" to better help seperate different elements
+    * Added borders to better help seperate different elements
     * Removed some of the unnecessary or extra padding/margin from Bootstrap
