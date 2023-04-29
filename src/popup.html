@@ -25,6 +25,7 @@
         <tr>
       </table>
       {{message}}
+      <h3 class="text-center" ng-if="is_empty"><u>Your patterns seems to be empty.</u></h3>
       <table class="table table-hover">
         <tr ng-repeat="u in patterns">
           <td>
@@ -75,7 +76,7 @@
           </td>
         </tr>
       </table>
-      <div id="modal" class="modal fade">
+      <div class="modal fade" id="modal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">

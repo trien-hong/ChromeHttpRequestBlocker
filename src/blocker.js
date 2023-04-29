@@ -79,11 +79,14 @@ load(function(p) {
     }
   });
   patterns = p;
+  if (patterns.length === 0) {
+    is_empty = true;
+  }
   updateFilters();
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if(request.type === "reload") {
+  if (request.type === "reload") {
     window.location.reload();
   }
 });

@@ -12,6 +12,8 @@ app.controller('PopupController', function($scope) {
 
     $scope.is_pause = $scope.backgroundPage.is_pause;
 
+    $scope.is_empty = $scope.backgroundPage.is_empty;
+
     chrome.storage.local.get("is_pause", function (data) {
         var is_pause = data.is_pause;
 
@@ -48,6 +50,7 @@ app.controller('PopupController', function($scope) {
             });
 
             $scope.scrollDown();
+            $scope.is_empty = false;
         } else {
             $scope.patterns.push({
                 index: $scope.patterns.length,
@@ -72,8 +75,9 @@ app.controller('PopupController', function($scope) {
                     index: $scope.patterns.length,
                     pattern: website[2]
                 });
-
+                
                 $scope.scrollDown();
+                $scope.is_empty = false;
             }
         }
     });
@@ -84,37 +88,52 @@ app.controller('PopupController', function($scope) {
         if (index > -1) {
             $scope.patterns.splice(index, 1);
         }
+
+        if ($scope.patterns.length === 0) {
+            $scope.is_empty = true;
+        }
     };
 
     $scope.save = function(msg) {
         var prefix = "*://*."
         var suffix = "/*"
-        
-        var patterns = $scope.patterns.map(function(x) {
-            if (x.pattern.includes(prefix) === false) {
-                return prefix + x.pattern + suffix;
-            } else {
-                return x.pattern;
-            }
-        });
+        var removedEmptyElements = [];
+        var patterns = $scope.patterns;
 
-        $scope.backgroundPage.save(patterns, function() {
+        for (var i = 0; i < $scope.patterns.length; i++) {
+            if (patterns[i].pattern.includes(prefix) === false && patterns[i].pattern !== "") {
+                // If the item does not contain a prefix, it'll be added here along with a suffix
+                removedEmptyElements.push(prefix + patterns[i].pattern + suffix);
+            } else if (patterns[i].pattern === "") {
+                // If the item is "", it'll be removed
+                $scope.patterns.splice(i, 1);
+                i--;
+            } else {
+                // If the item already has the correct patterns
+                removedEmptyElements.push(patterns[i].pattern);
+            }
+        }
+
+        $scope.backgroundPage.save(removedEmptyElements, function() {
             $scope.$apply(function() {
                 if (msg === undefined) {
-                    $scope.success("Your patterns has been saved.");
+                    $scope.success("Your patterns has been saved. Any pattern(s) that were empty have also been removed.");
+                    chrome.runtime.sendMessage({type: "reload"});
                 } else {
                     $scope.success(msg);
+                    chrome.runtime.sendMessage({type: "reload"});
                 }
             });
         });
     };
 
     $scope.exportPatterns = function() {
+        console.log($scope.patterns);
         if ($scope.patterns.length === 0) {
             $scope.error("Your patterns seems to be empty. There was nothing to export. Please try adding some websites first.");
         } else {
-            var patterns = $scope.patterns.map(function(x) {
-                return x.pattern;
+            var patterns = $scope.backgroundPage.patterns.map(function(x) {
+                return x;
             });
     
             var exportData = (function () {
@@ -158,6 +177,7 @@ app.controller('PopupController', function($scope) {
                 }
 
                 $scope.save("Your patterns has been cleared.");
+                $scope.is_empty = true;
             }
         } else {
             length = $scope.patterns.length;
@@ -186,6 +206,7 @@ app.controller('PopupController', function($scope) {
                         }
 
                         $scope.save("Your new patterns has been imported.");
+                        $scope.is_empty = false;
                     }
 
                     reader.readAsBinaryString(file);
