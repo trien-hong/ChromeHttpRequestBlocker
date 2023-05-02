@@ -58,10 +58,10 @@
             <h4><button class="btn btn-primary" ng-click="exportPatterns()" title="{{'Download your patterns'}}">Export Patterns</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
           </td>
           <td>
-            <h4><button class="btn btn-primary" ng-click="clearPatterns()" title="{{'Clear your patterns'}}">Clear Patterns</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
+            <h4><button class="btn btn-warning" ng-click="clearPatterns()" title="{{'Clear your patterns'}}">Clear Patterns</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
           </td>
           <td>
-            <button class="btn btn-primary" ng-click="pause()">{{is_pause}}</button>
+            <button class="btn {{button_is_pause_color}}" ng-click="pause()">{{is_pause}}</button>
           </td>
         <tr>
       </table>

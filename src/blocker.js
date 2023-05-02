@@ -14,14 +14,30 @@ chrome.contextMenus.removeAll(function() {
 
           save(patterns);
 
-          alert("Your site, \"" + website[2]+ "\" has been added.");
+          alert("Your site, \"" + website[2] + "\" has been added.");
 
-          chrome.tabs.reload(tabs[0].id);
+          chrome.tabs.reload();
         } else {
           alert("This site you are trying to add doesn't seem to be a valid website.");
         }
       });
     }
+  });
+});
+
+chrome.contextMenus.removeAll(function() {
+  chrome.contextMenus.create({
+      title: "Click to add highlighted text to blacklist",
+      contexts:["selection"],
+      onclick: function(highlightedText) {
+        var url = highlightedText.selectionText;
+
+        patterns.push("*://*." + url + "/*");
+
+        save(patterns);
+
+        alert("Your site, \"" + url + "\" has been added.");
+      }
   });
 });
 
@@ -74,8 +90,10 @@ load(function(p) {
   chrome.storage.local.get('is_pause', function(data) {
     if (data.is_pause === undefined || data.is_pause === false) {
       is_pause = "Unpause Extension";
+      button_is_pause_color = "btn-success";
     } else {
       is_pause = "Pause Extension";
+      button_is_pause_color = "btn-danger";
     }
   });
   patterns = p;

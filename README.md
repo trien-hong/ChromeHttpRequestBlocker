@@ -35,10 +35,11 @@ Changes from the original fork
 * Added a pause feature to temporarily not block sites
 * When you right click on a webpage, a context menu will now appear for you to block the current site
     * This can be useful when you want to quickly block the current site
-    * The more patterns you have (thousands if not more) will increase the popup load time
+    * The more patterns you have (thousands if not more) will increase the extension's popup load time
 * Change some of the styling and layout
     * Moved the majority of buttons to the bottom
     * Moved some of the custom CSS to a seperate file
+    * Added dyanmic colors to pause button
     * Added a scroll down when adding new sites
     * Added titles when hovering over certain elements
     * Added borders to better help seperate different elements

@@ -10,6 +10,8 @@ app.controller('PopupController', function($scope) {
         };
     });
 
+    $scope.button_is_pause_color = $scope.backgroundPage.button_is_pause_color;
+
     $scope.is_pause = $scope.backgroundPage.is_pause;
 
     $scope.is_empty = $scope.backgroundPage.is_empty;
@@ -23,22 +25,20 @@ app.controller('PopupController', function($scope) {
                 
                 });
                 $scope.is_pause = "Pause Extension";
+                $scope.button_is_pause_color = "btn-danger";
                 $scope.alert("Extension is now UNPAUSED. All patterns will be blocked.");
-                chrome.storage.local.get("is_pause", function (data) {
-                    is_pause = data.is_pause;
-                });
-                chrome.runtime.sendMessage({type: "reload"});
             } else {
                 chrome.storage.local.set({'is_pause': false}, function () {
                 
                 });
                 $scope.is_pause = "Unpause Extension";
+                $scope.button_is_pause_color = "btn-success";
                 $scope.alert("Extension is now PAUSED. All patterns will not be blocked.");
-                chrome.storage.local.get("is_pause", function (data) {
-                    is_pause = data.is_pause;
-                });
-                chrome.runtime.sendMessage({type: "reload"});
             }
+            chrome.storage.local.get("is_pause", function (data) {
+                is_pause = data.is_pause;
+            });
+            chrome.runtime.sendMessage({type: "reload"});
         }
     });
 
@@ -102,14 +102,16 @@ app.controller('PopupController', function($scope) {
 
         for (var i = 0; i < $scope.patterns.length; i++) {
             if (patterns[i].pattern.includes(prefix) === false && patterns[i].pattern !== "") {
-                // If the item does not contain a prefix, it'll be added here along with a suffix
-                removedEmptyElements.push(prefix + patterns[i].pattern + suffix);
+                // If the pattern does not contain a prefix, it'll be added here along with a suffix
+                var completePattern = prefix + patterns[i].pattern + suffix;
+                $scope.patterns[i].pattern = completePattern;
+                removedEmptyElements.push(completePattern);
             } else if (patterns[i].pattern === "") {
-                // If the item is "", it'll be removed
+                // If the pattern is "", it'll be removed
                 $scope.patterns.splice(i, 1);
                 i--;
             } else {
-                // If the item already has the correct patterns
+                // If the pattern already has the correct patterns
                 removedEmptyElements.push(patterns[i].pattern);
             }
         }
@@ -118,11 +120,10 @@ app.controller('PopupController', function($scope) {
             $scope.$apply(function() {
                 if (msg === undefined) {
                     $scope.success("Your patterns has been saved. Any pattern(s) that were empty have also been removed.");
-                    chrome.runtime.sendMessage({type: "reload"});
                 } else {
                     $scope.success(msg);
-                    chrome.runtime.sendMessage({type: "reload"});
                 }
+                chrome.runtime.sendMessage({type: "reload"});
             });
         });
     };
