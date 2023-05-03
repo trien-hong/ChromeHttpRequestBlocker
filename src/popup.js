@@ -21,19 +21,23 @@ app.controller('PopupController', function($scope) {
 
         $scope.pause = function() {
             if (is_pause === undefined || is_pause === false) {
+                // extension is currently not on pause (is blocking sites)
+                // user wants to PUASE extension
                 chrome.storage.local.set({'is_pause': true}, function () {
-                
-                });
-                $scope.is_pause = "Pause Extension";
-                $scope.button_is_pause_color = "btn-danger";
-                $scope.alert("Extension is now UNPAUSED. All patterns will be blocked.");
-            } else {
-                chrome.storage.local.set({'is_pause': false}, function () {
                 
                 });
                 $scope.is_pause = "Unpause Extension";
                 $scope.button_is_pause_color = "btn-success";
                 $scope.alert("Extension is now PAUSED. All patterns will not be blocked.");
+            } else {
+                // extension is currently on pause (is not blocking sites)
+                // user wants to UNPUASE extension
+                chrome.storage.local.set({'is_pause': false}, function () {
+                
+                });
+                $scope.is_pause = "Pause Extension";
+                $scope.button_is_pause_color = "btn-danger";
+                $scope.alert("Extension is now UNPAUSED. All patterns will be blocked.");
             }
             chrome.storage.local.get("is_pause", function (data) {
                 is_pause = data.is_pause;
@@ -129,7 +133,6 @@ app.controller('PopupController', function($scope) {
     };
 
     $scope.exportPatterns = function() {
-        console.log($scope.patterns);
         if ($scope.patterns.length === 0) {
             $scope.error("Your patterns seems to be empty. There was nothing to export. Please try adding some websites first.");
         } else {

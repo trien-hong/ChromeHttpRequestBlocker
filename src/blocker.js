@@ -28,7 +28,7 @@ chrome.contextMenus.removeAll(function() {
 chrome.contextMenus.removeAll(function() {
   chrome.contextMenus.create({
       title: "Click to add highlighted text to blacklist",
-      contexts:["selection"],
+      contexts: ["selection"],
       onclick: function(highlightedText) {
         var url = highlightedText.selectionText;
 
@@ -55,7 +55,7 @@ function updateFilters(urls) {
 
   if (patterns.length) {
     chrome.storage.local.get('is_pause', function(data) {
-      if (data.is_pause === true) {
+      if (data.is_pause === undefined || data.is_pause === false) {
         try {
           chrome.webRequest.onBeforeRequest.addListener(blockRequest, {
             urls: patterns
@@ -88,12 +88,15 @@ function save(newPatterns, callback) {
 
 load(function(p) {
   chrome.storage.local.get('is_pause', function(data) {
+    // inital values of buttons
     if (data.is_pause === undefined || data.is_pause === false) {
-      is_pause = "Unpause Extension";
-      button_is_pause_color = "btn-success";
-    } else {
+      // extension is currently not on pause (is blocking sites)
       is_pause = "Pause Extension";
       button_is_pause_color = "btn-danger";
+    } else {
+      // extension is currently on pause (is not blocking sites)
+      is_pause = "Unpause Extension";
+      button_is_pause_color = "btn-success";
     }
   });
   patterns = p;
