@@ -22,7 +22,7 @@ app.controller('PopupController', function($scope) {
         $scope.pause = function() {
             if (is_pause === undefined || is_pause === false) {
                 // extension is currently not on pause (is blocking sites)
-                // user wants to PUASE extension
+                // user wants to PAUSE extension
                 chrome.storage.local.set({'is_pause': true}, function () {
                 
                 });
@@ -31,7 +31,7 @@ app.controller('PopupController', function($scope) {
                 $scope.alert("Extension is now PAUSED. All patterns will not be blocked.");
             } else {
                 // extension is currently on pause (is not blocking sites)
-                // user wants to UNPUASE extension
+                // user wants to UNPAUSE extension
                 chrome.storage.local.set({'is_pause': false}, function () {
                 
                 });

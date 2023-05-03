@@ -30,6 +30,7 @@ Changes from the original fork
 * Added a way to import that same text file
     * Added confirmation as importing will replace the existing patterns
     * Added check to see if the uploaded file is indeed a text file
+    * Added an example file (patternsExport_05-03-2023.txt) that contains 997 patterns in which the user can import
 * Added a way to clear your entire pattterns
     * Added confirmation to see if the user really wants to clear their patterns
 * Added a pause feature to temporarily not block sites
