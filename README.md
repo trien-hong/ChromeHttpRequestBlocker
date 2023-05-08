@@ -13,12 +13,12 @@ Changes from the original fork
     * Since this is for personal use and I know how to add valid patterns I've removed it.
     * I believe it makes the extension a little bit faster. Especially if you have thousands of patterns to check.
 * Simply add a site like `google.com` is all you need
-    * In the background, when you click save the extension will automatically add in the correct patterns to be able to block request
+    * In the background, when you click save, the extension will automatically add in the correct patterns to be able to block request
     * The patterns are `*://*.` for prefix and `/*` for suffix
     * It will look something like `*://*.google.com/*` or `*://*.yahoo.com/*` or `*://*.ads.twitter.com/*`
         * Note that blocking subdomain(s) will not block the actual domain
         * For example, blocking `ads.twitter.com` will not block `twitter.com`
-        * Note that blocking the actual domain will block all subdomains
+        * Note that blocking the actual domain will block all subdomain(s)
         * For example, blocking `google.com` will also block `ads.google.com`
     * I am aware there are more types of patterns but this is the most useful for me
     * Please do remember to save after adding your site(s)
@@ -34,9 +34,14 @@ Changes from the original fork
 * Added a way to clear your entire pattterns
     * Added confirmation to see if the user really wants to clear their patterns
 * Added a pause feature to temporarily not block sites
-* When you right click on a webpage, a context menu will now appear for you to block the current site
-    * This can be useful when you want to quickly block the current site
-    * The more patterns you have (thousands if not more) will increase the extension's popup load time
+* Context menu will now appear when you right click over certain elements
+    * This can be useful when you want to quickly block a site
+        * The more patterns you have (thousands if not more) will increase the extension's popup load time
+    * Context menu will appear when you right click a page to block the current site
+    * Context menu will appear when you right click on a link to block the link
+    * Context menu will appear when you right click over highlighted text to block said text
+        * Not all highlighted text are websites though so be mindful of what it is
+        * Though you can always remove invalid sites by opening the extension's popup
 * Change some of the styling and layout
     * Moved the majority of buttons to the bottom
     * Moved some of the custom CSS to a seperate file

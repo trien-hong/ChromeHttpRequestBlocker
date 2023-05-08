@@ -27,10 +27,33 @@ chrome.contextMenus.removeAll(function() {
 
 chrome.contextMenus.removeAll(function() {
   chrome.contextMenus.create({
+    title: "Block link",
+    contexts: ["link"],
+    onclick: function(data) {
+      var url = data.linkUrl;
+      
+      if (url !== undefined) {
+        var newUrl = url.replace("www.", "");
+        var website = newUrl.split("/");
+
+        patterns.push("*://*." + website[2] + "/*");
+
+        save(patterns);
+
+        alert("Your site, \"" + website[2] + "\" has been added.");
+      } else {
+        alert("This site you are trying to add doesn't seem to be a valid website.");
+      }
+    }
+  });
+});
+
+chrome.contextMenus.removeAll(function() {
+  chrome.contextMenus.create({
       title: "Click to add highlighted text to blacklist",
       contexts: ["selection"],
-      onclick: function(highlightedText) {
-        var url = highlightedText.selectionText;
+      onclick: function(data) {
+        var url = data.selectionText;
 
         patterns.push("*://*." + url + "/*");
 
