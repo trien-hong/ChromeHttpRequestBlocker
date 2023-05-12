@@ -9,14 +9,19 @@ chrome.contextMenus.removeAll(function() {
         if (url !== undefined) {
           var newUrl = url.replace("www.", "");
           var website = newUrl.split("/");
+          var pattern = "*://*." + website[2] + "/*";
 
-          patterns.push("*://*." + website[2] + "/*");
+          if (patterns.includes(pattern) === false) {
+            patterns.push(pattern);
 
-          save(patterns);
+            save(patterns);
 
-          alert("Your site, \"" + website[2] + "\" has been added.");
+            alert("Your site, \"" + website[2] + "\" has been added.");
 
-          chrome.tabs.reload();
+            chrome.tabs.reload();
+          } else {
+            alert("Your site, \"" + website[2] + "\" is already in your patterns. \n\nTherefore, the website will not be added again.");
+          }
         } else {
           alert("This site you are trying to add doesn't seem to be a valid website.");
         }
@@ -35,12 +40,17 @@ chrome.contextMenus.removeAll(function() {
       if (url !== undefined) {
         var newUrl = url.replace("www.", "");
         var website = newUrl.split("/");
+        var pattern = "*://*." + website[2] + "/*";
 
-        patterns.push("*://*." + website[2] + "/*");
+        if (patterns.includes(pattern) === false) {
+          patterns.push(pattern);
 
-        save(patterns);
+          save(patterns);
 
-        alert("Your site, \"" + website[2] + "\" has been added.");
+          alert("Your site, \"" + website[2] + "\" has been added.");
+        } else {
+          alert("Your site, \"" + website[2] + "\" is already in your patterns. \n\nTherefore, the website will not be added again.");
+        }
       } else {
         alert("This site you are trying to add doesn't seem to be a valid website.");
       }
@@ -53,13 +63,17 @@ chrome.contextMenus.removeAll(function() {
       title: "Click to add highlighted text to blacklist",
       contexts: ["selection"],
       onclick: function(data) {
-        var url = data.selectionText;
+        var pattern = "*://*." + data.selectionText + "/*";
 
-        patterns.push("*://*." + url + "/*");
+        if (patterns.includes(pattern) === false) {
+          patterns.push(pattern);
 
-        save(patterns);
+          save(patterns);
 
-        alert("Your site, \"" + url + "\" has been added.");
+          alert("Your site, \"" + data.selectionText + "\" has been added.");
+        } else {
+          alert("Your site, \"" + data.selectionText + "\" is already in your patterns. \n\nTherefore, the website will not be added again.");
+        }
       }
   });
 });
@@ -87,7 +101,7 @@ function updateFilters(urls) {
           console.error(e);
         }
       } else {
-        console.log("Extension is currently paused. All patterns will not be blocked.")
+        console.log("Extension is currently paused. All patterns will not be blocked.");
       }
     });
   }
