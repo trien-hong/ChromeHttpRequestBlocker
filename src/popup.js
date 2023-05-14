@@ -16,14 +16,14 @@ app.controller('PopupController', function($scope) {
 
     $scope.is_empty = $scope.backgroundPage.is_empty;
 
-    chrome.storage.local.get("is_pause", function (data) {
+    chrome.storage.local.get("is_pause", function(data) {
         var is_pause = data.is_pause;
 
         $scope.pause = function() {
             if (is_pause === undefined || is_pause === false) {
                 // extension is currently not on pause (is blocking sites)
                 // user wants to PAUSE extension
-                chrome.storage.local.set({'is_pause': true}, function () {
+                chrome.storage.local.set({'is_pause': true}, function() {
                 
                 });
                 $scope.is_pause = "Unpause Extension";
@@ -32,14 +32,14 @@ app.controller('PopupController', function($scope) {
             } else {
                 // extension is currently on pause (is not blocking sites)
                 // user wants to UNPAUSE extension
-                chrome.storage.local.set({'is_pause': false}, function () {
+                chrome.storage.local.set({'is_pause': false}, function() {
                 
                 });
                 $scope.is_pause = "Pause Extension";
                 $scope.button_is_pause_color = "btn-danger";
                 $scope.alert("Extension is now UNPAUSED. All patterns will be blocked.");
             }
-            chrome.storage.local.get("is_pause", function (data) {
+            chrome.storage.local.get("is_pause", function(data) {
                 is_pause = data.is_pause;
             });
             chrome.runtime.sendMessage({type: "reload"});
@@ -63,7 +63,7 @@ app.controller('PopupController', function($scope) {
         }
     };
 
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         var url = tabs[0].url;
 
         if (url !== undefined) {
@@ -104,14 +104,22 @@ app.controller('PopupController', function($scope) {
         var removedEmptyElements = [];
         var patterns = $scope.patterns;
 
-        for (var i = 0; i < $scope.patterns.length; i++) {
+        for (var i = 0; i < patterns.length; i++) {
             if (patterns[i].pattern.includes(prefix) === false && patterns[i].pattern !== "") {
-                // If the pattern does not contain a prefix, it'll be added here along with a suffix
                 var completePattern = prefix + patterns[i].pattern + suffix;
-                $scope.patterns[i].pattern = completePattern;
-                removedEmptyElements.push(completePattern);
+                var checkDuplicate = obj => obj.pattern === completePattern;
+
+                if (patterns.some(checkDuplicate) === true) {
+                    // If pattern already exist, it'll be removed
+                    $scope.patterns.splice(i, 1);
+                    i--;
+                } else {
+                    // If the pattern does not contain a prefix, it'll be added here along with a suffix
+                    $scope.patterns[i].pattern = completePattern;
+                    removedEmptyElements.push(completePattern);
+                }
             } else if (patterns[i].pattern === "") {
-                // If the pattern is "", it'll be removed
+                // If the pattern is "" (empty), it'll be removed
                 $scope.patterns.splice(i, 1);
                 i--;
             } else {
@@ -123,7 +131,7 @@ app.controller('PopupController', function($scope) {
         $scope.backgroundPage.save(removedEmptyElements, function() {
             $scope.$apply(function() {
                 if (msg === undefined) {
-                    $scope.success("Your patterns has been saved. Any pattern(s) that were empty have also been removed.");
+                    $scope.success("Your patterns has been saved. Any pattern(s) that were \"\" (empty) have been removed. If your pattern(s) contains any duplicates, it was also removed.");
                 } else {
                     $scope.success(msg);
                 }
@@ -140,12 +148,12 @@ app.controller('PopupController', function($scope) {
                 return x;
             });
     
-            var exportData = (function () {
+            var exportData = (function() {
                 var a = document.createElement('a');
                 document.body.appendChild(a);
                 a.style = 'display: none';
         
-                return function (fileName) {
+                return function(fileName) {
                     blob = new Blob([patterns], {type: 'octet/stream'}),
                     url = window.URL.createObjectURL(blob);
                     a.href = url;
@@ -174,7 +182,7 @@ app.controller('PopupController', function($scope) {
             $scope.error("Your patterns seems to be empty. Try adding some websites first.");
         } else if (confirmation === undefined) {
             if (confirm("Are you sure you want to clear your current patterns?\n\nDepending on the size of your patterns, it make take some time to load.") === true) {
-                length = $scope.patterns.length;
+                var length = $scope.patterns.length;
 
                 for (var i = 0; i < length; i++) {
                     $scope.patterns.splice(0, 1);
@@ -184,7 +192,7 @@ app.controller('PopupController', function($scope) {
                 $scope.is_empty = true;
             }
         } else {
-            length = $scope.patterns.length;
+            var length = $scope.patterns.length;
 
             for (var i = 0; i < length; i++) {
                 $scope.patterns.splice(0, 1);
