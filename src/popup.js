@@ -99,17 +99,17 @@ app.controller('PopupController', function($scope) {
     };
 
     $scope.save = function(msg) {
-        var prefix = "*://*."
-        var suffix = "/*"
+        var prefix = "*://*.";
+        var suffix = "/*";
         var removedEmptyElements = [];
         var patterns = $scope.patterns;
 
         for (var i = 0; i < patterns.length; i++) {
             if (patterns[i].pattern.includes(prefix) === false && patterns[i].pattern !== "") {
                 var completePattern = prefix + patterns[i].pattern + suffix;
-                var checkDuplicate = obj => obj.pattern === completePattern;
+                var checkPattern = obj => obj.pattern === completePattern;
 
-                if (patterns.some(checkDuplicate) === true) {
+                if (patterns.some(checkPattern) === true) {
                     // If pattern already exist, it'll be removed
                     $scope.patterns.splice(i, 1);
                     i--;
@@ -160,7 +160,7 @@ app.controller('PopupController', function($scope) {
                     a.download = fileName;
                     a.click();
                     window.URL.revokeObjectURL(url);
-                    $scope.success("Your patterns has been exported. Please be sure to download it. Also remember that you can always import this file in the future.");
+                    $scope.success("Your patterns has been exported. Please be sure to download it. Also remember that you can always import this file in the future. Depending on the size of your patterns, it may take some time to load.");
                 };
             }());
         
@@ -180,8 +180,8 @@ app.controller('PopupController', function($scope) {
     $scope.clearPatterns = function(confirmation) {
         if ($scope.patterns.length === 0 && confirmation === undefined) {
             $scope.error("Your patterns seems to be empty. Try adding some websites first.");
-        } else if (confirmation === undefined) {
-            if (confirm("Are you sure you want to clear your current patterns?\n\nDepending on the size of your patterns, it make take some time to load.") === true) {
+        } else if ($scope.patterns.length !== 0 && confirmation === undefined) {
+            if (confirm("Are you sure you want to clear your current patterns?\n\nDepending on the size of your patterns, it may take some time to load.") === true) {
                 var length = $scope.patterns.length;
 
                 for (var i = 0; i < length; i++) {
@@ -201,7 +201,7 @@ app.controller('PopupController', function($scope) {
     };
 
     $scope.uploadFile = function() {
-        if (confirm("Importing a patterns from a file will overwrite your current patterns.\n\nDepending on the size of your patterns, it make take some time to load.") === true) {
+        if (confirm("Importing patterns from a file will overwrite your current patterns.\n\nDepending on the size of your patterns, it may take some time to load.") === true) {
             try {
                 var file = document.getElementById('file').files[0];
 
@@ -214,10 +214,14 @@ app.controller('PopupController', function($scope) {
                         $scope.clearPatterns(1);
 
                         for (var i = 0; i < patterns.length; i++) {
-                            $scope.add(patterns[i]);
+                            var checkPattern = obj => obj.pattern === patterns[i];
+                        
+                            if ($scope.patterns.some(checkPattern) === false) {
+                                $scope.add(patterns[i]);
+                            }
                         }
 
-                        $scope.save("Your new patterns has been imported.");
+                        $scope.save("Your new patterns has been imported. If the file contains any duplicate patterns, it will not be added beyond the first.");
                         $scope.is_empty = false;
                     }
 

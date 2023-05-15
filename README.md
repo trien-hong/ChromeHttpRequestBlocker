@@ -42,6 +42,7 @@ Changes from the original fork
     * Context menu will appear when you right click over highlighted text to block said text
         * Not all highlighted text are websites though so be mindful of what it is
         * Though you can always remove invalid sites by opening the extension's popup
+* Extension will now check for duplicate patterns before adding via context menu, popup, and uploading file
 * Change some of the styling and layout
     * Moved the majority of buttons to the bottom
     * Moved some of the custom CSS to a seperate file
