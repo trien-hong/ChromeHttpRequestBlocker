@@ -14,11 +14,11 @@ chrome.contextMenus.removeAll(function() {
           if (patterns.includes(pattern) === false) {
             patterns.push(pattern);
 
-            save(patterns);
+            save(patterns, function() {
+              alert("Your site, \"" + website[2] + "\" has been added.");
 
-            alert("Your site, \"" + website[2] + "\" has been added.");
-
-            chrome.tabs.reload();
+              chrome.tabs.reload();
+            });
           } else {
             alert("Your site, \"" + website[2] + "\" is already in your patterns. \n\nTherefore, the website will not be added again.");
           }
@@ -45,9 +45,11 @@ chrome.contextMenus.removeAll(function() {
         if (patterns.includes(pattern) === false) {
           patterns.push(pattern);
 
-          save(patterns);
+          save(patterns, function() {
+            alert("Your site, \"" + website[2] + "\" has been added.");
 
-          alert("Your site, \"" + website[2] + "\" has been added.");
+            chrome.tabs.reload();
+          });
         } else {
           alert("Your site, \"" + website[2] + "\" is already in your patterns. \n\nTherefore, the website will not be added again.");
         }
@@ -68,9 +70,11 @@ chrome.contextMenus.removeAll(function() {
         if (patterns.includes(pattern) === false) {
           patterns.push(pattern);
 
-          save(patterns);
+          save(patterns, function() {
+            alert("Your site, \"" + data.selectionText + "\" has been added.");
 
-          alert("Your site, \"" + data.selectionText + "\" has been added.");
+            chrome.tabs.reload();
+          });
         } else {
           alert("Your site, \"" + data.selectionText + "\" is already in your patterns. \n\nTherefore, the website will not be added again.");
         }
@@ -125,7 +129,7 @@ function save(newPatterns, callback) {
 
 load(function(p) {
   chrome.storage.local.get('is_pause', function(data) {
-    // inital values of buttons
+    // inital value of pause buttons
     if (data.is_pause === undefined || data.is_pause === false) {
       // extension is currently not on pause (is blocking sites)
       is_pause = "Pause Extension";

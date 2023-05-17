@@ -86,7 +86,7 @@ app.controller('PopupController', function($scope) {
         }
     });
 
-    $scope.remove = function(patternToRemove) {
+    $scope.removeByIndex = function(patternToRemove) {
         var index = $scope.patterns.indexOf(patternToRemove);
 
         if (index > -1) {
