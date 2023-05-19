@@ -17,6 +17,8 @@ chrome.contextMenus.removeAll(function() {
             save(patterns, function() {
               alert("Your site, \"" + website[2] + "\" has been added. Page will reload shortly.");
 
+              is_empty = false;
+
               chrome.tabs.reload();
             });
           } else {
@@ -46,6 +48,8 @@ chrome.contextMenus.removeAll(function() {
           patterns.push(pattern);
 
           save(patterns, function() {
+            is_empty = false;
+
             alert("Your site, \"" + website[2] + "\" has been added.");
           });
         } else {
@@ -69,6 +73,8 @@ chrome.contextMenus.removeAll(function() {
           patterns.push(pattern);
 
           save(patterns, function() {
+            is_empty = false;
+
             alert("Your site, \"" + data.selectionText + "\" has been added.");
           });
         } else {
@@ -101,7 +107,7 @@ function updateFilters(urls) {
           console.error(e);
         }
       } else {
-        console.log("Extension is currently paused. All patterns will not be blocked.");
+        console.log("Extension is currently paused. Any and all patterns will not be blocked.");
       }
     });
   }

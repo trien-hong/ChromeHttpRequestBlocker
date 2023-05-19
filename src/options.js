@@ -63,28 +63,28 @@ app.controller('PopupController', function($scope) {
         }
     };
 
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        var url = tabs[0].url;
+    // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    //     var url = tabs[0].url;
 
-        if (url !== undefined) {
-            var newUrl = url.replace("www.", "");
-            var website = newUrl.split("/");
-        }
+    //     if (url !== undefined) {
+    //         var newUrl = url.replace("www.", "");
+    //         var website = newUrl.split("/");
+    //     }
 
-        $scope.addCurrentSite = function() {
-            if (url === undefined) {
-                $scope.error("This site you are trying to add doesn't seem to be a valid website.");
-            } else {
-                $scope.patterns.push({
-                    index: $scope.patterns.length,
-                    pattern: website[2]
-                });
+    //     $scope.addCurrentSite = function() {
+    //         if (url === undefined) {
+    //             $scope.error("This site you are trying to add doesn't seem to be a valid website.");
+    //         } else {
+    //             $scope.patterns.push({
+    //                 index: $scope.patterns.length,
+    //                 pattern: website[2]
+    //             });
                 
-                $scope.scrollDown();
-                $scope.is_empty = false;
-            }
-        }
-    });
+    //             $scope.scrollDown();
+    //             $scope.is_empty = false;
+    //         }
+    //     }
+    // });
 
     $scope.removeByIndex = function(patternToRemove) {
         var index = $scope.patterns.indexOf(patternToRemove);
@@ -131,10 +131,15 @@ app.controller('PopupController', function($scope) {
         $scope.backgroundPage.save(removedEmptyElements, function() {
             $scope.$apply(function() {
                 if (msg === undefined) {
-                    $scope.success("Your patterns has been saved. Any pattern(s) that were \"\" (empty) have been removed. If your pattern(s) contains any duplicates, it was also removed.");
+                    $scope.success("Your patterns has been saved. Any pattern(s) that were \"\" (empty) have been removed. If your pattern(s) contains any duplicates, it was also removed (beyond the first).");
                 } else {
                     $scope.success(msg);
                 }
+
+                if ($scope.patterns.length === 0) {
+                    $scope.is_empty = true;
+                }
+                
                 chrome.runtime.sendMessage({type: "reload"});
             });
         });
@@ -179,7 +184,7 @@ app.controller('PopupController', function($scope) {
 
     $scope.clearPatterns = function(confirmation) {
         if ($scope.patterns.length === 0 && confirmation === undefined) {
-            $scope.error("Your patterns seems to be empty. Try adding some websites first.");
+            $scope.error("Your patterns seems to be empty. There was nothing to clear. Try adding some websites first.");
         } else if ($scope.patterns.length !== 0 && confirmation === undefined) {
             if (confirm("Are you sure you want to clear your current patterns?\n\nDepending on the size of your patterns, it may take some time to load.") === true) {
                 var length = $scope.patterns.length;
@@ -236,7 +241,10 @@ app.controller('PopupController', function($scope) {
     };
 
     $scope.scrollDown = function() {
-        window.scrollTo({top: document.body.scrollHeight, behavior: "smooth" });
+        // doesn't seem to scroll all the way down when adding new sites. looks like it's one step behind.
+        // clicking the button will scroll all the way down.
+        var objDiv = document.getElementsByClassName("patterns")[0];
+        objDiv.scrollTo({top: document.getElementsByClassName("patterns")[0].scrollHeight, behavior: "smooth" });
     };
 
     $scope.alert = function(message, title) {
@@ -255,6 +263,6 @@ app.controller('PopupController', function($scope) {
         $scope.modalClass = modalClass;
         $scope.modalTitle = title;
         $scope.modalMessage = message;
-        $('#modal').modal();
+        $('#modal').modal('show');
     };
 });

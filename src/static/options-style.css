@@ -1,0 +1,61 @@
+/* This will overwrite any Bootstrap CSS */
+
+body {
+    background-color: #C6E8E8;
+}
+
+hr {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    border: 1px solid gray;
+}
+
+.vr {
+    border: 1px solid gray;
+}
+
+h3 {
+    margin-top: 0.3em;
+}
+
+.content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.content-patterns-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content-patterns {
+    padding: 5px;
+    width: 800px;
+    height: 470px;
+}
+
+.patterns {
+    height: 87%;
+    overflow-y: auto;
+}
+
+.pattern {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.content-buttons {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.table {
+    margin-bottom: 0em;
+}
+
+tr {
+    border: 2px solid gray;
+}
