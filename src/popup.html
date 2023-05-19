@@ -10,72 +10,57 @@
     <link href="static/style.css" rel="stylesheet"/>
   </head>
   <body ng-app="RequestBlockerApp">
-    <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 500px;">
+    <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 485px;">
       <h1><b>HTTP Request Blocker</b></h1>
-      <table style="width: 100%;">
-        <tr>
-          <td>
-            <h3><u>{{patterns.length}}</u> Pattern(s)</h3>
-          </td>
-          <td>
-            <button class="btn btn-default pull-right" ng-click="scrollDown()" title="{{'Scroll Down'}}">
-              <i class="glyphicon glyphicon-arrow-down" style="color: black;"></i>&nbsp;SCROLL DOWN
-            </button>
-          </td>
-        <tr>
-      </table>
+      <div class="container-space-between">
+        <div>
+          <h3><u>{{patterns.length}}</u> Pattern(s)</h3> <div class="vr"></div>
+        </div>
+        <div>
+          <button class="btn btn-default pull-right" ng-click="scrollDown()" title="{{'Scroll Down'}}">
+            <i class="glyphicon glyphicon-arrow-down" style="color: black;"></i>&nbsp;SCROLL DOWN
+          </button>
+        </div>
+      </div>
       {{message}}
       <h3 class="text-center" ng-if="is_empty"><u>Your patterns seems to be empty.</u></h3>
       <table class="table table-hover">
         <tr ng-repeat="u in patterns">
-          <td>
-              <input type="text" class="form-control" ng-model="u.pattern" title="{{'Add/Edit Pattern'}}"/>
-          </td>
-          <td style="width: 20px;">
-            <button class="btn btn-default" ng-click="removeByIndex(u)" title="{{'Delete Pattern'}}">
-              <i class="glyphicon glyphicon-remove" style="color: #A94442;"></i>
-            </button>
-          </td>
-        </tr>
-      </table>
-      <table>
-        <tr>
-          <td>
-            <h4><button class="btn btn-primary" ng-click="add()" title="{{'Manually enter site'}}">Add new site</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
-          </td>
-          <td>
-            <h4><button class="btn btn-primary" ng-click="addCurrentSite()" title="{{'Automatically enter site'}}">Add current site</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
-          </td>
-          <td>
-            <button class="btn btn-primary" ng-click="save()" title="{{'Save your newly added/edited site(s)'}}">Save</button>
+          <td class="container-space-between patterns">
+            <div>
+              <button class="btn btn-info" disabled>
+                <img src="https://s2.googleusercontent.com/s2/favicons?domain={{ u.pattern.substring(6, u.pattern.length-2) }}">
+              </button>
+            </div>
+            <div style="width: 78%;">
+              <input type="text" class="form-control" ng-model="u.pattern" title="{{'Add/Edit Pattern'}}" style=""/>
+            </div>
+            <div>
+              <button class="btn btn-default" ng-click="removeByIndex(u)" title="{{'Delete Pattern'}}">
+                <i class="glyphicon glyphicon-remove" style="color: #A94442;"></i>
+              </button>
+            </div>
           </td>
         </tr>
       </table>
       <hr/>
-      <table>
-        <tr>
-          <td>
-            <h4><button class="btn btn-primary" ng-click="exportPatterns()" title="{{'Download your patterns'}}">Export Patterns</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
-          </td>
-          <td>
-            <h4><button class="btn btn-warning" ng-click="clearPatterns()" title="{{'Clear your patterns'}}">Clear Patterns</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
-          </td>
-          <td>
-            <button class="btn {{button_is_pause_color}}" ng-click="pause()">{{is_pause}}</button>
-          </td>
-        <tr>
-      </table>
+      <div class="container-space-between">
+        <div><button class="btn btn-primary" ng-click="add()" title="{{'Manually enter site'}}">Add new site</button></div>
+        <div><button class="btn btn-primary" ng-click="addCurrentSite()" title="{{'Automatically enter site'}}">Add current site</button></div>
+        <div><button class="btn btn-primary" ng-click="save()" title="{{'Save your newly added/edited site(s)'}}">Save patterns</button></div>
+      </div>
       <hr/>
-      <table>
-        <tr>
-          <td>
-            <h4><button class="btn btn-primary" ng-click="uploadFile()" title="{{'Upload selected file'}}">Upload File (.txt)</button>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h4>
-          </td>
-          <td>
-            <input class="form-control" id="file" type="file" accept="text/plain" title="{{'Choose a file (.txt)'}}">
-          </td>
-        </tr>
-      </table>
+      <div class="container-space-between">
+        <div><button class="btn btn-primary" ng-click="exportPatterns()" title="{{'Download your patterns'}}">Export Patterns</button></div>
+        <div><button class="btn btn-warning" ng-click="clearPatterns()" title="{{'Clear your patterns'}}">Clear Patterns</button></div>
+        <div><button class="btn {{button_is_pause_color}}" ng-click="pause()">{{is_pause}}</button></div>
+      </div>
+      <hr/>
+      <div class="container-space-between">
+        <div><button class="btn btn-primary" ng-click="uploadFile()" title="{{'Upload selected file'}}">Upload File (.txt)</button></div>
+        <div><input class="form-control" id="file" type="file" accept="text/plain" title="{{'Choose a file (.txt)'}}"></div>
+      </div>
+      <hr/>
       <div class="modal fade" id="modal">
         <div class="modal-dialog">
           <div class="modal-content">
