@@ -13,7 +13,7 @@ Changes from the original fork
     * I might put it back but for now it's removed.
     * Since this is for personal use and I know how to add valid patterns I've removed it.
     * I believe it makes the extension a little bit faster. Especially if you have thousands of patterns to check.
-* Simply add a site like `google.com` is all you need
+* Within options.html simply add a site like `google.com` is all you need
     * In the background, when you click save, the extension will automatically add in the correct patterns to be able to block request
     * The patterns are `*://*.` for prefix and `/*` for suffix
     * It will look something like `*://*.google.com/*` or `*://*.yahoo.com/*` or `*://*.ads.twitter.com/*`
@@ -23,10 +23,6 @@ Changes from the original fork
         * For example, blocking `google.com` will also block `ads.google.com`
     * I am aware there are more types of patterns but this is the most useful for me
     * Please do remember to save after adding your site(s)
-* ~~Added a way to click on a button to add the current site with just one click~~
-    * ~~Added a check to see if it's a valid site first before adding~~
-    * ~~Please do remember to save after adding your site(s)~~
-    * I will add back when I add a new extension's popup later
 * Added a way to export your patterns as a simple text (.txt) file
     * Added check to see if there are any patterns before exporting
 * Added a way to import that same text file
@@ -43,10 +39,13 @@ Changes from the original fork
     * Context menu will appear when you right click on a link to block the link
     * Context menu will appear when you right click over highlighted text to block said text
         * Not all highlighted text are websites though so be mindful of what it is
-        * Though you can always remove invalid sites by opening the extension's popup
-* Extension will now check for duplicate patterns before adding via context menu, popup, and uploading file
-* Extension's popup is now unavliable (I will add a new extension's popup later)
-    * Moved what was the previous popup into the extension's options
+        * Though you can always remove invalid sites by opening the extension's options.html page
+* Extension's popup now does a few things
+    * It shows the current site along with it's favicon (if it has one)
+    * You can now add the current site within extension's popup to block it
+        * Added check to see if it's a valid website first
+    * Extension's popup also includes a pause/unpause button, options button, & GitHub repo button
+* Before adding via popup, context menu, & options.html (manually) it will check for existing patterns before adding or saving
 * Change some of the styling and layout
     * Updated Bootstrap to v5.3.0-alpha3
     * Moved some of the custom CSS to a seperate file

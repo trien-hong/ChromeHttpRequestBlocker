@@ -26,7 +26,7 @@ app.controller('PopupController', function($scope) {
                 chrome.storage.local.set({'is_pause': true}, function() {
                 
                 });
-                $scope.is_pause = "Unpause Extension";
+                $scope.is_pause = "Unpause extension";
                 $scope.button_is_pause_color = "btn-success";
                 $scope.alert("Extension is now PAUSED. All patterns will not be blocked.");
             } else {
@@ -35,7 +35,7 @@ app.controller('PopupController', function($scope) {
                 chrome.storage.local.set({'is_pause': false}, function() {
                 
                 });
-                $scope.is_pause = "Pause Extension";
+                $scope.is_pause = "Pause extension";
                 $scope.button_is_pause_color = "btn-danger";
                 $scope.alert("Extension is now UNPAUSED. All patterns will be blocked.");
             }
@@ -62,29 +62,6 @@ app.controller('PopupController', function($scope) {
             });
         }
     };
-
-    // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    //     var url = tabs[0].url;
-
-    //     if (url !== undefined) {
-    //         var newUrl = url.replace("www.", "");
-    //         var website = newUrl.split("/");
-    //     }
-
-    //     $scope.addCurrentSite = function() {
-    //         if (url === undefined) {
-    //             $scope.error("This site you are trying to add doesn't seem to be a valid website.");
-    //         } else {
-    //             $scope.patterns.push({
-    //                 index: $scope.patterns.length,
-    //                 pattern: website[2]
-    //             });
-                
-    //             $scope.scrollDown();
-    //             $scope.is_empty = false;
-    //         }
-    //     }
-    // });
 
     $scope.removeByIndex = function(patternToRemove) {
         var index = $scope.patterns.indexOf(patternToRemove);

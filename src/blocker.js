@@ -134,11 +134,11 @@ load(function(p) {
     // inital value of pause button
     if (data.is_pause === undefined || data.is_pause === false) {
       // extension is currently not on pause (is blocking sites)
-      is_pause = "Pause Extension";
+      is_pause = "Pause extension";
       button_is_pause_color = "btn-danger";
     } else {
       // extension is currently on pause (is not blocking sites)
-      is_pause = "Unpause Extension";
+      is_pause = "Unpause extension";
       button_is_pause_color = "btn-success";
     }
   });
