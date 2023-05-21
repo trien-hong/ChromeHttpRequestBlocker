@@ -50,7 +50,7 @@ app.controller('PopupController', function($scope, currentSite) {
         if ($scope.website === "Sorry, not a valid website."){
             $scope.error("The site you are trying to add doesn't seem to be a valid website.");
         } else if ($scope.isBlocked === "The current site is in your patterns.") {
-            $scope.error("The website, \"" + $scope.website + "\" already exist in your patterns. Therefore, it will not be added again. Check the pause button if it's not being blocked.");
+            $scope.error("The website, \"" + $scope.website + "\" already exist in your patterns. Therefore, it will not be added again. Check the pause button if it's not being blocked or refresh page.");
         } else {
             $scope.patterns.push({
                 index: $scope.patterns.length,
@@ -61,27 +61,27 @@ app.controller('PopupController', function($scope, currentSite) {
         }
     };
 
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        $scope.save = function() {
-            var patterns = [];
+    $scope.save = function() {
+        var patterns = [];
     
-            for (var i = 0; i < $scope.patterns.length; i++) {
-                patterns.push($scope.patterns[i].pattern);
-            }
+        for (var i = 0; i < $scope.patterns.length; i++) {
+            patterns.push($scope.patterns[i].pattern);
+        }
     
-            $scope.backgroundPage.save(patterns, function() {
-                $scope.$apply(function() {
-                    $scope.isBlocked = "The current site is in your patterns.";
-                    
-                    $scope.success("Your site, \"" + $scope.website + "\" has been added. It is now blocked.");
+        $scope.backgroundPage.save(patterns, function() {
+            $scope.$apply(function() {
+                $scope.isBlocked = "The current site is in your patterns.";
+                
+                $scope.success("Your site, \"" + $scope.website + "\" has been added. It is now blocked and page will reload shortly.");
+                
+                chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                    chrome.tabs.reload();
                     
                     chrome.runtime.sendMessage({type: "reload"});
-                    
-                    chrome.tabs.reload();
                 });
             });
-        };
-    });
+        });
+    };
 
     chrome.storage.local.get("is_pause", function(data) {
         var is_pause = data.is_pause;
