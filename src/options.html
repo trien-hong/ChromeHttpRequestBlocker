@@ -11,17 +11,29 @@
   </head>
   <body ng-app="RequestBlockerApp">
     <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 1250px;">
-      <h1><img src="images/icon128.png" width="60" height="60"/><b>HTTP Request Blocker</b></h1>
+      <h1><img src="images/icon128.png" width="60" height="60"/>&nbsp;<b>HTTP Request Blocker</b></h1>
       {{message}}
       <hr/>
       <div class="content">
+        <div class="vr"></div>
         <div class="content-patterns">
           <div class="content-patterns-header">
             <div>
+              <button class="btn btn-secondary" ng-click="scrollUp()" title="{{'Scroll Up'}}">
+                SCROLL UP
+                &nbsp;
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="vr"></div>
+            <div>
               <h3><u>{{patterns.length}}</u> Pattern(s)</h3>
             </div>
+            <div class="vr"></div>
             <div>
-              <button class="btn btn-secondary mt-1 py-2" ng-click="scrollDown()" title="{{'Scroll Down'}}">
+              <button class="btn btn-secondary" ng-click="scrollDown()" title="{{'Scroll Down'}}">
                 SCROLL DOWN
                 &nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
@@ -41,7 +53,7 @@
                       <img src="https://s2.googleusercontent.com/s2/favicons?domain={{ u.pattern.substring(6, u.pattern.length-2) }}">
                     </button>
                   </div>
-                  <div style="width: 87%;">
+                  <div class="pattern-input">
                     <input type="text" class="form-control" ng-model="u.pattern" title="{{'Add/Edit Pattern'}}"/>
                   </div>
                   <div>
@@ -131,6 +143,7 @@
             <input class="form-control" id="file" type="file" accept="text/plain" title="{{'Choose a file (.txt)'}}">
           </div>
         </div>
+        <div class="vr"></div>
       </div>
       <hr/>
       <div class="modal fade" id="modal">

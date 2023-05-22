@@ -37,7 +37,9 @@ app.controller('PopupController', function($scope, currentSite) {
         
         var checkPattern = obj => obj.pattern === "*://*." + url + "/*";
 
-        if ($scope.patterns.some(checkPattern) === true) {
+        if (url === "Sorry, not a valid website.") {
+            $scope.isBlocked = "You cannot add this site. It's not valid.";
+        } else if ($scope.patterns.some(checkPattern) === true) {
             $scope.isBlocked = "The current site is in your patterns.";
         } else {
             $scope.isBlocked = "The current site is not in your patterns.";
@@ -72,7 +74,7 @@ app.controller('PopupController', function($scope, currentSite) {
             $scope.$apply(function() {
                 $scope.isBlocked = "The current site is in your patterns.";
                 
-                $scope.success("Your site, \"" + $scope.website + "\" has been added. It is now blocked and page will reload shortly.");
+                $scope.success("The site, \"" + $scope.website + "\", has been added. It is now blocked and page will reload shortly.");
                 
                 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                     chrome.tabs.reload();

@@ -10,19 +10,23 @@
     <link href="static/popup-style.css" rel="stylesheet"/>
   </head>
   <body ng-app="RequestBlockerApp">
-    <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 500px; height: 360px">
-      <h1>HTTP Request Blocker</h1>
-      <hr/>
-      <div class="current-site text-center">
+    <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 500px; height: 400px">
+      <div>
+        <h1><img src="images/icon128.png" width="40" height="40"/>&nbsp;<b>HTTP Request Blocker</b></h1>
+        <hr/>
+      </div>
+      <div class="text-center">
         <div>
           <button class="btn btn-info" disabled>
             <img src="https://s2.googleusercontent.com/s2/favicons?domain={{ website }}" width="25px" height="25px">
           </button>
-          <h2>{{website}}</h2>
+          <h2 class="website"><u>{{website}}</u></h2>
         </div>
       </div>
-      <hr/>
-      <div class="add-site text-center">
+      <div>
+        <hr/>
+      </div>
+      <div class="text-center">
         <h2>{{isBlocked}}</h2>
         <button class="btn btn-primary" ng-click="addCurrentSite()" title="{{'Block Current Site'}}">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -32,8 +36,10 @@
           Add Current Site
         </button>
       </div>
-      <hr/>
-      <div class="content-buttons">
+      <div>
+        <hr/>
+      </div>
+      <div class="content-buttons pb-1 mb-1">
         <div>
           <button class="btn {{button_is_pause_color}}" title="{{is_pause}}" ng-click="pause()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pause-circle-fill" viewBox="0 0 16 16">

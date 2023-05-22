@@ -1,59 +1,68 @@
-/* This will overwrite any Bootstrap CSS */
+/* This will overwrite any (ish) Bootstrap CSS */
 
 body {
     background-color: #C6E8E8;
 }
 
+.container {
+    padding-top: 1em;
+}
+
 hr {
-    margin-top: 6px;
-    margin-bottom: 6px;
-    border: 1px solid gray;
+    border: 1px solid #000000;
 }
 
 .vr {
-    border: 1px solid gray;
-}
-
-h3 {
-    margin-top: 0.3em;
+    margin-left: 1em;
+    margin-right: 1em;
+    border: 1px solid #000000;
 }
 
 .content {
     display: flex;
-    justify-content: space-around;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .content-patterns-header {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
 }
 
 .content-patterns {
-    padding: 5px;
+    border-style: solid;
+    padding: 1em;
+    background-color: #C4EBC4;
     width: 800px;
-    height: 470px;
+    height: 500px;
 }
 
 .patterns {
-    height: 87%;
+    height: 385px;
+    overflow-x: hidden;
     overflow-y: auto;
 }
 
 .pattern {
-    width: 100%;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
 }
 
-.content-buttons {
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+.pattern-input {
+    width: 100%;
+    padding-left: 7px;
+    padding-right: 7px;
 }
 
-.table {
-    margin-bottom: 0em;
+.content-buttons {
+    border-style: solid;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #C4EBC4;
 }
 
 tr {

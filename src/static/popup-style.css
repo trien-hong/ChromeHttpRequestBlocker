@@ -1,29 +1,27 @@
+/* This will overwrite any (ish) Bootstrap CSS */
+
 body {
     background-color: #C6E8E8;
 }
 
-h3 {
-    margin-top: 0.3em;
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 5px;
+    border-style: double;
 }
 
 hr {
-    margin-top: 6px;
-    margin-bottom: 6px;
-    border: 1px solid gray;
+    border: 1px solid #000000;
 }
 
-.current-site {
-    padding-top: 1em;
-    padding-bottom: 1em;
-}
-
-.add-site {
-    padding-top: 1em;
-    padding-bottom: 1em;
+.website {
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .content-buttons {
-    padding-top: 1em;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -217,11 +217,16 @@ app.controller('PopupController', function($scope) {
         }
     };
 
+    $scope.scrollUp = function() {
+        var objDiv = document.getElementsByClassName("patterns")[0];
+        objDiv.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
     $scope.scrollDown = function() {
         // doesn't seem to scroll all the way down when adding new sites. looks like it's one step behind.
         // clicking the button will scroll all the way down.
         var objDiv = document.getElementsByClassName("patterns")[0];
-        objDiv.scrollTo({top: document.getElementsByClassName("patterns")[0].scrollHeight, behavior: "smooth" });
+        objDiv.scrollTo({top: objDiv.scrollHeight, behavior: "smooth" });
     };
 
     $scope.alert = function(message, title) {
