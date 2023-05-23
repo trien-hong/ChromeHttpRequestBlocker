@@ -52,7 +52,11 @@ app.controller('PopupController', function($scope, currentSite) {
         if ($scope.website === "Sorry, not a valid website."){
             $scope.error("The site you are trying to add doesn't seem to be a valid website.");
         } else if ($scope.isBlocked === "The current site is in your patterns.") {
-            $scope.error("The website, \"" + $scope.website + "\" already exist in your patterns. Therefore, it will not be added again. Check the pause button if it's not being blocked or refresh page.");
+            $scope.error("The website, \"" + $scope.website + "\" already exist in your patterns. Therefore, it will not be added again. Check the pause button if it's not being blocked.");
+            
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {                    
+                chrome.tabs.reload();
+            });
         } else {
             $scope.patterns.push({
                 index: $scope.patterns.length,
@@ -76,10 +80,10 @@ app.controller('PopupController', function($scope, currentSite) {
                 
                 $scope.success("The site, \"" + $scope.website + "\", has been added. It is now blocked and page will reload shortly.");
                 
-                chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {                    
+                    chrome.runtime.sendMessage({type: "reload-background-script"});
+
                     chrome.tabs.reload();
-                    
-                    chrome.runtime.sendMessage({type: "reload"});
                 });
             });
         });
@@ -97,6 +101,7 @@ app.controller('PopupController', function($scope, currentSite) {
                 });
                 $scope.is_pause = "Unpause Extension";
                 $scope.button_is_pause_color = "btn-success";
+                
                 $scope.alert("Extension is now PAUSED. All patterns will not be blocked.");
             } else {
                 // extension is currently on pause (is not blocking sites)
@@ -106,12 +111,15 @@ app.controller('PopupController', function($scope, currentSite) {
                 });
                 $scope.is_pause = "Pause Extension";
                 $scope.button_is_pause_color = "btn-danger";
+
                 $scope.alert("Extension is now UNPAUSED. All patterns will be blocked.");
             }
+
             chrome.storage.local.get("is_pause", function(data) {
                 is_pause = data.is_pause;
             });
-            chrome.runtime.sendMessage({type: "reload"});
+
+            chrome.runtime.sendMessage({type: "reload-background-script"});
         }
     });
 

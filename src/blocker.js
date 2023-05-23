@@ -150,7 +150,7 @@ load(function(p) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.type === "reload") {
+  if (request.type === "reload-background-script") {
     window.location.reload();
   }
 });

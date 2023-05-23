@@ -28,6 +28,7 @@ app.controller('PopupController', function($scope) {
                 });
                 $scope.is_pause = "Unpause extension";
                 $scope.button_is_pause_color = "btn-success";
+                
                 $scope.alert("Extension is now PAUSED. All patterns will not be blocked.");
             } else {
                 // extension is currently on pause (is not blocking sites)
@@ -37,12 +38,15 @@ app.controller('PopupController', function($scope) {
                 });
                 $scope.is_pause = "Pause extension";
                 $scope.button_is_pause_color = "btn-danger";
+
                 $scope.alert("Extension is now UNPAUSED. All patterns will be blocked.");
             }
+
             chrome.storage.local.get("is_pause", function(data) {
                 is_pause = data.is_pause;
             });
-            chrome.runtime.sendMessage({type: "reload"});
+
+            chrome.runtime.sendMessage({type: "reload-background-script"});
         }
     });
 
@@ -117,7 +121,7 @@ app.controller('PopupController', function($scope) {
                     $scope.is_empty = true;
                 }
                 
-                chrome.runtime.sendMessage({type: "reload"});
+                chrome.runtime.sendMessage({type: "reload-background-script"});
             });
         });
     };

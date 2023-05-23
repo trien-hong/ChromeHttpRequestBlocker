@@ -12,6 +12,11 @@ hr {
     border: 1px solid #000000;
 }
 
+.hr-bar-top-bottom {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
 .vr {
     margin-left: 1em;
     margin-right: 1em;

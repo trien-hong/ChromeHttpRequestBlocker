@@ -13,7 +13,7 @@
     <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 1250px;">
       <h1><img src="images/icon128.png" width="60" height="60"/>&nbsp;<b>HTTP Request Blocker</b></h1>
       {{message}}
-      <hr/>
+      <hr class="hr-bar-top-bottom"/>
       <div class="content">
         <div class="vr"></div>
         <div class="content-patterns">
@@ -80,7 +80,9 @@
               GitHub Repo
             </a>
           </div>
-          <hr/>
+          <div>
+            <hr/>
+          </div>
           <div class="d-grid gap-2">
             <button class="btn btn-primary" ng-click="add()" title="{{'Manually enter site'}}">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -128,7 +130,9 @@
               {{is_pause}}
             </button>
           </div>
-          <hr/>
+          <div>
+            <hr/>
+          </div>
           <div class="d-grid gap-2">
             <button class="btn btn-primary" ng-click="uploadFile()" title="{{'Upload selected file'}}">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-upload" viewBox="0 0 16 16">
@@ -145,7 +149,7 @@
         </div>
         <div class="vr"></div>
       </div>
-      <hr/>
+      <hr class="hr-bar-top-bottom"/>
       <div class="modal fade" id="modal">
         <div class="modal-dialog">
           <div class="modal-content">
