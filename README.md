@@ -62,9 +62,9 @@ Example of Valid Patterns (when adding manually)
 
 <details>
     <summary>Click to view</summary>
-    <h3><b>NOTE:</b> The extension will automatically add in <code>*://*.</code> and <code>/*</code> for you when adding your sites manually. You do not need to add <code>*://*.</code> or <code>/*</code> to your patterns. Just the domain/second-level domain, subdomain(s), IP address, or file path are all you need.</h3>
-    <br>
-    <h3>Here are some exmaples...</h3>
+    <b>NOTE:</b> The extension will automatically add in <code>*://*.</code> and <code>/*</code> for you when adding your sites manually. You do not need to add <code>*://*.</code> or <code>/*</code> to your patterns. Just the domain/second-level domain, subdomain(s), IP address, or file path are all you need.
+    <br><br>
+    Here are some exmaples...
     <ul>
         <li><code>google.com</code></li>
             <ul>
