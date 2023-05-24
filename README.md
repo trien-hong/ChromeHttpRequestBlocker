@@ -59,6 +59,7 @@ Changes from the original repository
     * Added a scroll up and scroll down button
     * Added titles when hovering over certain elements
     * Added borders to better help seperate different elements
+* Updated icon (credit to SVG Repo @ [https://www.svgrepo.com](https://www.svgrepo.com) or [https://www.svgrepo.com/svg/261850/shield-antivirus](https://www.svgrepo.com/svg/261850/shield-antivirus))
 
 Example of Valid Patterns (when adding manually)
 ================================================

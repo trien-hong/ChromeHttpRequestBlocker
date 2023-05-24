@@ -1,6 +1,6 @@
 var app = angular.module('RequestBlockerApp', []);
 
-app.controller('PopupController', function($scope) {
+app.controller('OptionsController', function($scope) {
     $scope.backgroundPage = chrome.extension.getBackgroundPage();
 
     $scope.patterns = $scope.backgroundPage.patterns.map(function(x, i) {
