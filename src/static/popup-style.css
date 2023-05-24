@@ -8,8 +8,16 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    row-gap: 0px;
     margin: 5px;
     border-style: double;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 
 hr {
@@ -19,11 +27,13 @@ hr {
 .website {
     overflow-x: auto;
     overflow-y: hidden;
+    white-space: nowrap;
 }
 
 .total_number_blocked {
     overflow-x: auto;
     overflow-y: hidden;
+    white-space: nowrap;
 }
 
 .content-buttons {

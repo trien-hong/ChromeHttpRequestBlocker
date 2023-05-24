@@ -16,6 +16,8 @@ app.controller('PopupController', function($scope) {
 
     $scope.is_empty = $scope.backgroundPage.is_empty;
 
+    $scope.total_blocked = $scope.backgroundPage.total_blocked;
+
     chrome.storage.local.get("is_pause", function(data) {
         var is_pause = data.is_pause;
 

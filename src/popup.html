@@ -11,8 +11,18 @@
   </head>
   <body ng-app="RequestBlockerApp">
     <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 475px; height: 500px">
+      <div class="header pt-3">
+        <div>
+          <img src="images/icon128.png" width="45" height="45"/>
+        </div>
+        <div>
+          <h1><b>HTTP Request Blocker</b></h1>
+        </div>
+        <div>
+          <img src="images/icon128.png" width="40" height="40"/>
+        </div>
+      </div>
       <div>
-        <h1><img src="images/icon128.png" width="40" height="40"/>&nbsp;<b>HTTP Request Blocker</b></h1>
         <hr/>
       </div>
       <div class="text-center">
@@ -45,7 +55,7 @@
       <div>
         <hr/>
       </div>
-      <div class="content-buttons pb-1 mb-1">
+      <div class="content-buttons pb-3">
         <div>
           <button class="btn {{button_is_pause_color}}" title="{{is_pause}}" ng-click="pause()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pause-circle-fill" viewBox="0 0 16 16">
