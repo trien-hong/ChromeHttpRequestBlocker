@@ -21,6 +21,11 @@ hr {
     overflow-y: hidden;
 }
 
+.total_number_blocked {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
 .content-buttons {
     display: flex;
     flex-direction: row;

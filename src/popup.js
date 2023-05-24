@@ -32,6 +32,8 @@ app.controller('PopupController', function($scope, currentSite) {
 
     $scope.is_pause = $scope.backgroundPage.is_pause;
 
+    $scope.total_blocked = $scope.backgroundPage.total_blocked;
+
     currentSite.getUrl(function (url) {
         $scope.website = url;
         

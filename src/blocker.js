@@ -1,3 +1,15 @@
+var total_blocked = 0;
+
+chrome.storage.local.get('total_blocked', function(data) {
+  if(data.total_blocked === undefined) {
+    chrome.storage.local.set({'total_blocked': 0}, function() {
+
+    });
+  } else {
+    total_blocked = data.total_blocked;
+  }
+});
+
 chrome.contextMenus.removeAll(function() {
   chrome.contextMenus.create({
     title: "Block current site",
@@ -85,7 +97,14 @@ chrome.contextMenus.removeAll(function() {
 });
 
 function blockRequest(details) {
-  console.log("Blocked: ", details.url);
+  total_blocked = total_blocked + 1;
+
+  chrome.storage.local.set({'total_blocked': total_blocked}, function() {
+
+  });
+
+  console.log("Blocked #" + total_blocked + ": " + details.url);
+
   return {
     cancel: true
   };
@@ -146,6 +165,7 @@ load(function(p) {
   if (patterns.length === 0) {
     is_empty = true;
   }
+  total_blocked = total_blocked;
   updateFilters();
 });
 

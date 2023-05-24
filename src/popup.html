@@ -10,7 +10,7 @@
     <link href="static/popup-style.css" rel="stylesheet"/>
   </head>
   <body ng-app="RequestBlockerApp">
-    <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 500px; height: 400px">
+    <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 475px; height: 500px">
       <div>
         <h1><img src="images/icon128.png" width="40" height="40"/>&nbsp;<b>HTTP Request Blocker</b></h1>
         <hr/>
@@ -20,14 +20,14 @@
           <button class="btn btn-info" disabled>
             <img src="https://s2.googleusercontent.com/s2/favicons?domain={{ website }}" width="25px" height="25px">
           </button>
-          <h2 class="website"><u>{{website}}</u></h2>
+          <h2 class="website"><u>{{website}}</u><h2>
         </div>
       </div>
       <div>
         <hr/>
       </div>
       <div class="text-center">
-        <h2>{{isBlocked}}</h2>
+        <h3>{{isBlocked}}</h3>
         <button class="btn btn-primary" ng-click="addCurrentSite()" title="{{'Block Current Site'}}">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
@@ -35,6 +35,12 @@
           &nbsp;
           Add Current Site
         </button>
+      </div>
+      <div>
+        <hr/>
+      </div>
+      <div class="total_number_blocked text-center">
+        <h3>Total Number Blocked: <u class="text-danger">{{total_blocked}}</u><h3>
       </div>
       <div>
         <hr/>

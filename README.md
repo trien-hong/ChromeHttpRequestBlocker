@@ -42,9 +42,12 @@ Changes from the original fork
         * Though you can always remove invalid sites by opening the extension's options.html page
 * Extension's popup now does a few things
     * It shows the current site along with it's favicon (if it has one)
+    * Shows if the current site is or is not in your patterns
     * You can now add the current site within extension's popup to block it
         * Added check to see if it's a valid website first
+    * It shows the total number of blocked patterns
     * Extension's popup also includes a pause/unpause button, options button, & GitHub repo button
+* Extension now keeps track of the number of times it has blocked a pattern
 * Extension's options.html page now contains most of the utilities in terms of viewing, exporting, clearing, uploading, removing patterns, etc.
 * Before adding via popup, context menu, & options.html (manually) it will check for existing patterns before adding or saving
 * Change some of the styling and layout
@@ -62,9 +65,10 @@ Example of Valid Patterns (when adding manually)
 
 <details>
     <summary>Click to view</summary>
+    <br>
     <b>NOTE:</b> The extension will automatically add in <code>*://*.</code> and <code>/*</code> for you when adding your sites manually. You do not need to add <code>*://*.</code> or <code>/*</code> to your patterns. Just the domain/second-level domain, subdomain(s), IP address, or file path are all you need.
     <br><br>
-    Here are some exmaples...
+    Here are some valid exmaples...
     <ul>
         <li><code>google.com</code></li>
             <ul>
