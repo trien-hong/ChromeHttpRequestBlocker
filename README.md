@@ -5,8 +5,8 @@ Chrome extension that will block certain HTTP requests, based on configurable UR
 
 This is a fork from the original [https://github.com/clupasq/ChromeHttpRequestBlocker](https://github.com/clupasq/ChromeHttpRequestBlocker) by [clupasq](https://github.com/clupasq/).
 
-Changes from the original fork
-==============================
+Changes from the original repository
+====================================
 
 * Removed valid matching patterns
     * I might put it back but for now it's removed.
