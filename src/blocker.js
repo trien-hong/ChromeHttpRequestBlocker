@@ -1,11 +1,14 @@
 var total_blocked = 0;
 
 chrome.storage.local.get('total_blocked', function(data) {
-  if(data.total_blocked === undefined) {
+  // initial value of total_blocked
+  if (data.total_blocked === undefined) {
+    // if total_blocked is undefined
     chrome.storage.local.set({'total_blocked': 0}, function() {
 
     });
   } else {
+    // if total_block contains a value that's not undefined
     total_blocked = data.total_blocked;
   }
 });
@@ -19,22 +22,21 @@ chrome.contextMenus.removeAll(function() {
         var url = tabs[0].url;
       
         if (url !== undefined) {
-          var newUrl = url.replace("www.", "");
-          var website = newUrl.split("/");
-          var pattern = "*://*." + website[2] + "/*";
+          var website = url.replace("www.", "").split("/")[2];
+          var pattern = "*://*." + website + "/*";
 
           if (patterns.includes(pattern) === false) {
             patterns.push(pattern);
 
             save(patterns, function() {
-              alert("Your site, \"" + website[2] + "\" has been added. Page will reload shortly.");
+              alert("Your site, \"" + website + "\" has been added. Page will reload shortly.");
 
               is_empty = false;
 
               chrome.tabs.reload();
             });
           } else {
-            alert("Your site, \"" + website[2] + "\" is already in your patterns. \n\nTherefore, the website will not be added again.");
+            alert("Your site, \"" + website + "\" is already in your patterns. \n\nTherefore, the website will not be added again.");
           }
         } else {
           alert("This site you are trying to add doesn't seem to be a valid website.");
@@ -46,15 +48,14 @@ chrome.contextMenus.removeAll(function() {
 
 chrome.contextMenus.removeAll(function() {
   chrome.contextMenus.create({
-    title: "Block link",
+    title: "Block URL of link",
     contexts: ["link"],
     onclick: function(data) {
       var url = data.linkUrl;
       
       if (url !== undefined) {
-        var newUrl = url.replace("www.", "");
-        var website = newUrl.split("/");
-        var pattern = "*://*." + website[2] + "/*";
+        var website = url.replace("www.", "").split("/")[2];
+        var pattern = "*://*." + website + "/*";
 
         if (patterns.includes(pattern) === false) {
           patterns.push(pattern);
@@ -62,10 +63,10 @@ chrome.contextMenus.removeAll(function() {
           save(patterns, function() {
             is_empty = false;
 
-            alert("Your site, \"" + website[2] + "\" has been added.");
+            alert("Your site, \"" + website + "\" has been added.");
           });
         } else {
-          alert("Your site, \"" + website[2] + "\" is already in your patterns. \n\nTherefore, the website will not be added again.");
+          alert("Your site, \"" + website + "\" is already in your patterns. \n\nTherefore, the website will not be added again.");
         }
       } else {
         alert("This site you are trying to add doesn't seem to be a valid website.");
@@ -149,8 +150,16 @@ function save(newPatterns, callback) {
 }
 
 load(function(p) {
+  patterns = p;
+
+  total_blocked = total_blocked;
+
+  if (patterns.length === 0) {
+    is_empty = true;
+  }
+
   chrome.storage.local.get('is_pause', function(data) {
-    // inital value of pause button
+    // initial value of pause button
     if (data.is_pause === undefined || data.is_pause === false) {
       // extension is currently not on pause (is blocking sites)
       is_pause = "Pause extension";
@@ -161,11 +170,7 @@ load(function(p) {
       button_is_pause_color = "btn-success";
     }
   });
-  patterns = p;
-  if (patterns.length === 0) {
-    is_empty = true;
-  }
-  total_blocked = total_blocked;
+  
   updateFilters();
 });
 
