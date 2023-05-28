@@ -11,12 +11,28 @@ body {
 .header {
     margin-left: 1em;
     margin-right: 1em;
+    padding-bottom: 0.25em;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.header-text {
+    padding-top: 12px;
+}
+
+.logo {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
     align-items: center;
 }
 
@@ -47,16 +63,19 @@ hr {
     justify-content: space-between;
 }
 
+.patterns-empty-text {
+    padding-top: 5em;
+}
+
 .content-patterns {
     border-style: solid;
     padding: 1em;
     background-color: #C4EBC4;
     width: 800px;
-    height: 500px;
 }
 
 .patterns {
-    height: 385px;
+    height: 525px;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -84,4 +103,8 @@ hr {
 
 tr {
     border: 2px solid gray;
+}
+
+td {
+    border-bottom: none;
 }
