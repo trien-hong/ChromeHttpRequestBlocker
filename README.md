@@ -31,7 +31,10 @@ Changes from the original repository
             * For example, blocking `ads.twitter.com` will not block `twitter.com`
         * However, blocking the domain/second-level domain will block all subdomain(s)
             * For example, blocking `google.com` will also block `ads.google.com`
-    * I am aware there are more types of patterns but this is the most useful for me
+* You can now add exact URLs manually
+    * For example, `https://www.linkedin.com/learning/` or `https://www.youtube.com/watch?v=uICUlqWXGB0`
+    * To do... I still need to check for duplicates and be able to remove them inline since I don't want to refresh the page
+    * For now, just know that it won't remove duplicates for exact URLs (you can remove them manually though)
 * Context menu will now appear when you right click over certain elements
     * Context menu will appear when you right click on a page to block the current site
     * Context menu will appear when you right click on a link to block the link
@@ -97,9 +100,9 @@ Example of Valid Patterns (when adding manually)
 <details>
     <summary>Click to view</summary>
     <br>
-    <b>NOTE:</b> The extension will automatically add in <code>*://*.</code> and <code>/*</code> for you when adding your sites manually. You do not need to add <code>*://*.</code> or <code>/*</code> to your patterns. Just the domain/second-level domain, subdomain(s), IP address, or file path are all you need. When adding/removing manually please remember to click the save button after you're done.
+    <b>NOTE:</b> The extension will automatically add in <code>*://*.</code> and <code>/*</code> for you when adding your sites manually. You do not need to add <code>*://*.</code> or <code>/*</code> to your patterns. Just the domain/second-level domain, subdomain(s), IP address, or file path are all you need. When adding/removing manually please remember to click the save button after you're done. Matching exact URLs is also now possible.
     <br><br>
-    Here are some valid exmaples...
+    Here are some valid exmaples of domains/second-level domains, subdomains, file path, and IP addresses...
     <ul>
         <li><code>google.com</code></li>
             <ul>
@@ -131,5 +134,12 @@ Example of Valid Patterns (when adding manually)
         <li><code>digital.co.jp</code></li>
         <li><code>sony.net</code></li>
         <li><code>thenew.org</code></li>
+    </ul>
+    Here are some valid examples of exact URLs
+    <ul>
+        <li><code>https://www.youtube.com/watch?v=CDokUdux0rc</code></li>
+        <li><code>https://github.com/trien-hong/ChromeHttpRequestBlocker</code></li>
+        <li><code>https://en.wikipedia.org/wiki/World_Wide_Web</code></li>
+        <li><code>https://wordpress.org/about/</code></li>
     </ul>
 </details>

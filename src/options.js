@@ -87,8 +87,17 @@ app.controller('OptionsController', function($scope) {
         var removedEmptyElements = [];
         var patterns = $scope.patterns;
 
-        for (var i = 0; i < patterns.length; i++) {
-            if (patterns[i].pattern.includes(prefix) === false && patterns[i].pattern !== "") {
+        for (var i = 0; i < patterns.length; i++) { 
+            if (patterns[i].pattern.substring(0, 8) === "https://" || patterns[i].pattern.substring(0, 7) === "http://") {
+                // Matching exact URLs (ex. https://www.youtube.com/watch?v=CDokUdux0rc or https://github.com/trien-hong/ChromeHttpRequestBlocker)
+                // i still need to check for duplicates and be able to remove them inline since I don't want to refresh the page
+                // the implementation I did below this doesn't work here becuse it's modifying the existing one after
+                // since this one isn't modified it'll just check for itself and remove itself which doesn't help
+                // i may have to redo the entire save. for now, just know it doesn't remove duplicates for exact patterns
+                // you can remove duplicates manually if you managed to add them in and find them
+                removedEmptyElements.push(patterns[i].pattern);
+            } else if (patterns[i].pattern.substring(0, 6) !== prefix && patterns[i].pattern !== "") {
+                // Matching domains/second-level domains, subdomain(s), file path, and ip adresses (ex. youtube.com, www.google.com, test.com/picture.png, and 12.34.56.78)
                 var completePattern = prefix + patterns[i].pattern + suffix;
                 var checkPattern = obj => obj.pattern === completePattern;
 
