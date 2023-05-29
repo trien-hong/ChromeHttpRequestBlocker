@@ -50,6 +50,7 @@ Changes from the original repository
     * Extension's popup also includes a pause/unpause button, options button, & GitHub repo button
 * Extension's options.html page now contains most of the utilities in terms of viewing, exporting, clearing, uploading, removing patterns, etc.
 * Extension now keeps track of the number of times it has blocked a pattern
+    * Added ability to reset the number back to 0
 * Added .map files for AngularJS & Bootstrap
 * Added a way to export your patterns as a simple text (.txt) file
     * Added check to see if there are any patterns before exporting

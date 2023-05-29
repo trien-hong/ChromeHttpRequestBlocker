@@ -9,7 +9,7 @@ app.controller('OptionsController', function($scope) {
             pattern: x
         };
     });
-
+    
     $scope.button_is_pause_color = $scope.backgroundPage.button_is_pause_color;
 
     $scope.is_pause = $scope.backgroundPage.is_pause;
@@ -194,6 +194,20 @@ app.controller('OptionsController', function($scope) {
             for (var i = 0; i < length; i++) {
                 $scope.patterns.splice(0, 1);
             }
+        }
+    };
+
+    $scope.resetTotalBlocked = function() {
+        if (confirm("Are you sure you want to reset your total blocked request to 0?") === true) {
+            chrome.storage.local.set({'total_blocked': 0}, function() {
+
+            });
+
+            $scope.total_blocked = 0;
+
+            chrome.runtime.sendMessage({type: "reload-background-script"});
+
+            $scope.success("Your total blocked requests has been reset. It is now 0.");
         }
     };
 
