@@ -68,8 +68,9 @@ Changes from the original repository
     * Removed glyphicons files in favor of Bootstrap icons
     * When patterns are empty, a simple message is displayed on the screen leting the user know
     * Moved some of the custom CSS to a seperate file
+    * All confirmations are done through modal rather than JavaScript's confirm
     * Added favicons for each pattern (if it has one)
-    * Added alert modal
+    * Added alert and confirm modal
     * Added dyanmic colors to pause button
     * Added a scroll up and scroll down button
     * Added titles when hovering over certain elements

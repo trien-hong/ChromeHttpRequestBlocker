@@ -9,7 +9,9 @@ app.controller('OptionsController', function($scope) {
             pattern: x
         };
     });
-    
+
+    $scope.function = "";
+
     $scope.button_is_pause_color = $scope.backgroundPage.button_is_pause_color;
 
     $scope.is_pause = $scope.backgroundPage.is_pause;
@@ -40,7 +42,7 @@ app.controller('OptionsController', function($scope) {
                 });
                 $scope.is_pause = "Pause extension";
                 $scope.button_is_pause_color = "btn-danger";
-
+                
                 $scope.alert("Extension is now UNPAUSED. All patterns will be blocked.");
             }
 
@@ -131,7 +133,7 @@ app.controller('OptionsController', function($scope) {
                 if ($scope.patterns.length === 0) {
                     $scope.is_empty = true;
                 }
-                
+
                 chrome.runtime.sendMessage({type: "reload-background-script"});
             });
         });
@@ -174,75 +176,87 @@ app.controller('OptionsController', function($scope) {
         }
     };
 
-    $scope.clearPatterns = function(confirmation) {
-        if ($scope.patterns.length === 0 && confirmation === undefined) {
+    $scope.clearPatterns = function() {
+        if ($scope.patterns.length === 0) {
             $scope.error("Your patterns seems to be empty. There was nothing to clear. Try adding some websites first.");
-        } else if ($scope.patterns.length !== 0 && confirmation === undefined) {
-            if (confirm("Are you sure you want to clear your current patterns?\n\nDepending on the size of your patterns, it may take some time to load.") === true) {
-                var length = $scope.patterns.length;
-
-                for (var i = 0; i < length; i++) {
-                    $scope.patterns.splice(0, 1);
-                }
-
-                $scope.save("Your patterns has been cleared.");
-                $scope.is_empty = true;
-            }
         } else {
-            var length = $scope.patterns.length;
+            $scope.function = "clearPatternsConfirm";
+            $scope.confirm("Are you sure you want to clear your current patterns? Depending on the size of your patterns, it may take some time to load.");
+        }
+    };
 
-            for (var i = 0; i < length; i++) {
-                $scope.patterns.splice(0, 1);
-            }
+    $scope.clearPatternsConfirm = function(showClearPatternsConfirmModal) {
+        var length = $scope.patterns.length;
+        $scope.function = "";
+
+        for (var i = 0; i < length; i++) {
+            $scope.patterns.splice(0, 1);
+        }
+
+        if (showClearPatternsConfirmModal !== false) {
+            $scope.save("Your patterns has been cleared.");
         }
     };
 
     $scope.resetTotalBlocked = function() {
-        if (confirm("Are you sure you want to reset your total blocked request to 0?") === true) {
-            chrome.storage.local.set({'total_blocked': 0}, function() {
-
-            });
-
-            $scope.total_blocked = 0;
-
-            chrome.runtime.sendMessage({type: "reload-background-script"});
-
-            $scope.success("Your total blocked requests has been reset. It is now 0.");
+        if ($scope.total_blocked === 0) {
+            $scope.error("Your total blocked request is already at 0.");
+        } else {
+            $scope.function = "resetTotalBlockedConfirmed";
+            $scope.confirm("Are you sure you want to reset your total blocked requests to 0?");
         }
     };
 
+    $scope.resetTotalBlockedConfirmed = function() {
+        $scope.function = "";
+
+        chrome.storage.local.set({'total_blocked': 0}, function() {
+
+        });
+
+        $scope.total_blocked = 0;
+        $scope.success("Your total blocked requests has been reset. It is now 0.");
+
+        chrome.runtime.sendMessage({type: "reload-background-script"});
+    };
+
     $scope.uploadFile = function() {
-        if (confirm("Importing patterns from a file will overwrite your current patterns.\n\nDepending on the size of your patterns, it may take some time to load.") === true) {
-            try {
-                var file = document.getElementById('file').files[0];
+        $scope.function = "uploadFileConfirmed";
+        $scope.confirm("Importing patterns from a file will overwrite your current patterns. Depending on the size of your patterns, it may take some time to load.");
+    };
 
-                if (file["type"] === "text/plain") {
-                    var reader = new FileReader();
+    $scope.uploadFileConfirmed = function() {
+        $scope.function = "";
+        
+        try {
+            var file = document.getElementById('file').files[0];
 
-                    reader.onloadend = function(e) {
-                        var patterns = e.target.result.split(",");
+            if (file["type"] === "text/plain") {
+                var reader = new FileReader();
 
-                        $scope.clearPatterns(1);
+                reader.onloadend = function(e) {
+                    var patterns = e.target.result.split(",");
 
-                        for (var i = 0; i < patterns.length; i++) {
-                            var checkPattern = obj => obj.pattern === patterns[i];
-                        
-                            if ($scope.patterns.some(checkPattern) === false) {
-                                $scope.add(patterns[i]);
-                            }
+                    $scope.clearPatternsConfirm(false);
+
+                    for (var i = 0; i < patterns.length; i++) {
+                        var checkPattern = obj => obj.pattern === patterns[i];
+                    
+                        if ($scope.patterns.some(checkPattern) === false) {
+                            $scope.add(patterns[i]);
                         }
-
-                        $scope.save("Your new patterns has been imported. If the file contains any duplicate patterns, it will not be added beyond the first.");
-                        $scope.is_empty = false;
                     }
 
-                    reader.readAsBinaryString(file);
-                } else {
-                    $scope.error("The file you've uploaded doesn't seem to be a text file. Please try a different file or try again.");
+                    $scope.is_empty = false;
+                    $scope.save("Your new patterns has been imported. If the file contains any duplicate patterns, it will not be added beyond the first.");
                 }
-            } catch {
-                $scope.error("You did not choose a file to upload or there seems to be an error with uploading and/or reading your file. Please try a different file or try again.");
+
+                reader.readAsBinaryString(file);
+            } else {
+                $scope.error("The file you've uploaded doesn't seem to be a text file. Please try a different file or try again.");
             }
+        } catch {
+            $scope.error("You did not choose a file to upload or there seems to be an error with uploading and/or reading your file. Please try a different file or try again.");
         }
     };
 
@@ -255,18 +269,30 @@ app.controller('OptionsController', function($scope) {
         // doesn't seem to scroll all the way down when adding new sites. looks like it's one step behind.
         // clicking the button will scroll all the way down.
         var objDiv = document.getElementsByClassName("patterns")[0];
-        objDiv.scrollTo({top: objDiv.scrollHeight, behavior: "smooth" });
+        objDiv.scrollTo({top: objDiv.scrollHeight, behavior: "smooth"});
+    };
+
+    $scope.confirm = function(message, title) {
+        $scope.show_modal_confirm = true;
+        $scope.show_modal_close = false;
+        $scope.modal(message, title || "PLEASE CONFIRM", "text-black");
     };
 
     $scope.alert = function(message, title) {
+        $scope.show_modal_confirm = false;
+        $scope.show_modal_close = true;
         $scope.modal(message, title || "ALERT", "text-info");
     };
 
     $scope.success = function(message, title) {
+        $scope.show_modal_confirm = false;
+        $scope.show_modal_close = true;
         $scope.modal(message, title || "SUCCESS", "text-success");
     };
 
     $scope.error = function(message, title) {
+        $scope.show_modal_confirm = false;
+        $scope.show_modal_close = true;
         $scope.modal(message, title || "ERROR", "text-danger");
     };
 
