@@ -176,6 +176,53 @@ app.controller('OptionsController', function($scope) {
         }
     };
 
+    $scope.resetTotalBlocked = function() {
+        if ($scope.total_blocked === 0) {
+            $scope.errorModal("Your total blocked request is already at 0.");
+        } else {
+            $scope.function = "resetTotalBlockedConfirmed";
+            $scope.confirmModal("Are you sure you want to reset your total blocked requests to 0?");
+        }
+    };
+
+    $scope.resetTotalBlockedConfirmed = function() {
+        chrome.storage.local.set({'total_blocked': 0}, function() {
+
+        });
+
+        $scope.total_blocked = 0;
+        $scope.successModal("Your total blocked requests has been reset. It is now 0.");
+
+        chrome.runtime.sendMessage({type: "reload-background-script"});
+    };
+
+    $scope.searchAndRemove = function() {
+        if ($scope.patterns.length === 0) {
+            $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to search and remove. Try adding some websites first.");
+        } else {
+            $scope.inputModal("Please enter the pattern in which you want to remove.", "SEARCH & REMOVE");
+        }
+    };
+
+    $scope.searchAndRemoveInput = function() {
+        var input = $('#searchAndRemoveInput').val();
+
+        if (input === "") {
+            $scope.errorModal("Your input was empty. Please enter the pattern you wish you remove.");
+        } else if (input.substring(0, 8) === "https://" || input.substring(0, 7) === "http://") {
+            var result = $scope.patterns.find(patterns => patterns.pattern === input);
+        } else {
+            var result = $scope.patterns.find(patterns => patterns.pattern === "*://*." + input + "/*");
+        }
+
+        if (result !== undefined) {
+            $scope.removeByIndex(result);
+            $scope.successModal("A match was found at index " + result.index + " with the pattern \"" + result.pattern + "\" and has been removed. Please don't forget to save!");
+        } else {
+            $scope.errorModal("Your input of \"" + input + "\" could not be found. Please try a different input.");
+        }
+    };
+
     $scope.clearPatterns = function() {
         if ($scope.patterns.length === 0) {
             $scope.errorModal("Your patterns seems to be empty. There was nothing to clear. Try adding some websites first.");
@@ -195,26 +242,6 @@ app.controller('OptionsController', function($scope) {
         if (showClearPatternsConfirmModal !== false) {
             $scope.save("Your patterns has been cleared.");
         }
-    };
-
-    $scope.resetTotalBlocked = function() {
-        if ($scope.total_blocked === 0) {
-            $scope.errorModal("Your total blocked request is already at 0.");
-        } else {
-            $scope.function = "resetTotalBlockedConfirmed";
-            $scope.confirmModal("Are you sure you want to reset your total blocked requests to 0?");
-        }
-    };
-
-    $scope.resetTotalBlockedConfirmed = function() {
-        chrome.storage.local.set({'total_blocked': 0}, function() {
-
-        });
-
-        $scope.total_blocked = 0;
-        $scope.successModal("Your total blocked requests has been reset. It is now 0.");
-
-        chrome.runtime.sendMessage({type: "reload-background-script"});
     };
 
     $scope.uploadFile = function() {
@@ -267,25 +294,48 @@ app.controller('OptionsController', function($scope) {
         objDiv.scrollTo({top: objDiv.scrollHeight, behavior: "smooth"});
     };
 
+    // I will try to find a better solution for all these different modals later
+    
+    $scope.inputModal = function(message, title) {
+        $scope.show_modal_input = true;
+        $scope.show_modal_message_class = false;
+        $scope.show_modal_search_remove_button = true;
+        $scope.show_modal_confirm_button = false;
+        $scope.show_modal_close_button = true;
+        $scope.modal(message, title, "text-black");
+    }
+
     $scope.confirmModal = function(message, title) {
+        $scope.show_modal_input = false;
+        $scope.show_modal_message_class = true;
+        $scope.show_modal_search_remove_button = false;
         $scope.show_modal_confirm_button = true;
         $scope.show_modal_close_button = false;
         $scope.modal(message, title || "PLEASE CONFIRM", "text-black");
     };
 
     $scope.alertModal = function(message, title) {
+        $scope.show_modal_input = false;
+        $scope.show_modal_message_class = true;
+        $scope.show_modal_search_remove_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal(message, title || "ALERT", "text-info");
     };
 
     $scope.successModal = function(message, title) {
+        $scope.show_modal_input = false;
+        $scope.show_modal_message_class = true;
+        $scope.show_modal_search_remove_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal(message, title || "SUCCESS", "text-success");
     };
 
     $scope.errorModal = function(message, title) {
+        $scope.show_modal_input = false;
+        $scope.show_modal_message_class = true;
+        $scope.show_modal_search_remove_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal(message, title || "ERROR", "text-danger");

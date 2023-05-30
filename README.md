@@ -60,9 +60,11 @@ Changes from the original repository
     * Added confirmation as importing will replace the existing patterns
     * Added check to see if the uploaded file is indeed a text file
     * Added an example file (patternsExport_05-03-2023.txt) that contains 997 patterns in which the user can import to start off with
+* Added a pause feature to temporarily not block sites (clicking it again will unpause and vice versa)
+* Added a search & remove button which allows you to input a specific pattern (ex. google.com, https://test.com/placeholder.js?v=3, etc.)
+    * Added check to see if the input exist and if it exist it'll be removed
 * Added a way to clear your entire pattterns
     * Added confirmation to see if the user really wants to clear their entire patterns
-* Added a pause feature to temporarily not block sites
 * Change some of the styling, layout, and added other minor features
     * Updated Bootstrap to v5.3.0-alpha3
     * Removed glyphicons files in favor of Bootstrap icons
