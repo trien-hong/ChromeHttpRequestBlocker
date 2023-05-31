@@ -197,6 +197,8 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.searchAndRemove = function() {
+        $('#searchAndRemoveInput').val('');
+
         if ($scope.patterns.length === 0) {
             $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to search and remove. Try adding some websites first.");
         } else {
@@ -206,33 +208,39 @@ app.controller('OptionsController', function($scope) {
 
     $scope.searchAndRemoveInput = function() {
         var input = $('#searchAndRemoveInput').val();
-
-        if (input === "") {
-            $scope.errorModal("Your input was empty. Please enter the pattern you wish you remove.");
-        } else if (input.substring(0, 8) === "https://" || input.substring(0, 7) === "http://") {
+        
+        if (input.substring(0, 8) === "https://" || input.substring(0, 7) === "http://") {
             var result = $scope.patterns.find(patterns => patterns.pattern === input);
         } else {
             var result = $scope.patterns.find(patterns => patterns.pattern === "*://*." + input + "/*");
         }
 
         if (result !== undefined) {
-            $scope.removeByIndex(result);
-            $scope.successModal("A match was found at index " + result.index + " with the pattern \"" + result.pattern + "\" and has been removed. Please don't forget to save!");
+            $scope.function = "searchAndRemoveInputConfirmed";
+            $scope.param = result;
+            $scope.confirmModal("A match was found at index " + result.index + " with the pattern \"" + result.pattern + "\". Are you sure you want to remove it?");
+        } else if (input === "") {
+            $scope.errorModal("Sorry, your input was empty (\"\"). Please try a different input.");
         } else {
             $scope.errorModal("Your input of \"" + input + "\" could not be found. Please try a different input.");
         }
+    };
+
+    $scope.searchAndRemoveInputConfirmed = function(pattern) {
+        $scope.removeByIndex(pattern);
+        $scope.save("Your pattern, \"" + pattern.pattern + "\", has been removed at index " + pattern.index + ".");
     };
 
     $scope.clearPatterns = function() {
         if ($scope.patterns.length === 0) {
             $scope.errorModal("Your patterns seems to be empty. There was nothing to clear. Try adding some websites first.");
         } else {
-            $scope.function = "clearPatternsConfirm";
+            $scope.function = "clearPatternsConfirmed";
             $scope.confirmModal("Are you sure you want to clear your current patterns? Depending on the size of your patterns, it may take some time to load.");
         }
     };
 
-    $scope.clearPatternsConfirm = function(showClearPatternsConfirmModal) {
+    $scope.clearPatternsConfirmed = function(showClearPatternsConfirmModal) {
         var length = $scope.patterns.length;
 
         for (var i = 0; i < length; i++) {

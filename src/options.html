@@ -91,6 +91,15 @@
               GitHub Repo
             </a>
           </div>
+          <div class="d-grid gap-2">
+            <button class="btn {{button_is_pause_color}}" title="{{is_pause}}" ng-click="pause()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pause-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z"/>
+              </svg>
+              &nbsp;
+              {{is_pause}}
+            </button>
+          </div>
           <div>
             <hr>
           </div>
@@ -130,15 +139,6 @@
               </svg>
               &nbsp;
               Reset Total Blocked
-            </button>
-          </div>
-          <div class="d-grid gap-2">
-            <button class="btn {{button_is_pause_color}}" title="{{is_pause}}" ng-click="pause()">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pause-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z"/>
-              </svg>
-              &nbsp;
-              {{is_pause}}
             </button>
           </div>
           <div>
@@ -184,7 +184,7 @@
       </div>
       <hr class="hr-bar-top-bottom"/>
       <div class="modal fade" id="modal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title"><u><b>{{modalTitle}}</b></u></h4>
@@ -199,11 +199,11 @@
               <h4 ng-class="modalClass" ng-if="show_modal_message_class">{{modalMessage}}</h4>
               <div class="form-group" ng-if="show_modal_input">
                 <label for="searchAndRemoveInput" class="col-form-label"><h6>{{modalMessage}}</h6></label>
-                <input type="text" class="form-control" id="searchAndRemoveInput" placeholder="ex. google.com, https://test.com/placeholder.js?v=3, etc."/>
+                <input type="text" class="form-control" id="searchAndRemoveInput" placeholder="ex. google.com, https://test.com/placeholder.js?v=3, etc." title="{{'Enter only one at a time'}}"/>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[function]()" title="{{'YES'}}">YES</button>
+              <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[function](param)" title="{{'YES'}}">YES</button>
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal" ng-if="show_modal_confirm_button" title="{{'NO'}}">NO</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-if="show_modal_close_button" title="{{'CLOSE ALERT'}}">CLOSE</button>
               <button type="button" class="btn btn-primary" ng-if="show_modal_search_remove_button" ng-click="searchAndRemoveInput()" title="{{'SEARCH & REMOVE'}}">SEARCH & REMOVE</button>
