@@ -267,7 +267,7 @@ app.controller('OptionsController', function($scope) {
                 reader.onloadend = function(e) {
                     var patterns = e.target.result.split(",");
 
-                    $scope.clearPatternsConfirm(false);
+                    $scope.clearPatternsConfirmed(false);
 
                     for (var i = 0; i < patterns.length; i++) {
                         var checkPattern = obj => obj.pattern === patterns[i];
