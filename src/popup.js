@@ -17,7 +17,7 @@ app.service('currentSite', function() {
         });
     };
 });
-    
+
 app.controller('PopupController', function($scope, currentSite) {
     $scope.backgroundPage = chrome.extension.getBackgroundPage();
 
@@ -40,33 +40,54 @@ app.controller('PopupController', function($scope, currentSite) {
         var checkPattern = obj => obj.pattern === "*://*." + url + "/*";
 
         if (url === "Sorry, not a valid website.") {
-            $scope.isBlocked = "You cannot add this site. It's not valid.";
+            $scope.currentSiteStatus = "You cannot add this site. It's not valid.";
+            $scope.is_blocked = false;
+            $scope.is_not_blocked = true;
         } else if ($scope.patterns.some(checkPattern) === true) {
-            $scope.isBlocked = "The current site is in your patterns.";
+            $scope.currentSiteStatus = "The current site is in your patterns.";
+            $scope.is_blocked = true;
+            $scope.is_not_blocked = false;
         } else {
-            $scope.isBlocked = "The current site is not in your patterns.";
+            $scope.currentSiteStatus = "The current site is not in your patterns.";
+            $scope.is_blocked = false;
+            $scope.is_not_blocked = true;
         }
         
         $scope.$apply();
     });
 
     $scope.addCurrentSite = function() {
-        if ($scope.website === "Sorry, not a valid website."){
+        if ($scope.website === "Sorry, not a valid website.") {
             $scope.error("The site you are trying to add doesn't seem to be a valid website.");
-        } else if ($scope.isBlocked === "The current site is in your patterns.") {
-            $scope.error("The website, \"" + $scope.website + "\" already exist in your patterns. Therefore, it will not be added again. Check the pause button if it's not being blocked.");
-            
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {                    
-                chrome.tabs.reload();
-            });
         } else {
             $scope.patterns.push({
                 index: $scope.patterns.length,
                 pattern: "*://*." + $scope.website + "/*"
             });
 
+            $scope.currentSiteStatus = "The current site is in your patterns.";
+            $scope.is_blocked = true;
+            $scope.is_not_blocked = false;
+            $scope.success("The site, \"" + $scope.website + "\", has been added. It is now blocked and page will reload shortly.");
+
             $scope.save();
         }
+    };
+
+    $scope.unblockCurrentSite = function() {
+        var result = $scope.patterns.find(patterns => patterns.pattern === "*://*." + $scope.website + "/*");
+        var index = $scope.patterns.indexOf(result);
+
+        if (index > -1) {
+            $scope.patterns.splice(index, 1);
+        }
+
+        $scope.currentSiteStatus = "The current site is not in your patterns.";
+        $scope.is_blocked = false;
+        $scope.is_not_blocked = true;
+        $scope.success("The site, \"" + $scope.website + "\", has been removed. It is now unblocked and page will reload shortly.");
+
+        $scope.save();
     };
 
     $scope.save = function() {
@@ -78,10 +99,6 @@ app.controller('PopupController', function($scope, currentSite) {
     
         $scope.backgroundPage.save(patterns, function() {
             $scope.$apply(function() {
-                $scope.isBlocked = "The current site is in your patterns.";
-                
-                $scope.success("The site, \"" + $scope.website + "\", has been added. It is now blocked and page will reload shortly.");
-                
                 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {                    
                     chrome.runtime.sendMessage({type: "reload-background-script"});
 

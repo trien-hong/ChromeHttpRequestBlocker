@@ -28,7 +28,7 @@
       <div class="text-center">
         <div>
           <button class="btn btn-info" disabled>
-            <img src="https://s2.googleusercontent.com/s2/favicons?domain={{ website }}" width="25px" height="25px">
+            <img src="https://s2.googleusercontent.com/s2/favicons?domain={{website}}" width="25px" height="25px">
           </button>
           <h2 class="website"><u>{{website}}</u><h2>
         </div>
@@ -37,13 +37,20 @@
         <hr/>
       </div>
       <div class="text-center">
-        <h3>{{isBlocked}}</h3>
-        <button class="btn btn-primary" ng-click="addCurrentSite()" title="{{'Block Current Site'}}">
+        <h3>{{currentSiteStatus}}</h3>
+        <button class="btn btn-primary" ng-click="addCurrentSite()" ng-if="is_not_blocked" title="{{'Block Current Site'}}">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
           </svg>
           &nbsp;
           Add Current Site
+        </button>
+        <button class="btn btn-primary" ng-click="unblockCurrentSite()" ng-if="is_blocked" title="{{'Unblock Current Site'}}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+          </svg>
+          &nbsp;
+          Unblock Current Site
         </button>
       </div>
       <div>
@@ -101,7 +108,7 @@
               <h4 ng-class="modalClass">{{modalMessage}}</h4>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" title="{{'CLOSE ALERT'}}">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" title="{{'CLOSE ALERT'}}">CLOSE</button>
             </div>
           </div>
         </div>
