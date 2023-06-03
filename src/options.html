@@ -100,6 +100,16 @@
               {{is_pause}}
             </button>
           </div>
+          <div class="d-grid gap-2">
+            <button class="btn btn-secondary" title="Reset your total blocked request to 0" ng-click="resetTotalBlocked()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+              </svg>
+              &nbsp;
+              Reset Total Blocked
+            </button>
+          </div>
           <div>
             <hr>
           </div>
@@ -129,16 +139,6 @@
               </svg>
               &nbsp;
               Export Patterns
-            </button>
-          </div>
-          <div class="d-grid gap-2">
-            <button class="btn btn-secondary" title="Reset your total blocked request to 0" ng-click="resetTotalBlocked()">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
-              </svg>
-              &nbsp;
-              Reset Total Blocked
             </button>
           </div>
           <div>
@@ -203,10 +203,10 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[function](param)" title="{{'YES'}}">YES</button>
+              <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[function](parameter)" title="{{'YES'}}">YES</button>
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal" ng-if="show_modal_confirm_button" title="{{'NO'}}">NO</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-if="show_modal_close_button" title="{{'CLOSE ALERT'}}">CLOSE</button>
               <button type="button" class="btn btn-primary" ng-if="show_modal_search_remove_button" ng-click="searchAndRemoveInput()" title="{{'SEARCH & REMOVE'}}">SEARCH & REMOVE</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-if="show_modal_close_button" title="{{'CLOSE ALERT'}}">CLOSE</button>
             </div>
           </div>
         </div>

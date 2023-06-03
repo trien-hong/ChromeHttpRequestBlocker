@@ -52,6 +52,25 @@ app.controller('OptionsController', function($scope) {
         }
     });
 
+    $scope.resetTotalBlocked = function() {
+        if ($scope.total_blocked === 0) {
+            $scope.errorModal("Your total blocked request is already at 0.");
+        } else {
+            $scope.confirmModal("Are you sure you want to reset your total blocked requests to 0?", "resetTotalBlockedConfirmed");
+        }
+    };
+
+    $scope.resetTotalBlockedConfirmed = function() {
+        chrome.storage.local.set({'total_blocked': 0}, function() {
+
+        });
+
+        $scope.total_blocked = 0;
+        $scope.successModal("Your total blocked requests has been reset. It is now 0.");
+
+        chrome.runtime.sendMessage({type: "reload-background-script"});
+    };
+
     $scope.add = function(site) {
         if (site === undefined) {
             $scope.patterns.push({
@@ -141,7 +160,7 @@ app.controller('OptionsController', function($scope) {
 
     $scope.exportPatterns = function() {
         if ($scope.patterns.length === 0) {
-            $scope.errorModal("Your patterns seems to be empty. There was nothing to export. Please try adding some websites first.");
+            $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to export. Please try adding some websites first.");
         } else {
             var patterns = $scope.backgroundPage.patterns.map(function(x) {
                 return x;
@@ -176,33 +195,13 @@ app.controller('OptionsController', function($scope) {
         }
     };
 
-    $scope.resetTotalBlocked = function() {
-        if ($scope.total_blocked === 0) {
-            $scope.errorModal("Your total blocked request is already at 0.");
-        } else {
-            $scope.function = "resetTotalBlockedConfirmed";
-            $scope.confirmModal("Are you sure you want to reset your total blocked requests to 0?");
-        }
-    };
-
-    $scope.resetTotalBlockedConfirmed = function() {
-        chrome.storage.local.set({'total_blocked': 0}, function() {
-
-        });
-
-        $scope.total_blocked = 0;
-        $scope.successModal("Your total blocked requests has been reset. It is now 0.");
-
-        chrome.runtime.sendMessage({type: "reload-background-script"});
-    };
-
     $scope.searchAndRemove = function() {
         $('#searchAndRemoveInput').val('');
 
         if ($scope.patterns.length === 0) {
-            $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to search and remove. Try adding some websites first.");
+            $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to search and remove. Please try adding some websites first.");
         } else {
-            $scope.inputModal("Please enter the pattern in which you want to remove.", "SEARCH & REMOVE");
+            $scope.inputModal("SEARCH & REMOVE", "Please enter the pattern in which you want to remove.");
         }
     };
 
@@ -210,19 +209,17 @@ app.controller('OptionsController', function($scope) {
         var input = $('#searchAndRemoveInput').val();
         
         if (input.substring(0, 8) === "https://" || input.substring(0, 7) === "http://") {
-            var result = $scope.patterns.find(patterns => patterns.pattern === input);
+            var object = $scope.patterns.find(patterns => patterns.pattern === input);
         } else {
-            var result = $scope.patterns.find(patterns => patterns.pattern === "*://*." + input + "/*");
+            var object = $scope.patterns.find(patterns => patterns.pattern === "*://*." + input + "/*");
         }
 
-        if (result !== undefined) {
-            $scope.function = "searchAndRemoveInputConfirmed";
-            $scope.param = result;
-            $scope.confirmModal("A match was found at index " + result.index + " with the pattern \"" + result.pattern + "\". Are you sure you want to remove it?");
+        if (object !== undefined) {
+            $scope.confirmModal("A match was found at index " + object.index + " with the pattern \"" + object.pattern + "\". Are you sure you want to remove it?", "searchAndRemoveInputConfirmed", object);
         } else if (input === "") {
             $scope.errorModal("Sorry, your input was empty (\"\"). Please try a different input.");
         } else {
-            $scope.errorModal("Your input of \"" + input + "\" could not be found. Please try a different input.");
+            $scope.errorModal("Sorry, your input of \"" + input + "\" could not be found. Please try a different input.");
         }
     };
 
@@ -233,10 +230,9 @@ app.controller('OptionsController', function($scope) {
 
     $scope.clearPatterns = function() {
         if ($scope.patterns.length === 0) {
-            $scope.errorModal("Your patterns seems to be empty. There was nothing to clear. Try adding some websites first.");
+            $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to clear. Please try adding some websites first.");
         } else {
-            $scope.function = "clearPatternsConfirmed";
-            $scope.confirmModal("Are you sure you want to clear your current patterns? Depending on the size of your patterns, it may take some time to load.");
+            $scope.confirmModal("Are you sure you want to clear your current patterns? Depending on the size of your patterns, it may take some time to load.", "clearPatternsConfirmed");
         }
     };
 
@@ -253,8 +249,7 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.uploadFile = function() {
-        $scope.function = "uploadFileConfirmed";
-        $scope.confirmModal("Importing patterns from a file will overwrite your current patterns. Depending on the size of your patterns, it may take some time to load.");
+        $scope.confirmModal("Please note that importing patterns from a file will overwrite your current patterns. Are you okay with that? Depending on the size of your patterns, it may take some time to load.", "uploadFileConfirmed");
     };
 
     $scope.uploadFileConfirmed = function() {
@@ -286,7 +281,7 @@ app.controller('OptionsController', function($scope) {
                 $scope.errorModal("The file you've uploaded doesn't seem to be a text file. Please try a different file or try again.");
             }
         } catch {
-            $scope.errorModal("You did not choose a file to upload or there seems to be an error with uploading and/or reading your file. Please try a different file or try again.");
+            $scope.errorModal("There seems to be an error with uploading and/or reading your file. It's also possible that you did not choose a file. Please try a different file or try again.");
         }
     };
 
@@ -296,63 +291,63 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.scrollDown = function() {
-        // doesn't seem to scroll all the way down when adding new sites. looks like it's one step behind.
-        // clicking the button will scroll all the way down.
         var objDiv = document.getElementsByClassName("patterns")[0];
         objDiv.scrollTo({top: objDiv.scrollHeight, behavior: "smooth"});
     };
 
     // I will try to find a better solution for all these different modals later
     
-    $scope.inputModal = function(message, title) {
+    $scope.inputModal = function(title, message) {
         $scope.show_modal_input = true;
         $scope.show_modal_message_class = false;
         $scope.show_modal_search_remove_button = true;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal(message, title, "text-black");
-    }
+        $scope.modal(title, message, "text-black");
+    };
 
-    $scope.confirmModal = function(message, title) {
+    $scope.confirmModal = function(message, functionVariable, parameterVariable) {
+        $scope.function = functionVariable;
+        $scope.parameter = parameterVariable;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
         $scope.show_modal_search_remove_button = false;
         $scope.show_modal_confirm_button = true;
         $scope.show_modal_close_button = false;
-        $scope.modal(message, title || "PLEASE CONFIRM", "text-black");
+        $scope.modal("PLEASE CONFIRM", message, "text-black");
     };
 
-    $scope.alertModal = function(message, title) {
+    $scope.alertModal = function(message) {
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
         $scope.show_modal_search_remove_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal(message, title || "ALERT", "text-info");
+        $scope.modal("ALERT", message, "text-info");
     };
 
-    $scope.successModal = function(message, title) {
+    $scope.successModal = function(message) {
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
         $scope.show_modal_search_remove_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal(message, title || "SUCCESS", "text-success");
+        $scope.modal("SUCCESS", message, "text-success");
     };
 
-    $scope.errorModal = function(message, title) {
+    $scope.errorModal = function(message) {
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
         $scope.show_modal_search_remove_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal(message, title || "ERROR", "text-danger");
+        $scope.modal("ERROR", message, "text-danger");
     };
 
-    $scope.modal = function(message, title, modalClass) {
-        $scope.modalClass = modalClass;
+    $scope.modal = function(title, message, modalClass) {
         $scope.modalTitle = title;
         $scope.modalMessage = message;
+        $scope.modalClass = modalClass;
         $('#modal').modal('show');
     };
 });
