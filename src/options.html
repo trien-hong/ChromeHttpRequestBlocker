@@ -11,7 +11,7 @@
   </head>
   <body ng-app="RequestBlockerApp">
     <div class="container" ng-controller="OptionsController" ng-init="init()" style="width: 1250px;">
-      <div class="header">
+      <div class="header overflow-x-auto overflow-y-hidden">
         <div>
           <h2 class="header-text"><img class="logo" src="images/icon128.png" width="60" height="60"/><b style="padding-left: 2.25em;">HTTP Request Blocker</b></h2>
         </div>
@@ -25,7 +25,7 @@
         <div class="content-patterns">
           <div class="content-patterns-header">
             <div>
-              <button class="btn btn-secondary" ng-click="scrollUp()" title="{{'Scroll Up'}}">
+              <button class="btn btn-secondary" ng-click="scrollUp()" title="SCROLL UP">
                 SCROLL UP
                 &nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
@@ -39,7 +39,7 @@
             </div>
             <div class="vr"></div>
             <div>
-              <button class="btn btn-secondary" ng-click="scrollDown()" title="{{'Scroll Down'}}">
+              <button class="btn btn-secondary" ng-click="scrollDown()" title="SCROLL DOWN">
                 SCROLL DOWN
                 &nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
@@ -49,7 +49,7 @@
             </div>
           </div>
           <hr>
-          <div class="patterns">
+          <div class="patterns overflow-x-hidden overflow-y-auto">
             <h2 class="patterns-empty-text text-danger text-center" ng-if="is_empty">
               <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-bug" viewBox="0 0 16 16">
                 <path d="M4.355.522a.5.5 0 0 1 .623.333l.291.956A4.979 4.979 0 0 1 8 1c1.007 0 1.946.298 2.731.811l.29-.956a.5.5 0 1 1 .957.29l-.41 1.352A4.985 4.985 0 0 1 13 6h.5a.5.5 0 0 0 .5-.5V5a.5.5 0 0 1 1 0v.5A1.5 1.5 0 0 1 13.5 7H13v1h1.5a.5.5 0 0 1 0 1H13v1h.5a1.5 1.5 0 0 1 1.5 1.5v.5a.5.5 0 1 1-1 0v-.5a.5.5 0 0 0-.5-.5H13a5 5 0 0 1-10 0h-.5a.5.5 0 0 0-.5.5v.5a.5.5 0 1 1-1 0v-.5A1.5 1.5 0 0 1 2.5 10H3V9H1.5a.5.5 0 0 1 0-1H3V7h-.5A1.5 1.5 0 0 1 1 5.5V5a.5.5 0 0 1 1 0v.5a.5.5 0 0 0 .5.5H3c0-1.364.547-2.601 1.432-3.503l-.41-1.352a.5.5 0 0 1 .333-.623zM4 7v4a4 4 0 0 0 3.5 3.97V7H4zm4.5 0v7.97A4 4 0 0 0 12 11V7H8.5zM12 6a3.989 3.989 0 0 0-1.334-2.982A3.983 3.983 0 0 0 8 2a3.983 3.983 0 0 0-2.667 1.018A3.989 3.989 0 0 0 4 6h8z"/>
@@ -65,10 +65,10 @@
                     </button>
                   </div>
                   <div class="pattern-input">
-                    <input type="text" class="form-control" ng-model="u.pattern" title="{{'Add/Edit Pattern'}}"/>
+                    <input type="text" class="form-control" ng-model="u.pattern" title="Add/Edit Pattern"/>
                   </div>
                   <div>
-                    <button type="button" class="btn btn-danger" ng-click="removeByIndex(u)" title="{{'Delete Pattern'}}">
+                    <button type="button" class="btn btn-danger" ng-click="removeByIndex(u)" title="Delete Pattern">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"></path>
                         <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"></path>
@@ -83,7 +83,7 @@
         <div class="vr"></div>
         <div class="content-buttons">
           <div class="d-grid gap-2">
-            <a class="btn btn-light" target="_blank" rel="noopener noreferrer" href="https://github.com/trien-hong/ChromeHttpRequestBlocker" role="button" title="{{'Extension\'s Repository'}}">
+            <a class="btn btn-light" target="_blank" rel="noopener noreferrer" href="https://github.com/trien-hong/ChromeHttpRequestBlocker" role="button" title="Extension's repository">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
                 <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
               </svg>
@@ -114,7 +114,7 @@
             <hr>
           </div>
           <div class="d-grid gap-2">
-            <button class="btn btn-primary" ng-click="add()" title="{{'Manually enter site'}}">
+            <button class="btn btn-primary" ng-click="add()" title="Manually enter new site">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
               </svg>
@@ -123,7 +123,7 @@
             </button>
           </div>
           <div class="d-grid gap-2">
-            <button class="btn btn-primary" ng-click="save()" title="{{'Save your newly added/edited site(s)'}}">
+            <button class="btn btn-primary" ng-click="save()" title="Save your newly added/edited site(s)">
               <svg class="mr-5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
                 <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
               </svg>
@@ -132,7 +132,7 @@
             </button>
           </div>
           <div class="d-grid gap-2">
-            <button class="btn btn-primary" ng-click="exportPatterns()" title="{{'Download your patterns'}}">
+            <button class="btn btn-primary" ng-click="exportPatterns()" title="Download your patterns">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-download" viewBox="0 0 16 16">
                 <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
                 <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
@@ -145,7 +145,7 @@
             <hr>
           </div>
           <div class="d-grid gap-2">
-            <button class="btn btn-warning" ng-click="searchAndRemove()" title="{{'Search and remove a specific pattern'}}">
+            <button class="btn btn-warning" ng-click="searchAndRemove()" title="Search and remove a specific pattern">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
               </svg>
@@ -154,7 +154,7 @@
             </button>
           </div>
           <div class="d-grid gap-2">
-            <button class="btn btn-warning" ng-click="clearPatterns()" title="{{'Clear your patterns'}}">
+            <button class="btn btn-warning" ng-click="clearPatterns()" title="Clear your patterns">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-octagon" viewBox="0 0 16 16">
                 <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z"/>
                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -167,7 +167,7 @@
             <hr>
           </div>
           <div class="d-grid gap-2">
-            <button class="btn btn-primary" ng-click="uploadFile()" title="{{'Upload selected file'}}">
+            <button class="btn btn-primary" ng-click="uploadFile()" title="Upload selected file">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-upload" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
                 <path fill-rule="evenodd" d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3z"/>
@@ -177,7 +177,13 @@
             </button>
           </div>
           <div>
-            <input class="form-control" id="file" type="file" accept="text/plain" title="{{'Choose a file (.txt)'}}">
+            <input class="form-control" id="file" type="file" accept="text/plain" title="Choose a file (.txt)">
+          </div>
+          <div>
+            <hr>
+          </div>
+          <div class="text-center">
+            <p><b>Extension's Version | v{{extension_version}}</b></p>
           </div>
         </div>
         <div class="vr"></div>
@@ -188,25 +194,20 @@
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title"><u><b>{{modalTitle}}</b></u></h4>
-              <button type="button" class="close" data-bs-dismiss="modal" title="{{'CLOSE ALERT'}}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="25" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
-              </button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" title="CLOSE ALERT"></button>
             </div>
             <div class="modal-body">
               <h4 ng-class="modalClass" ng-if="show_modal_message_class">{{modalMessage}}</h4>
               <div class="form-group" ng-if="show_modal_input">
                 <label for="searchAndRemoveInput" class="col-form-label"><h6>{{modalMessage}}</h6></label>
-                <input type="text" class="form-control" id="searchAndRemoveInput" placeholder="ex. google.com, https://test.com/placeholder.js?v=3, etc." title="{{'Enter only one at a time'}}"/>
+                <input type="text" class="form-control" id="searchAndRemoveInput" placeholder="ex. google.com, https://test.com/placeholder.js?v=3, etc." title="Enter only one at a time"/>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[function](parameter)" title="{{'YES'}}">YES</button>
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" ng-if="show_modal_confirm_button" title="{{'NO'}}">NO</button>
-              <button type="button" class="btn btn-primary" ng-if="show_modal_search_remove_button" ng-click="searchAndRemoveInput()" title="{{'SEARCH & REMOVE'}}">SEARCH & REMOVE</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-if="show_modal_close_button" title="{{'CLOSE ALERT'}}">CLOSE</button>
+              <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[function](parameter)" title="YES">YES</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" ng-if="show_modal_confirm_button" title="NO">NO</button>
+              <button type="button" class="btn btn-primary" ng-if="show_modal_search_remove_button" ng-click="searchAndRemoveInput()" title="SEARCH & REMOVE">SEARCH & REMOVE</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-if="show_modal_close_button" title="CLOSE ALERT">CLOSE</button>
             </div>
           </div>
         </div>

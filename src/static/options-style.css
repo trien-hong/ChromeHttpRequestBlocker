@@ -12,8 +12,6 @@ body {
     margin-left: 1em;
     margin-right: 1em;
     padding-bottom: 0.25em;
-    overflow-x: auto;
-    overflow-y: hidden;
     white-space: nowrap;
     display: flex;
     flex-direction: row;
@@ -75,9 +73,7 @@ hr {
 }
 
 .patterns {
-    height: 525px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    height: 550px;
 }
 
 .pattern {

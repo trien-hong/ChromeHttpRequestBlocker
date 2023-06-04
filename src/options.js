@@ -3,6 +3,8 @@ var app = angular.module('RequestBlockerApp', []);
 app.controller('OptionsController', function($scope) {
     $scope.backgroundPage = chrome.extension.getBackgroundPage();
 
+    $scope.extension_version = chrome.runtime.getManifest().version;
+
     $scope.patterns = $scope.backgroundPage.patterns.map(function(x, i) {
         return {
             index: i,
