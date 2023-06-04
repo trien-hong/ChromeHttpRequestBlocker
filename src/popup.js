@@ -58,25 +58,33 @@ app.controller('PopupController', function($scope, currentSite) {
 
     $scope.addCurrentSite = function() {
         if ($scope.website === "Sorry, not a valid website.") {
-            $scope.error("The site you are trying to add doesn't seem to be a valid website.");
+            $scope.errorModal("The site you are trying to add doesn't seem to be a valid website.");
         } else {
-            $scope.patterns.push({
-                index: $scope.patterns.length,
-                pattern: "*://*." + $scope.website + "/*"
-            });
-
-            $scope.currentSiteStatus = "The current site is in your patterns.";
-            $scope.is_blocked = true;
-            $scope.is_not_blocked = false;
-            $scope.success("The site, \"" + $scope.website + "\", has been added. It is now blocked and page will reload shortly.");
-
-            $scope.save();
+            $scope.confirmModal("Are you sure you want to block the current site, \"" + $scope.website + "\"?", "addCurrentSiteConfirmed");
         }
     };
 
+    $scope.addCurrentSiteConfirmed = function() {
+        $scope.patterns.push({
+            index: $scope.patterns.length,
+            pattern: "*://*." + $scope.website + "/*"
+        });
+
+        $scope.currentSiteStatus = "The current site is in your patterns.";
+        $scope.is_blocked = true;
+        $scope.is_not_blocked = false;
+        $scope.successModal("The site, \"" + $scope.website + "\", has been added. It is now blocked and the page will reload shortly.");
+
+        $scope.save();
+    };
+
     $scope.unblockCurrentSite = function() {
-        var result = $scope.patterns.find(patterns => patterns.pattern === "*://*." + $scope.website + "/*");
-        var index = $scope.patterns.indexOf(result);
+        $scope.confirmModal("Are you sure you want to unblock the current site, \"" + $scope.website + "\"?", "unblockCurrentSiteConfirmed");
+    };
+
+    $scope.unblockCurrentSiteConfirmed = function() {
+        var object = $scope.patterns.find(patterns => patterns.pattern === "*://*." + $scope.website + "/*");
+        var index = $scope.patterns.indexOf(object);
 
         if (index > -1) {
             $scope.patterns.splice(index, 1);
@@ -85,7 +93,7 @@ app.controller('PopupController', function($scope, currentSite) {
         $scope.currentSiteStatus = "The current site is not in your patterns.";
         $scope.is_blocked = false;
         $scope.is_not_blocked = true;
-        $scope.success("The site, \"" + $scope.website + "\", has been removed. It is now unblocked and page will reload shortly.");
+        $scope.successModal("The site, \"" + $scope.website + "\", has been removed. It is now unblocked and the page will reload shortly.");
 
         $scope.save();
     };
@@ -121,7 +129,7 @@ app.controller('PopupController', function($scope, currentSite) {
                 $scope.is_pause = "Unpause Extension";
                 $scope.button_is_pause_color = "btn-success";
                 
-                $scope.alert("Extension is now PAUSED. All patterns will not be blocked.");
+                $scope.alertModal("Extension is now PAUSED. All patterns will not be blocked.");
             } else {
                 // extension is currently on pause (is not blocking sites)
                 // user wants to UNPAUSE extension
@@ -131,7 +139,7 @@ app.controller('PopupController', function($scope, currentSite) {
                 $scope.is_pause = "Pause Extension";
                 $scope.button_is_pause_color = "btn-danger";
 
-                $scope.alert("Extension is now UNPAUSED. All patterns will be blocked.");
+                $scope.alertModal("Extension is now UNPAUSED. All patterns will be blocked.");
             }
 
             chrome.storage.local.get("is_pause", function(data) {
@@ -142,22 +150,38 @@ app.controller('PopupController', function($scope, currentSite) {
         }
     });
 
-    $scope.alert = function(message, title) {
-        $scope.modal(message, title || "ALERT", "text-info");
+    // I will try to find a better solution for all these different modals later
+
+    $scope.confirmModal = function(message, functionVariable, parameterVariable) {
+        $scope.function = functionVariable;
+        $scope.parameter = parameterVariable;
+        $scope.show_modal_confirm_button = true;
+        $scope.show_modal_close_button = false;
+        $scope.modal("PLEASE CONFIRM", message, "text-black");
     };
 
-    $scope.success = function(message, title) {
-        $scope.modal(message, title || "SUCCESS", "text-success");
+    $scope.alertModal = function(message) {
+        $scope.show_modal_confirm_button = false;
+        $scope.show_modal_close_button = true;
+        $scope.modal("ALERT", message, "text-info");
     };
 
-    $scope.error = function(message, title) {
-        $scope.modal(message, title || "ERROR", "text-danger");
+    $scope.successModal = function(message) {
+        $scope.show_modal_confirm_button = false;
+        $scope.show_modal_close_button = true;
+        $scope.modal("SUCCESS", message, "text-success");
     };
 
-    $scope.modal = function(message, title, modalClass) {
-        $scope.modalClass = modalClass;
+    $scope.errorModal = function(message) {
+        $scope.show_modal_confirm_button = false;
+        $scope.show_modal_close_button = true;
+        $scope.modal("ERROR", message, "text-danger");
+    };
+
+    $scope.modal = function(title, message, modalClass) {
         $scope.modalTitle = title;
         $scope.modalMessage = message;
+        $scope.modalClass = modalClass;
         $('#modal').modal('show');
     };
 });
