@@ -1,4 +1,4 @@
-var app = angular.module('RequestBlockerApp', []);
+var app = angular.module('RequestBlockerApp', ['ngSanitize']);
 
 app.controller('OptionsController', function($scope) {
     $scope.backgroundPage = chrome.extension.getBackgroundPage();
@@ -33,7 +33,7 @@ app.controller('OptionsController', function($scope) {
                 $scope.is_pause = "Unpause extension";
                 $scope.button_is_pause_color = "btn-success";
                 
-                $scope.alertModal("Extension is now PAUSED. All patterns will not be blocked.");
+                $scope.alertModal("Extension is now <u>PAUSED</u>. All patterns will not be blocked.");
             } else {
                 // extension is currently on pause (is not blocking sites)
                 // user wants to UNPAUSE extension
@@ -43,7 +43,7 @@ app.controller('OptionsController', function($scope) {
                 $scope.is_pause = "Pause extension";
                 $scope.button_is_pause_color = "btn-danger";
                 
-                $scope.alertModal("Extension is now UNPAUSED. All patterns will be blocked.");
+                $scope.alertModal("Extension is now <u>UNPAUSED</u>. All patterns will be blocked.");
             }
 
             chrome.storage.local.get("is_pause", function(data) {
@@ -146,7 +146,7 @@ app.controller('OptionsController', function($scope) {
         $scope.backgroundPage.save(removedEmptyElements, function() {
             $scope.$apply(function() {
                 if (msg === undefined) {
-                    $scope.successModal("Your patterns has been saved. Any pattern(s) that were \"\" (empty) have been removed. If your pattern(s) contains any duplicates, it was also removed (beyond the first).");
+                    $scope.successModal("Your patterns has been saved.<br><br>Any pattern(s) that were empty (\"\") have been removed.<br><br>If your pattern(s) contains any duplicates, it was also removed (beyond the first).");
                 } else {
                     $scope.successModal(msg);
                 }
@@ -162,7 +162,7 @@ app.controller('OptionsController', function($scope) {
 
     $scope.exportPatterns = function() {
         if ($scope.patterns.length === 0) {
-            $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to export. Please try adding some websites first.");
+            $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to export.<br><br>Please try adding some websites first.");
         } else {
             var patterns = $scope.backgroundPage.patterns.map(function(x) {
                 return x;
@@ -180,7 +180,7 @@ app.controller('OptionsController', function($scope) {
                     a.download = fileName;
                     a.click();
                     window.URL.revokeObjectURL(url);
-                    $scope.successModal("Your patterns has been exported. Please be sure to download it. Also remember that you can always import this file in the future. Depending on the size of your patterns, it may take some time to load.");
+                    $scope.successModal("Your patterns has been exported. Please be sure to download it. Also remember that you can always import this file in the future.<br><br>Depending on the size of your patterns, it may take some time to load.");
                 };
             }());
         
@@ -201,7 +201,7 @@ app.controller('OptionsController', function($scope) {
         $('#searchAndRemoveInput').val('');
 
         if ($scope.patterns.length === 0) {
-            $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to search and remove. Please try adding some websites first.");
+            $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to search and remove.<br><br>Please try adding some websites first.");
         } else {
             $scope.inputModal("SEARCH & REMOVE", "Please enter the pattern in which you want to remove.");
         }
@@ -217,24 +217,24 @@ app.controller('OptionsController', function($scope) {
         }
 
         if (object !== undefined) {
-            $scope.confirmModal("A match was found at index " + object.index + " with the pattern \"" + object.pattern + "\". Are you sure you want to remove it?", "searchAndRemoveInputConfirmed", object);
+            $scope.confirmModal("A match was found at index " + object.index + " with the pattern \"<u>" + object.pattern + "</u>\".<br><br>Are you sure you want to remove it?", "searchAndRemoveInputConfirmed", object);
         } else if (input === "") {
-            $scope.errorModal("Sorry, your input was empty (\"\"). Please try a different input.");
+            $scope.errorModal("Sorry, your input was empty (\"\").<br><br>Please try a different input.");
         } else {
-            $scope.errorModal("Sorry, your input of \"" + input + "\" could not be found. Please try a different input.");
+            $scope.errorModal("Sorry, your input of \"<u>" + input + "</u>\" could not be found.<br><br>Please try a different input.");
         }
     };
 
     $scope.searchAndRemoveInputConfirmed = function(pattern) {
         $scope.removeByIndex(pattern);
-        $scope.save("Your pattern, \"" + pattern.pattern + "\", has been removed at index " + pattern.index + ".");
+        $scope.save("Your pattern, \"<u>" + pattern.pattern + "</u>\", has been removed at index " + pattern.index + ".");
     };
 
     $scope.clearPatterns = function() {
         if ($scope.patterns.length === 0) {
-            $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to clear. Please try adding some websites first.");
+            $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to clear.<br><br>Please try adding some websites first.");
         } else {
-            $scope.confirmModal("Are you sure you want to clear your current patterns? Depending on the size of your patterns, it may take some time to load.", "clearPatternsConfirmed");
+            $scope.confirmModal("Are you sure you want to clear your current patterns?<br><br>Depending on the size of your patterns, it may take some time to load.", "clearPatternsConfirmed");
         }
     };
 
@@ -251,7 +251,7 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.uploadFile = function() {
-        $scope.confirmModal("Please note that importing patterns from a file will overwrite your current patterns. Are you okay with that? Depending on the size of your patterns, it may take some time to load.", "uploadFileConfirmed");
+        $scope.confirmModal("Please note that importing patterns from a file will overwrite your current patterns. Are you okay with that?<br><br>Depending on the size of your patterns, it may take some time to load.", "uploadFileConfirmed");
     };
 
     $scope.uploadFileConfirmed = function() {
@@ -280,10 +280,10 @@ app.controller('OptionsController', function($scope) {
 
                 reader.readAsBinaryString(file);
             } else {
-                $scope.errorModal("The file you've uploaded doesn't seem to be a text file. Please try a different file or try again.");
+                $scope.errorModal("The file you've uploaded doesn't seem to be a text file.<br><br>Please try a different file or try again.");
             }
         } catch {
-            $scope.errorModal("There seems to be an error with uploading and/or reading your file. It's also possible that you did not choose a file. Please try a different file or try again.");
+            $scope.errorModal("There seems to be an error with uploading and/or reading your file. It's also possible that you did not choose a file.<br><br>Please try a different file or try again.");
         }
     };
 

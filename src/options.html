@@ -6,6 +6,7 @@
     <link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet">
     <script src="lib/bootstrap/bootstrap.min.js"></script>
     <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular/angular-sanitize.min.js"></script>
     <script src="options.js"></script>
     <link href="static/options-style.css" rel="stylesheet"/>
   </head>
@@ -197,7 +198,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" title="CLOSE ALERT"></button>
             </div>
             <div class="modal-body">
-              <h4 ng-class="modalClass" ng-if="show_modal_message_class">{{modalMessage}}</h4>
+              <h5 ng-class="modalClass" ng-if="show_modal_message_class" ng-bind-html="modalMessage"></h5>
               <div class="form-group" ng-if="show_modal_input">
                 <label for="searchAndRemoveInput" class="col-form-label"><h6>{{modalMessage}}</h6></label>
                 <input type="text" class="form-control" id="searchAndRemoveInput" placeholder="ex. google.com, https://test.com/placeholder.js?v=3, etc." title="Enter only one at a time"/>
