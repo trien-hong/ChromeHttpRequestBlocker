@@ -6,8 +6,9 @@
     <link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet">
     <script src="lib/bootstrap/bootstrap.min.js"></script>
     <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular/angular-sanitize.min.js"></script>
     <script src="popup.js"></script>
-    <link href="static/popup-style.css" rel="stylesheet"/>
+    <link href="static/popup-style.css" rel="stylesheet">
   </head>
   <body ng-app="RequestBlockerApp">
     <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 500px; height: 500px">
@@ -100,7 +101,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" title="CLOSE ALERT"></button>
             </div>
             <div class="modal-body">
-              <h4 ng-class="modalClass">{{modalMessage}}</h4>
+              <h5 ng-class="modalClass" ng-bind-html="modalMessage"></h5>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[function](parameter)" title="YES">YES</button>

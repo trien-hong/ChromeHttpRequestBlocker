@@ -1,4 +1,4 @@
-var app = angular.module('RequestBlockerApp', []);
+var app = angular.module('RequestBlockerApp', ['ngSanitize']);
 
 app.service('currentSite', function() {
     this.getUrl = function(callback) {
@@ -58,9 +58,9 @@ app.controller('PopupController', function($scope, currentSite) {
 
     $scope.addCurrentSite = function() {
         if ($scope.website === "Sorry, not a valid website.") {
-            $scope.errorModal("The site you are trying to add doesn't seem to be a valid website.");
+            $scope.errorModal("The site you are trying to add doesn't seem to be a valid website.<br><br>Please try a different website.");
         } else {
-            $scope.confirmModal("Are you sure you want to block the current site, \"" + $scope.website + "\"?", "addCurrentSiteConfirmed");
+            $scope.confirmModal("Are you sure you want to block the current site, \"<u>" + $scope.website + "</u>\"?", "addCurrentSiteConfirmed");
         }
     };
 
@@ -73,13 +73,13 @@ app.controller('PopupController', function($scope, currentSite) {
         $scope.currentSiteStatus = "The current site is in your patterns.";
         $scope.is_blocked = true;
         $scope.is_not_blocked = false;
-        $scope.successModal("The site, \"" + $scope.website + "\", has been added. It is now blocked and the page will reload shortly.");
+        $scope.successModal("The site, \"<u>" + $scope.website + "</u>\", has been added.<br><br>It is now blocked and the page will reload shortly.");
 
         $scope.save();
     };
 
     $scope.unblockCurrentSite = function() {
-        $scope.confirmModal("Are you sure you want to unblock the current site, \"" + $scope.website + "\"?", "unblockCurrentSiteConfirmed");
+        $scope.confirmModal("Are you sure you want to unblock the current site, \"<u>" + $scope.website + "</u>\"?", "unblockCurrentSiteConfirmed");
     };
 
     $scope.unblockCurrentSiteConfirmed = function() {
@@ -93,7 +93,7 @@ app.controller('PopupController', function($scope, currentSite) {
         $scope.currentSiteStatus = "The current site is not in your patterns.";
         $scope.is_blocked = false;
         $scope.is_not_blocked = true;
-        $scope.successModal("The site, \"" + $scope.website + "\", has been removed. It is now unblocked and the page will reload shortly.");
+        $scope.successModal("The site, \"<u>" + $scope.website + "</u>\", has been removed.<br><br>It is now unblocked and the page will reload shortly.");
 
         $scope.save();
     };
@@ -129,7 +129,7 @@ app.controller('PopupController', function($scope, currentSite) {
                 $scope.is_pause = "Unpause Extension";
                 $scope.button_is_pause_color = "btn-success";
                 
-                $scope.alertModal("Extension is now PAUSED. All patterns will not be blocked.");
+                $scope.alertModal("Extension is now <u>PAUSED</u>. All patterns will not be blocked.");
             } else {
                 // extension is currently on pause (is not blocking sites)
                 // user wants to UNPAUSE extension
@@ -139,7 +139,7 @@ app.controller('PopupController', function($scope, currentSite) {
                 $scope.is_pause = "Pause Extension";
                 $scope.button_is_pause_color = "btn-danger";
 
-                $scope.alertModal("Extension is now UNPAUSED. All patterns will be blocked.");
+                $scope.alertModal("Extension is now <u>UNPAUSED</u>. All patterns will be blocked.");
             }
 
             chrome.storage.local.get("is_pause", function(data) {
