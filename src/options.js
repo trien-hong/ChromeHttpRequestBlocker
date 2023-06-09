@@ -30,7 +30,7 @@ app.controller('OptionsController', function($scope) {
                 chrome.storage.local.set({'is_pause': true}, function() {
                 
                 });
-                $scope.is_pause = "Unpause extension";
+                $scope.is_pause = "Unpause Extension";
                 $scope.button_is_pause_color = "btn-success";
                 
                 $scope.alertModal("Extension is now <u>PAUSED</u>. All patterns will not be blocked.");
@@ -40,7 +40,7 @@ app.controller('OptionsController', function($scope) {
                 chrome.storage.local.set({'is_pause': false}, function() {
                 
                 });
-                $scope.is_pause = "Pause extension";
+                $scope.is_pause = "Pause Extension";
                 $scope.button_is_pause_color = "btn-danger";
                 
                 $scope.alertModal("Extension is now <u>UNPAUSED</u>. All patterns will be blocked.");
@@ -104,11 +104,11 @@ app.controller('OptionsController', function($scope) {
 
     $scope.save = function(msg) {
         /*
-        for matching exact URLs, I still need to check for duplicates and be able to remove them inline since I don't want to refresh the page
-        the implementation I did below matching exact URLs doesn't work here becuse it's modifying the existing one
-        since exact URLs aren't modified it'll just check for itself and remove itself which doesn't help
-        i may have to redo the entire save. for now, just know it doesn't remove duplicates for exact URLs
-        you can remove duplicates manually if you managed to add them in and find them
+        For those that are unaware of the structure of a URL here's a basic overview of https://ads.twitter.com/
+        https:// is the protocol
+        ads is the subdomain
+        twitter is the domain or sometimes called second-level domain (SLD/2LD)
+        com is the top-level domain (TLD)
         */
         var prefix = "*://*.";
         var suffix = "/*";
@@ -118,6 +118,7 @@ app.controller('OptionsController', function($scope) {
         for (var i = 0; i < patterns.length; i++) { 
             if (patterns[i].pattern.substring(0, 8) === "https://" || patterns[i].pattern.substring(0, 7) === "http://") {
                 // Matching exact URLs (ex. https://www.youtube.com/watch?v=CDokUdux0rc or https://github.com/trien-hong/ChromeHttpRequestBlocker)
+                // For matching exact URLs, I still need to check for duplicates and be able to remove them inline since I don't want to refresh the page
                 removedEmptyElements.push(patterns[i].pattern);
             } else if (patterns[i].pattern.substring(0, 6) !== prefix && patterns[i].pattern !== "") {
                 // Matching domains/second-level domains, subdomain(s), file path, and ip adresses (ex. youtube.com, www.google.com, test.com/picture.png, and 12.34.56.78)
@@ -300,6 +301,8 @@ app.controller('OptionsController', function($scope) {
     // I will try to find a better solution for all these different modals later
     
     $scope.inputModal = function(title, message) {
+        $scope.show_modal_success_icon = false;
+        $scope.show_modal_error_icon = false;
         $scope.show_modal_input = true;
         $scope.show_modal_message_class = false;
         $scope.show_modal_search_remove_button = true;
@@ -309,6 +312,8 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.confirmModal = function(message, functionVariable, parameterVariable) {
+        $scope.show_modal_success_icon = false;
+        $scope.show_modal_error_icon = false;
         $scope.function = functionVariable;
         $scope.parameter = parameterVariable;
         $scope.show_modal_input = false;
@@ -320,6 +325,8 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.alertModal = function(message) {
+        $scope.show_modal_success_icon = false;
+        $scope.show_modal_error_icon = false;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
         $scope.show_modal_search_remove_button = false;
@@ -329,6 +336,8 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.successModal = function(message) {
+        $scope.show_modal_success_icon = true;
+        $scope.show_modal_error_icon = false;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
         $scope.show_modal_search_remove_button = false;
@@ -338,6 +347,8 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.errorModal = function(message) {
+        $scope.show_modal_success_icon = false;
+        $scope.show_modal_error_icon = true;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
         $scope.show_modal_search_remove_button = false;

@@ -1,18 +1,5 @@
 var total_blocked = 0;
 
-chrome.storage.local.get('total_blocked', function(data) {
-  // initial value of total_blocked
-  if (data.total_blocked === undefined) {
-    // if total_blocked is undefined
-    chrome.storage.local.set({'total_blocked': 0}, function() {
-
-    });
-  } else {
-    // if total_block contains a value that's not undefined
-    total_blocked = data.total_blocked;
-  }
-});
-
 chrome.contextMenus.removeAll(function() {
   chrome.contextMenus.create({
     title: "Block current site",
@@ -156,17 +143,32 @@ load(function(p) {
 
   if (patterns.length === 0) {
     is_empty = true;
+  } else {
+    is_empty = false;
   }
+
+  chrome.storage.local.get('total_blocked', function(data) {
+    // initial value of total_blocked
+    if (data.total_blocked === undefined) {
+      // if total_blocked is undefined
+      chrome.storage.local.set({'total_blocked': 0}, function() {
+  
+      });
+    } else {
+      // if total_block contains a value that's not undefined
+      total_blocked = data.total_blocked;
+    }
+  });
 
   chrome.storage.local.get('is_pause', function(data) {
     // initial value of pause button
     if (data.is_pause === undefined || data.is_pause === false) {
       // extension is currently not on pause (is blocking sites)
-      is_pause = "Pause extension";
+      is_pause = "Pause Extension";
       button_is_pause_color = "btn-danger";
     } else {
       // extension is currently on pause (is not blocking sites)
-      is_pause = "Unpause extension";
+      is_pause = "Unpause Extension";
       button_is_pause_color = "btn-success";
     }
   });
