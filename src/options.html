@@ -12,12 +12,9 @@
   </head>
   <body ng-app="RequestBlockerApp">
     <div class="container" ng-controller="OptionsController" ng-init="init()" style="width: 1250px;">
-      <div class="header overflow-x-auto overflow-y-hidden">
+      <div class="header">
         <div>
           <h2 class="header-text"><img class="logo" src="images/icon128.png" width="60" height="60"/><b style="padding-left: 2.25em;">HTTP Request Blocker</b></h2>
-        </div>
-        <div>
-          <h2 class="header-text"><b>Total Blocked Request(s): <u class="text-danger">{{total_blocked}}</u></b><h2>
         </div>
       </div>
       <hr class="hr-bar-top-bottom"/>
@@ -26,7 +23,11 @@
         <div class="content-patterns">
           <div class="content-patterns-header">
             <div>
-              <button class="btn btn-secondary" ng-click="scrollUp()" title="SCROLL UP">
+              <button class="btn btn-secondary" ng-click="scrollUp()" title="Scroll up">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                </svg>
+                &nbsp;
                 SCROLL UP
                 &nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
@@ -40,7 +41,11 @@
             </div>
             <div class="vr"></div>
             <div>
-              <button class="btn btn-secondary" ng-click="scrollDown()" title="SCROLL DOWN">
+              <button class="btn btn-secondary" ng-click="scrollDown()" title="Scroll down">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                </svg>
+                &nbsp;
                 SCROLL DOWN
                 &nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
@@ -184,12 +189,34 @@
             <hr>
           </div>
           <div class="text-center">
-            <p><b>Extension's Version | v{{extension_version}}</b></p>
+            <p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-git" viewBox="0 0 16 16">
+                <path d="M15.698 7.287 8.712.302a1.03 1.03 0 0 0-1.457 0l-1.45 1.45 1.84 1.84a1.223 1.223 0 0 1 1.55 1.56l1.773 1.774a1.224 1.224 0 0 1 1.267 2.025 1.226 1.226 0 0 1-2.002-1.334L8.58 5.963v4.353a1.226 1.226 0 1 1-1.008-.036V5.887a1.226 1.226 0 0 1-.666-1.608L5.093 2.465l-4.79 4.79a1.03 1.03 0 0 0 0 1.457l6.986 6.986a1.03 1.03 0 0 0 1.457 0l6.953-6.953a1.031 1.031 0 0 0 0-1.457"></path>
+              </svg>
+              &nbsp;
+              <b>Extension's Version | v{{extension_version}}</b>
+              &nbsp;
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-git" viewBox="0 0 16 16">
+                <path d="M15.698 7.287 8.712.302a1.03 1.03 0 0 0-1.457 0l-1.45 1.45 1.84 1.84a1.223 1.223 0 0 1 1.55 1.56l1.773 1.774a1.224 1.224 0 0 1 1.267 2.025 1.226 1.226 0 0 1-2.002-1.334L8.58 5.963v4.353a1.226 1.226 0 1 1-1.008-.036V5.887a1.226 1.226 0 0 1-.666-1.608L5.093 2.465l-4.79 4.79a1.03 1.03 0 0 0 0 1.457l6.986 6.986a1.03 1.03 0 0 0 1.457 0l6.953-6.953a1.031 1.031 0 0 0 0-1.457"></path>
+              </svg>
+            </p>
           </div>
         </div>
         <div class="vr"></div>
       </div>
       <hr class="hr-bar-top-bottom"/>
+      <div class="header">
+        <div>
+          <h2 class="header-text">
+            <b>
+              Total Blocked Request(s): <u class="text-danger">{{total_blocked}}</u>
+              <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="#dc3545" class="bi bi-shield-fill-x" viewBox="0 0 16 16">
+                <path d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zM6.854 5.146 8 6.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 7l1.147 1.146a.5.5 0 0 1-.708.708L8 7.707 6.854 8.854a.5.5 0 1 1-.708-.708L7.293 7 6.146 5.854a.5.5 0 1 1 .708-.708z"/>
+              </svg>
+            </b>
+          <h2>
+        </div>
+      </div>
       <div class="modal fade" id="modal">
         <div class="modal-dialog modal-dialog-scrollable">
           <div class="modal-content">
