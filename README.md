@@ -66,7 +66,7 @@ Changes from the original repository
 * Added a way to clear your entire pattterns
     * Added confirmation to see if the user really wants to clear their entire patterns
 * Change some of the styling, layout, and added other minor features
-    * Updated Bootstrap to v5.3.0-alpha3
+    * Updated Bootstrap to v5.3.2
     * Removed glyphicons files in favor of Bootstrap icons
     * When patterns are empty, a simple message is displayed on the screen leting the user know
     * Moved some of the custom CSS to a seperate file

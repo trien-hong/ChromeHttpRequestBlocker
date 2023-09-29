@@ -301,6 +301,9 @@ app.controller('OptionsController', function($scope) {
     // I will try to find a better solution for all these different modals later
     
     $scope.inputModal = function(title, message) {
+        $scope.show_modal_input_icon = true;
+        $scope.show_modal_confirm_icon = false;
+        $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = false;
         $scope.show_modal_input = true;
@@ -312,6 +315,9 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.confirmModal = function(message, functionVariable, parameterVariable) {
+        $scope.show_modal_input_icon = false;
+        $scope.show_modal_confirm_icon = true;
+        $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = false;
         $scope.function = functionVariable;
@@ -325,6 +331,9 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.alertModal = function(message) {
+        $scope.show_modal_input_icon = false;
+        $scope.show_modal_confirm_icon = false;
+        $scope.show_modal_alert_icon = true;
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = false;
         $scope.show_modal_input = false;
@@ -332,10 +341,13 @@ app.controller('OptionsController', function($scope) {
         $scope.show_modal_search_remove_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal("ALERT", message, "text-info");
+        $scope.modal("ALERT", message, "text-info-emphasis");
     };
 
     $scope.successModal = function(message) {
+        $scope.show_modal_input_icon = false;
+        $scope.show_modal_confirm_icon = false;
+        $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = true;
         $scope.show_modal_error_icon = false;
         $scope.show_modal_input = false;
@@ -347,6 +359,9 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.errorModal = function(message) {
+        $scope.show_modal_input_icon = false;
+        $scope.show_modal_confirm_icon = false;
+        $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = true;
         $scope.show_modal_input = false;
