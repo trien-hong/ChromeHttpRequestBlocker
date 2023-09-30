@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "HTTP Request Blocker",
     "short_name": "HTTPRequestBlocker",
-    "version": "1.4.5",
+    "version": "1.4.6",
     "description": "This extension blocks HTTP Request based on configurable URL patterns.",
     "author": "Cristian Lupașcu",
     "homepage_url": "https://github.com/clupasq/ChromeHttpRequestBlocker",
@@ -16,9 +16,9 @@
         "contextMenus"
     ],
     "icons": {
-        "16": "images/icon16.png",
-        "48": "images/icon48.png",
-        "128": "images/icon128.png"
+        "16": "images/extension_icons/icon-16.png",
+        "48": "images/extension_icons/icon-48.png",
+        "128": "images/extension_icons/icon-128.png"
     },
     "background": {
         "persistent": true,
@@ -27,9 +27,9 @@
     "browser_action": {
         "default_title": "HTTP Request Blocker",
         "default_icon": {
-            "16": "images/icon16.png",
-            "48": "images/icon48.png",
-            "128": "images/icon128.png"
+            "16": "images/extension_icons/icon-16.png",
+            "48": "images/extension_icons/icon-48.png",
+            "128": "images/extension_icons/icon-128.png"
         },
         "default_popup": "popup.html"
     }
