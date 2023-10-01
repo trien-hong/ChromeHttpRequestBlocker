@@ -153,6 +153,10 @@ app.controller('PopupController', function($scope, currentSite) {
     // I will try to find a better solution for all these different modals later
 
     $scope.confirmModal = function(message, functionVariable, parameterVariable) {
+        $scope.show_modal_confirm_icon = true;
+        $scope.show_modal_alert_icon = false;
+        $scope.show_modal_success_icon = false;
+        $scope.show_modal_error_icon = false;
         $scope.function = functionVariable;
         $scope.parameter = parameterVariable;
         $scope.show_modal_confirm_button = true;
@@ -161,18 +165,30 @@ app.controller('PopupController', function($scope, currentSite) {
     };
 
     $scope.alertModal = function(message) {
+        $scope.show_modal_confirm_icon = false;
+        $scope.show_modal_alert_icon = true;
+        $scope.show_modal_success_icon = false;
+        $scope.show_modal_error_icon = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal("ALERT", message, "text-info");
+        $scope.modal("ALERT", message, "text-info-emphasis");
     };
 
     $scope.successModal = function(message) {
+        $scope.show_modal_confirm_icon = false;
+        $scope.show_modal_alert_icon = false;
+        $scope.show_modal_success_icon = true;
+        $scope.show_modal_error_icon = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("SUCCESS", message, "text-success");
     };
 
     $scope.errorModal = function(message) {
+        $scope.show_modal_confirm_icon = false;
+        $scope.show_modal_alert_icon = false;
+        $scope.show_modal_success_icon = false;
+        $scope.show_modal_error_icon = true;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("ERROR", message, "text-danger");
