@@ -1,4 +1,5 @@
 var total_blocked = 0;
+var url_blocked = new Map();
 
 chrome.contextMenus.removeAll(function() {
   chrome.contextMenus.create({
@@ -85,17 +86,34 @@ chrome.contextMenus.removeAll(function() {
 });
 
 function blockRequest(details) {
-  total_blocked = total_blocked + 1;
-
-  chrome.storage.local.set({'total_blocked': total_blocked}, function() {
-
-  });
+  increaseUrlBlocked(details);
+  increaseTotalBlocked();
 
   console.log("Blocked #" + total_blocked + ": " + details.url);
 
   return {
     cancel: true
   };
+}
+
+function increaseUrlBlocked(details) {
+  if (url_blocked[details.url] === undefined) {
+    url_blocked[details.url] = 1;
+  } else {
+    url_blocked[details.url] = url_blocked[details.url] + 1;
+  }
+
+  chrome.storage.local.set({'url_blocked': url_blocked}, function() {
+  
+  });
+}
+
+function increaseTotalBlocked() {
+  total_blocked = total_blocked + 1;
+
+  chrome.storage.local.set({'total_blocked': total_blocked}, function() {
+
+  });
 }
 
 function updateFilters(urls) {
@@ -137,9 +155,14 @@ function save(newPatterns, callback) {
 }
 
 load(function(p) {
+  // chrome.storage.local.get(console.log)
+  // view the storage being used by a Chrome extension
+
   patterns = p;
 
   total_blocked = total_blocked;
+
+  url_blocked = url_blocked;
 
   if (patterns.length === 0) {
     is_empty = true;
@@ -157,6 +180,19 @@ load(function(p) {
     } else {
       // if total_block contains a value that's not undefined
       total_blocked = data.total_blocked;
+    }
+  });
+
+  chrome.storage.local.get('url_blocked', function(data) {
+    // initial value of url_blocked
+    if (data.url_blocked === undefined) {
+      // if url_blocked is undefined
+      chrome.storage.local.set({'url_blocked': url_blocked}, function() {
+  
+      });
+    } else {
+      // if url_blocked contains a value that's not undefined
+      url_blocked = data.url_blocked;
     }
   });
 
