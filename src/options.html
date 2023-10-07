@@ -17,7 +17,7 @@
           <h2 class="header-text"><img class="logo" src="images/extension_icons/icon-128.png" width="60" height="60"/><b style="padding-left: 2.25em;">HTTP Request Blocker</b></h2>
         </div>
       </div>
-      <hr class="hr-bar-top-bottom"/>
+      <hr class="hr-bar-top"/>
       <div class="content">
         <div class="vr"></div>
         <div class="content-patterns">
@@ -51,11 +51,12 @@
             <h2 class="patterns-empty-text text-danger text-center" ng-if="is_empty">
               <img src="images/misc/bug.svg" width="50"/>
               <br>
-              <u>Your patterns seems to be empty.<br>Try adding some patterns first.</u></h2>
+              <u>Your patterns seems to be empty.<br>Try adding some patterns first.</u>
+            </h2>
             <table class="table table-hover">
               <tr ng-repeat="u in patterns">
                 <td class="pattern">
-                  <div>
+                  <div title="Icon">
                     <button class="btn btn-info" disabled>
                       <img src="https://s2.googleusercontent.com/s2/favicons?domain={{ u.pattern.substring(6, u.pattern.length-2) }}">
                     </button>
@@ -80,6 +81,13 @@
               <img src="images/misc/github.svg"/>
               &nbsp;
               GitHub Repo
+            </a>
+          </div>
+          <div class="d-grid gap-2">
+            <a class="btn btn-info" href="history.html" role="button" title="URL blocked history page">
+              <img src="images/misc/clock-history.svg"/>
+              &nbsp;
+              History
             </a>
           </div>
           <div class="d-grid gap-2">
@@ -165,10 +173,10 @@
         </div>
         <div class="vr"></div>
       </div>
-      <hr class="hr-bar-top-bottom"/>
-      <div class="header">
+      <hr class="hr-bar-bottom"/>
+      <div class="footer">
         <div>
-          <h2 class="header-text">
+          <h2 class="footer-text">
             <b>
               Total Blocked Request(s): <u class="text-danger">{{total_blocked}}</u>
               <img src="images/misc/shield-fill-x.svg" width="35"/>

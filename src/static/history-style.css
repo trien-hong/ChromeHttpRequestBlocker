@@ -55,25 +55,15 @@ hr {
     justify-content: space-between;
 }
 
-.content-patterns-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.patterns-empty-text {
-    padding-top: 5em;
-}
-
 .content-patterns {
     border-style: solid;
     padding: 1em;
     background-color: #C4EBC4;
-    width: 800px;
+    width: 825px;
 }
 
 .patterns {
-    height: 575px;
+    height: 500px;
 }
 
 .pattern {
@@ -82,10 +72,19 @@ hr {
     justify-content: space-between;
 }
 
-.pattern-input {
+.pattern-input-one {
     width: 100%;
     padding-left: 7px;
-    padding-right: 7px;
+}
+
+.pattern-input-two {
+    width: 15%;
+    padding-left: 7px;
+}
+
+.pattern-input-three {
+    width: 60%;
+    padding-left: 7px;
 }
 
 .content-buttons {
