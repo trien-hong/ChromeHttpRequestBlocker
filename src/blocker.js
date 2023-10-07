@@ -97,10 +97,18 @@ function blockRequest(details) {
 }
 
 function increaseUrlBlocked(details) {
+  var today = new Date();
+  var timeStamp = (String(today.getMonth() + 1).padStart(2, '0') + "/" +
+    String(today.getDate()).padStart(2, '0') + "/" +
+    today.getFullYear() + " @ " +
+    today.getHours() + ":" +
+    today.getMinutes() + ":" +
+    today.getSeconds() + " UTC");
+
   if (url_blocked[details.url] === undefined) {
-    url_blocked[details.url] = 1;
+    url_blocked[details.url] = [1, timeStamp];
   } else {
-    url_blocked[details.url] = url_blocked[details.url] + 1;
+    url_blocked[details.url] = [url_blocked[details.url][0] + 1, timeStamp];
   }
 
   chrome.storage.local.set({'url_blocked': url_blocked}, function() {
