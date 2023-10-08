@@ -16,6 +16,11 @@
         <div>
           <h2 class="header-text"><img class="logo" src="images/extension_icons/icon-128.png" width="60" height="60"/><b style="padding-left: 2.25em;">HTTP Request Blocker</b></h2>
         </div>
+        <div>
+          <h3 class="header-text">
+            <b><u>Options Page</u></b>
+          </h3>
+        </div>
       </div>
       <hr class="hr-bar-top"/>
       <div class="content">
@@ -46,7 +51,9 @@
               </button>
             </div>
           </div>
-          <hr>
+          <div>
+            <hr>
+          </div>
           <div class="patterns overflow-x-hidden overflow-y-auto">
             <h2 class="patterns-empty-text text-danger text-center" ng-if="is_empty">
               <img src="images/misc/bug.svg" width="50"/>
@@ -58,7 +65,7 @@
                 <td class="pattern">
                   <div title="Icon">
                     <button class="btn btn-info" disabled>
-                      <img src="https://s2.googleusercontent.com/s2/favicons?domain={{ u.pattern.substring(6, u.pattern.length-2) }}">
+                      <img src="https://s2.googleusercontent.com/s2/favicons?domain={{u.pattern.substring(6, u.pattern.length-2)}}">
                     </button>
                   </div>
                   <div class="pattern-input">
@@ -87,7 +94,7 @@
             <a class="btn btn-info" href="history.html" role="button" title="URL blocked history page">
               <img src="images/misc/clock-history.svg"/>
               &nbsp;
-              History
+              History Page
             </a>
           </div>
           <div class="d-grid gap-2">

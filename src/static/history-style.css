@@ -49,6 +49,12 @@ hr {
     border: 1px solid #000000;
 }
 
+.content-patterns-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .content {
     display: flex;
     flex-direction: row;
