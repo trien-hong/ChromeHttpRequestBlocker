@@ -55,6 +55,10 @@ hr {
     justify-content: space-between;
 }
 
+.patterns-empty-text {
+    padding-top: 4em;
+}
+
 .content {
     display: flex;
     flex-direction: row;

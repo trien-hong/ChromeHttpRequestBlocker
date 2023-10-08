@@ -1,5 +1,5 @@
 var total_blocked = 0;
-var url_blocked = new Map();
+var url_blocked = {};
 
 chrome.contextMenus.removeAll(function() {
   chrome.contextMenus.create({

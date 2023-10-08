@@ -46,6 +46,11 @@
             <hr>
           </div>
           <div class="patterns overflow-x-hidden overflow-y-auto">
+            <h2 class="patterns-empty-text text-danger text-center" ng-if="is_empty">
+              <img src="images/misc/bug.svg" width="50"/>
+              <br>
+              <u>The extension has not blocked any website yet. <br>Therefore, history is empty.</u>
+            </h2>
             <table class="table table-hover">
               <tr ng-repeat="(key, value) in url_blocked">
                 <td class="pattern">

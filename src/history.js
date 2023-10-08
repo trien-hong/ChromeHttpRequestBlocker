@@ -45,6 +45,12 @@ app.controller('HistoryController', function($scope) {
         }
     });
 
+    if (Object.keys($scope.url_blocked).length === 0) {
+        $scope.is_empty = true;
+    } else {
+        $scope.is_empty = false;
+    }
+
     // I will try to find a better solution for all these different modals later (there will be more)
 
     $scope.alertModal = function(message) {
