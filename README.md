@@ -160,9 +160,10 @@ More info here:<br>
 [https://developer.chrome.com/docs/devtools/](https://developer.chrome.com/docs/devtools/) and [https://developer.chrome.com/docs/devtools/network/](https://developer.chrome.com/docs/devtools/network/)
 
 <details>
-    <summary><b>Click to view</b></summary>
+    <summary><b>Click to view for what to look for</b></summary>
     <br>
-    Here is an example of what to look for. The website in question is from https://www.fandom.com/. Most of the time it's just assets for the webpage like images, fonts, data, etc. Other times it is not.
+    Here is an example of what to look for. The website in question is from https://www.fandom.com/.<br>
+    Most of the time it's just assets for the webpage like images, fonts, data, etc. Other times it is not.
     <br><br>
     Note the number of request being made. The website made 248 request.<br>
     The extension was pasued and no requests were being blocked.
@@ -173,6 +174,9 @@ More info here:<br>
     The extension was not pasued and certain requests were being blocked.
     <br>
     <img src="https://i.imgur.com/I9xOpzk.jpg"/>
+    <br><br>
+    This is what a blocked site looks like.
+    <img src="https://i.imgur.com/u4K2FWH.png">
 </details>
 
 Example of Valid Patterns (when adding manually)
@@ -180,7 +184,7 @@ Example of Valid Patterns (when adding manually)
 <b>NOTE:</b> The extension will automatically add in <code>\*://\*.</code> and <code>/\*</code> for you when adding your sites manually. You do not need to add <code>\*://\*.</code> or <code>/\*</code> to your patterns. Just the domain/second-level domain, subdomain(s), IP address, or file path are all you need. When adding/removing manually please remember to click the save button after you're done. Matching exact URLs is also now possible.
 <br>
 <details>
-    <summary><b>Click to view</b></summary>
+    <summary><b>Click to view example of valid patterns</b></summary>
     <br>
     Here are some valid exmaples of domains/second-level domains, subdomains, file path, and IP addresses
     <ul>
@@ -239,12 +243,15 @@ Images
     <a href="https://imgur.com/a/yaMN7y7" target="_blank">Imgur link</a>
     <br>
     <h3>NEW images</h3>
-    <img src="https://i.imgur.com/ptFZZKf.png">
-    <img src="https://i.imgur.com/r8k8CIc.png">
-    <img src="https://i.imgur.com/RtBu73R.png">
-    <img src="https://i.imgur.com/gbXkh9C.png">
-    <img src="https://i.imgur.com/zi4TX6V.png">
-    <h3>OLD/ORIGINAL images | Note that was there no options page to begin with</h3>
+    <img src="https://i.imgur.com/Dg4SImW.png">
+    <img src="https://i.imgur.com/Jq2scex.png">
+    <img src="https://i.imgur.com/WTvI8w7.png">
+    <img src="https://i.imgur.com/OSLBh34.png">
+    <img src="https://i.imgur.com/PpvjhXT.png">
+    <img src="https://i.imgur.com/13veyqp.png">
+    <img src="https://i.imgur.com/7Sx5FQt.png">
+    <img src="https://i.imgur.com/FaMbajQ.png">
+    <h3>OLD/ORIGINAL images | there was no options or history page to begin with</h3>
     <img src="https://i.imgur.com/WTyicC6.png">
     <img src="https://i.imgur.com/wXMKDmJ.png">
 </details>
