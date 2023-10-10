@@ -1,5 +1,5 @@
 var total_blocked = 0;
-var url_blocked = {};
+var url_blocked = [{}];
 
 chrome.contextMenus.removeAll(function() {
   chrome.contextMenus.create({
@@ -97,18 +97,23 @@ function blockRequest(details) {
 }
 
 function increaseUrlBlocked(details) {
-  var today = new Date();
-  var timeStamp = (String(today.getMonth() + 1).padStart(2, '0') + "/" +
-    String(today.getDate()).padStart(2, '0') + "/" +
-    today.getFullYear() + " @ " +
-    today.getHours() + ":" +
-    today.getMinutes() + ":" +
-    today.getSeconds() + " UTC");
+  var timeStamp = new Date();
 
-  if (url_blocked[details.url] === undefined) {
-    url_blocked[details.url] = [1, timeStamp];
-  } else {
-    url_blocked[details.url] = [url_blocked[details.url][0] + 1, timeStamp];
+  // pagination/paging
+  // each element in the array will contain an object with max length of 100
+  for (var i = 0; i < url_blocked.length; i++) {
+    if (url_blocked[i][details.url] !== undefined) {
+      url_blocked[i][details.url] = [url_blocked[i][details.url][0] + 1, timeStamp.toLocaleString().replace(",", " @")];
+      break;
+    } else if (url_blocked[i][details.url] === undefined) {
+      if (Object.keys(url_blocked[i]).length !== 100) {
+        url_blocked[i][details.url] = [1, timeStamp.toLocaleString().replace(",", " @")];
+        if (Object.keys(url_blocked[i]).length === 100) {
+          url_blocked.push({});
+        }
+        break;
+      }
+    }
   }
 
   chrome.storage.local.set({'url_blocked': url_blocked}, function() {

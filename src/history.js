@@ -7,6 +7,10 @@ app.controller('HistoryController', function($scope) {
 
     $scope.url_blocked = $scope.backgroundPage.url_blocked;
 
+    $scope.page_number = 0;
+
+    $scope.page = $scope.url_blocked[$scope.page_number];
+
     $scope.button_is_pause_color = $scope.backgroundPage.button_is_pause_color;
 
     $scope.is_pause = $scope.backgroundPage.is_pause;
@@ -45,10 +49,47 @@ app.controller('HistoryController', function($scope) {
         }
     });
 
-    if (Object.keys($scope.url_blocked).length === 0) {
+    if (Object.keys($scope.url_blocked[0]).length === 0) {
         $scope.is_empty = true;
+        $scope.show_page_arrow_left_icon = false;
+        $scope.show_page_arrow_right_icon = false;
     } else {
         $scope.is_empty = false;
+        $scope.show_page_arrow_left_icon = false;
+        
+        if ($scope.page_number === $scope.url_blocked.length - 1) {
+            $scope.show_page_arrow_right_icon = false;
+        } else {
+            $scope.show_page_arrow_right_icon = true;
+        }
+    }
+
+    $scope.decreasePageNumber = function() {
+        $scope.page_number = $scope.page_number - 1;
+        $scope.page = $scope.url_blocked[$scope.page_number];
+
+        $scope.checkArrowIcons();
+    }
+
+    $scope.increasePageNumber = function() {
+        $scope.page_number = $scope.page_number + 1;
+        $scope.page = $scope.url_blocked[$scope.page_number];
+
+        $scope.checkArrowIcons();
+    }
+
+    $scope.checkArrowIcons = function() {
+        if ($scope.page_number === 0) {
+            $scope.show_page_arrow_left_icon = false;
+        } else {
+            $scope.show_page_arrow_left_icon = true;
+        }
+
+        if ($scope.page_number === $scope.url_blocked.length - 1) {
+            $scope.show_page_arrow_right_icon = false;
+        } else {
+            $scope.show_page_arrow_right_icon = true;
+        }
     }
 
     // I will try to find a better solution for all these different modals later (there will be more)

@@ -33,7 +33,7 @@
               </button>
             </div>
             <div class="pattern-input-one">
-              <input type="text" class="form-control" value="Exact URL of what was blocked" title="Exact URL" disabled/>
+              <input type="text" class="form-control" value="Exact URL of what was blocked" title="Exact URL of what was blocked" disabled/>
             </div>
             <div class="pattern-input-two">
               <input type="text" class="form-control text-center" value="#" title="Number of times blocked" disabled/>
@@ -52,11 +52,11 @@
               <u>The extension has not blocked any website yet. <br>Therefore, history is empty.</u>
             </h2>
             <table class="table table-hover">
-              <tr ng-repeat="(key, value) in url_blocked">
+              <tr ng-repeat="(key, value) in page">
                 <td class="pattern">
                   <div title="Icon">
                     <button class="btn btn-info" disabled>
-                      <img src="https://s2.googleusercontent.com/s2/favicons?domain={{key}}">
+                      <img class="mb-1" src="https://s2.googleusercontent.com/s2/favicons?domain={{key}}">
                     </button>
                   </div>
                   <div class="pattern-input-one">
@@ -72,12 +72,28 @@
               </tr>
             </table>
           </div>
+          <div>
+            <hr>
+          </div>
+          <div class="paging text-center">
+            <h5 class="my-0 py-0">
+              <a class="btn btn-primary" role="button" title="Decrease page number" ng-if="show_page_arrow_left_icon" ng-click="decreasePageNumber()">
+                <img class="mb-1" src="images/misc/arrow-left.svg"/>
+              </a>
+              &nbsp;
+              Page #<u>{{page_number + 1}}</u>
+              &nbsp;
+              <a class="btn btn-primary" role="button" title="Increase page number" ng-if="show_page_arrow_right_icon" ng-click="increasePageNumber()">
+                <img class="mb-1" src="images/misc/arrow-right.svg"/>
+              </a>
+            </h5>
+          </div>
         </div>
         <div class="vr"></div>
         <div class="content-buttons">
           <div class="d-grid gap-2">
             <a class="btn btn-light" target="_blank" rel="noopener noreferrer" href="https://github.com/trien-hong/ChromeHttpRequestBlocker" role="button" title="Extension's repository">
-              <img src="images/misc/github.svg"/>
+              <img class="mb-1" src="images/misc/github.svg"/>
               &nbsp;
               GitHub Repo
             </a>
@@ -87,7 +103,7 @@
           </div>
           <div class="d-grid gap-2">
             <a class="btn btn-secondary" href="options.html" role="button" title="Options page">
-              <img src="images/misc/gear.svg"/>
+              <img class="mb-1" src="images/misc/gear.svg"/>
               &nbsp;
               Options Page
             </a>
@@ -97,7 +113,7 @@
           </div>
           <div class="d-grid gap-2">
             <button class="btn {{button_is_pause_color}}" title="{{is_pause}}" ng-click="pause()">
-              <img src="images/misc/pause-circle.svg"/>
+              <img class="mb-1" src="images/misc/pause-circle.svg"/>
               &nbsp;
               {{is_pause}}
             </button>
@@ -108,7 +124,7 @@
           <!-- to be implemented clearPatterns() -->
           <div class="d-grid gap-2">
             <button class="btn btn-warning" ng-click="clearPatterns()" title="Clear your patterns">
-              <img src="images/misc/x-octagon.svg"/>
+              <img class="mb-1" src="images/misc/x-octagon.svg"/>
               &nbsp;
               Clear Patterns
             </button>
@@ -118,11 +134,11 @@
           </div>
           <div class="text-center">
             <p>
-              <img src="images/misc/git.svg"/>
+              <img class="mb-1" src="images/misc/git.svg"/>
               &nbsp;
               <b>Extension's Version | v{{extension_version}}</b>
               &nbsp;
-              <img src="images/misc/git.svg"/>
+              <img class="mb-1" src="images/misc/git.svg"/>
             </p>
           </div>
         </div>
@@ -135,7 +151,7 @@
             <div class="modal-header">
               <h4 class="modal-title"><u><b>{{modalTitle}}</b></u></h4>
               &nbsp;&nbsp;
-              <img src="images/misc/exclamation-octagon.svg" width="23" ng-if="show_modal_alert_icon"/>
+              <img class="mb-1" src="images/misc/exclamation-octagon.svg" width="23" ng-if="show_modal_alert_icon"/>
               <button type="button" class="btn-close" data-bs-dismiss="modal" title="CLOSE ALERT"></button>
             </div>
             <div class="modal-body">
