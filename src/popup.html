@@ -14,13 +14,13 @@
     <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 500px; height: 500px">
       <div class="header pt-3">
         <div>
-          <img src="images/extension_icons/icon-128.png" width="45" height="45"/>
+          <img class="mb-1" src="images/extension_icons/icon-128.png" width="45" height="45"/>
         </div>
         <div>
           <h1><b>HTTP Request Blocker</b></h1>
         </div>
         <div>
-          <img src="images/extension_icons/icon-128.png" width="45" height="45"/>
+          <img class="mb-1" src="images/extension_icons/icon-128.png" width="45" height="45"/>
         </div>
       </div>
       <div>
@@ -29,7 +29,7 @@
       <div class="text-center">
         <div>
           <button class="btn btn-info" disabled>
-            <img src="https://s2.googleusercontent.com/s2/favicons?domain={{website}}" width="25px" height="25px">
+            <img class="mb-1" src="https://s2.googleusercontent.com/s2/favicons?domain={{website}}" width="25px" height="25px">
           </button>
           <h2 class="website"><u>{{website}}</u><h2>
         </div>
@@ -40,12 +40,12 @@
       <div class="text-center">
         <h3>{{currentSiteStatus}}</h3>
         <button class="btn btn-primary" ng-click="addCurrentSite()" ng-if="is_not_blocked" title="Block the current site">
-          <img src="images/misc/plus-circle.svg"/>
+          <img class="mb-1" src="images/misc/plus-circle.svg"/>
           &nbsp;
           Add Current Site
         </button>
         <button class="btn btn-primary" ng-click="unblockCurrentSite()" ng-if="is_blocked" title="Unblock the current site">
-          <img src="images/misc/x-circle.svg"/>
+          <img class="mb-1" src="images/misc/x-circle.svg"/>
           &nbsp;
           Unblock Current Site
         </button>
@@ -62,21 +62,21 @@
       <div class="content-buttons pb-3">
         <div>
           <button class="btn {{button_is_pause_color}}" title="{{is_pause}}" ng-click="pause()">
-            <img src="images/misc/pause-circle.svg"/>
+            <img class="mb-1" src="images/misc/pause-circle.svg"/>
             &nbsp;
             {{is_pause}}
           </button>
         </div>
         <div>
           <a class="btn btn-secondary" target="_blank" rel="noopener noreferrer" href="options.html" role="button" title="Options page">
-            <img src="images/misc/gear.svg"/>
+            <img class="mb-1" src="images/misc/gear.svg"/>
             &nbsp;
             Options
           </a>
         </div>
         <div>
           <a class="btn btn-light" target="_blank" rel="noopener noreferrer" href="https://github.com/trien-hong/ChromeHttpRequestBlocker" role="button" title="Extension's repository">
-            <img src="images/misc/github.svg"/>
+            <img class="mb-1" src="images/misc/github.svg"/>
             &nbsp;
             GitHub Repo
           </a>
@@ -86,12 +86,13 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title"><u><b>{{modalTitle}}</b></u></h4>
-              &nbsp;&nbsp;
-              <img src="images/misc/patch-question.svg" width="23" ng-if="show_modal_confirm_icon"/>
-              <img src="images/misc/exclamation-octagon.svg" width="23" ng-if="show_modal_alert_icon"/>
-              <img src="images/misc/check2-circle.svg" width="23" ng-if="show_modal_success_icon"/>
-              <img src="images/misc/bug.svg" width="23" ng-if="show_modal_error_icon"/>
+              <h4 class="modal-title">
+                <u><b>{{modalTitle}}</b></u>
+                <img class="mb-1" src="images/misc/patch-question.svg" width="23" ng-if="show_modal_confirm_icon"/>
+                <img class="mb-1" src="images/misc/exclamation-octagon.svg" width="23" ng-if="show_modal_alert_icon"/>
+                <img class="mb-1" src="images/misc/check2-circle.svg" width="23" ng-if="show_modal_success_icon"/>
+                <img class="mb-1" src="images/misc/bug.svg" width="23" ng-if="show_modal_error_icon"/>
+              </h4>
               <button type="button" class="btn-close" data-bs-dismiss="modal" title="CLOSE ALERT"></button>
             </div>
             <div class="modal-body">

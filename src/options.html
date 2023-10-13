@@ -29,11 +29,11 @@
           <div class="content-patterns-header">
             <div>
               <button class="btn btn-secondary" ng-click="scrollUp()" title="Scroll up">
-                <img src="images/misc/arrow-up.svg"/>
+                <img class="mb-1" src="images/misc/arrow-up.svg"/>
                 &nbsp;
                 SCROLL UP
                 &nbsp;
-                <img src="images/misc/arrow-up.svg"/>
+                <img class="mb-1" src="images/misc/arrow-up.svg"/>
               </button>
             </div>
             <div class="vr"></div>
@@ -43,11 +43,11 @@
             <div class="vr"></div>
             <div>
               <button class="btn btn-secondary" ng-click="scrollDown()" title="Scroll down">
-                <img src="images/misc/arrow-down.svg"/>
+                <img class="mb-1" src="images/misc/arrow-down.svg"/>
                 &nbsp;
                 SCROLL DOWN
                 &nbsp;
-                <img src="images/misc/arrow-down.svg"/>
+                <img class="mb-1" src="images/misc/arrow-down.svg"/>
               </button>
             </div>
           </div>
@@ -65,7 +65,7 @@
                 <td class="pattern">
                   <div title="Icon">
                     <button class="btn btn-info" disabled>
-                      <img src="https://s2.googleusercontent.com/s2/favicons?domain={{u.pattern.substring(6, u.pattern.length-2)}}">
+                      <img class="mb-1" src="https://s2.googleusercontent.com/s2/favicons?domain={{u.pattern.substring(6, u.pattern.length-2)}}">
                     </button>
                   </div>
                   <div class="pattern-input">
@@ -73,7 +73,7 @@
                   </div>
                   <div>
                     <button type="button" class="btn btn-danger" ng-click="removeByIndex(u)" title="Delete Pattern">
-                      <img src="images/misc/trash.svg" width="20"/>
+                      <img class="mb-1" src="images/misc/trash.svg" width="16"/>
                     </button>
                   </div>
                 </td>
@@ -85,28 +85,28 @@
         <div class="content-buttons">
           <div class="d-grid gap-2">
             <a class="btn btn-light" target="_blank" rel="noopener noreferrer" href="https://github.com/trien-hong/ChromeHttpRequestBlocker" role="button" title="Extension's repository">
-              <img src="images/misc/github.svg"/>
+              <img class="mb-1" src="images/misc/github.svg"/>
               &nbsp;
               GitHub Repo
             </a>
           </div>
           <div class="d-grid gap-2">
             <a class="btn btn-info" href="history.html" role="button" title="URL blocked history page">
-              <img src="images/misc/clock-history.svg"/>
+              <img class="mb-1" src="images/misc/clock-history.svg"/>
               &nbsp;
               History Page
             </a>
           </div>
           <div class="d-grid gap-2">
             <button class="btn {{button_is_pause_color}}" title="{{is_pause}}" ng-click="pause()">
-              <img src="images/misc/pause-circle.svg"/>
+              <img class="mb-1" src="images/misc/pause-circle.svg"/>
               &nbsp;
               {{is_pause}}
             </button>
           </div>
           <div class="d-grid gap-2">
             <button class="btn btn-secondary" title="Reset your total blocked request to 0" ng-click="resetTotalBlocked()">
-              <img src="images/misc/arrow-clockwise.svg"/>
+              <img class="mb-1" src="images/misc/arrow-clockwise.svg"/>
               &nbsp;
               Reset Total Blocked
             </button>
@@ -116,21 +116,21 @@
           </div>
           <div class="d-grid gap-2">
             <button class="btn btn-primary" ng-click="add()" title="Manually enter new site">
-              <img src="images/misc/plus-circle.svg"/>
+              <img class="mb-1" src="images/misc/plus-circle.svg"/>
               &nbsp;
               Add New Site
             </button>
           </div>
           <div class="d-grid gap-2">
             <button class="btn btn-primary" ng-click="save()" title="Save your newly added/edited site(s)">
-              <img src="images/misc/save2.svg"/>
+              <img class="mb-1" src="images/misc/save2.svg"/>
               &nbsp;
               Save Patterns
             </button>
           </div>
           <div class="d-grid gap-2">
             <button class="btn btn-primary" ng-click="exportPatterns()" title="Download your patterns">
-              <img src="images/misc/cloud-download.svg"/>
+              <img class="mb-1" src="images/misc/cloud-download.svg"/>
               &nbsp;
               Export Patterns
             </button>
@@ -140,14 +140,14 @@
           </div>
           <div class="d-grid gap-2">
             <button class="btn btn-warning" ng-click="searchAndRemove()" title="Search and remove a specific pattern">
-              <img src="images/misc/search.svg"/>
+              <img class="mb-1" src="images/misc/search.svg"/>
               &nbsp;
               Search & Remove Pattern
             </button>
           </div>
           <div class="d-grid gap-2">
             <button class="btn btn-warning" ng-click="clearPatterns()" title="Clear your patterns">
-              <img src="images/misc/x-octagon.svg"/>
+              <img class="mb-1" src="images/misc/x-octagon.svg"/>
               &nbsp;
               Clear Patterns
             </button>
@@ -157,7 +157,7 @@
           </div>
           <div class="d-grid gap-2">
             <button class="btn btn-primary" ng-click="uploadFile()" title="Upload selected file">
-              <img src="images/misc/cloud-upload.svg"/>
+              <img class="mb-1" src="images/misc/cloud-upload.svg"/>
               &nbsp;
               Upload File (.txt)
             </button>
@@ -170,11 +170,11 @@
           </div>
           <div class="text-center">
             <p>
-              <img src="images/misc/git.svg"/>
+              <img class="mb-1" src="images/misc/git.svg"/>
               &nbsp;
               <b>Extension's Version | v{{extension_version}}</b>
               &nbsp;
-              <img src="images/misc/git.svg"/>
+              <img class="mb-1" src="images/misc/git.svg"/>
             </p>
           </div>
         </div>
@@ -186,7 +186,7 @@
           <h2 class="footer-text">
             <b>
               Total Blocked Request(s): <u class="text-danger">{{total_blocked}}</u>
-              <img src="images/misc/shield-fill-x.svg" width="35"/>
+              <img class="mb-1" src="images/misc/shield-fill-x.svg" width="35"/>
             </b>
           <h2>
         </div>
@@ -195,13 +195,14 @@
         <div class="modal-dialog modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title"><u><b>{{modalTitle}}</b></u></h4>
-              &nbsp;&nbsp;
-              <img src="images/misc/keyboard.svg" width="33" ng-if="show_modal_input_icon"/>
-              <img src="images/misc/patch-question.svg" width="23" ng-if="show_modal_confirm_icon"/>
-              <img src="images/misc/exclamation-octagon.svg" width="23" ng-if="show_modal_alert_icon"/>
-              <img src="images/misc/check2-circle.svg" width="23" ng-if="show_modal_success_icon"/>
-              <img src="images/misc/bug.svg" width="23" ng-if="show_modal_error_icon"/>
+              <h4 class="modal-title">
+                <u><b>{{modalTitle}}</b></u>
+                <img class="mb-1" src="images/misc/keyboard.svg" width="33" ng-if="show_modal_input_icon"/>
+                <img class="mb-1" src="images/misc/patch-question.svg" width="23" ng-if="show_modal_confirm_icon"/>
+                <img class="mb-1" src="images/misc/exclamation-octagon.svg" width="23" ng-if="show_modal_alert_icon"/>
+                <img class="mb-1" src="images/misc/check2-circle.svg" width="23" ng-if="show_modal_success_icon"/>
+                <img class="mb-1" src="images/misc/bug.svg" width="23" ng-if="show_modal_error_icon"/>
+              </h4>
               <button type="button" class="btn-close" data-bs-dismiss="modal" title="CLOSE ALERT"></button>
             </div>
             <div class="modal-body">
