@@ -11,6 +11,21 @@ app.controller('HistoryController', function($scope) {
 
     $scope.page = $scope.url_blocked[$scope.page_number];
 
+    if (Object.keys($scope.url_blocked[0]).length === 0) {
+        $scope.is_empty = true;
+        $scope.show_page_arrow_left_icon = false;
+        $scope.show_page_arrow_right_icon = false;
+    } else {
+        $scope.is_empty = false;
+        $scope.show_page_arrow_left_icon = false;
+        
+        if ($scope.page_number === $scope.url_blocked.length - 1) {
+            $scope.show_page_arrow_right_icon = false;
+        } else {
+            $scope.show_page_arrow_right_icon = true;
+        }
+    }
+
     $scope.button_is_pause_color = $scope.backgroundPage.button_is_pause_color;
 
     $scope.is_pause = $scope.backgroundPage.is_pause;
@@ -49,34 +64,19 @@ app.controller('HistoryController', function($scope) {
         }
     });
 
-    if (Object.keys($scope.url_blocked[0]).length === 0) {
-        $scope.is_empty = true;
-        $scope.show_page_arrow_left_icon = false;
-        $scope.show_page_arrow_right_icon = false;
-    } else {
-        $scope.is_empty = false;
-        $scope.show_page_arrow_left_icon = false;
-        
-        if ($scope.page_number === $scope.url_blocked.length - 1) {
-            $scope.show_page_arrow_right_icon = false;
-        } else {
-            $scope.show_page_arrow_right_icon = true;
-        }
-    }
-
     $scope.decreasePageNumber = function() {
         $scope.page_number = $scope.page_number - 1;
         $scope.page = $scope.url_blocked[$scope.page_number];
 
         $scope.checkArrowIcons();
-    }
+    };
 
     $scope.increasePageNumber = function() {
         $scope.page_number = $scope.page_number + 1;
         $scope.page = $scope.url_blocked[$scope.page_number];
 
         $scope.checkArrowIcons();
-    }
+    };
 
     $scope.checkArrowIcons = function() {
         if ($scope.page_number === 0) {
@@ -90,15 +90,57 @@ app.controller('HistoryController', function($scope) {
         } else {
             $scope.show_page_arrow_right_icon = true;
         }
-    }
+    };
+
+    $scope.clearHistory = function() {
+        $scope.confirmModal("Are you sure you want to clear your history?<br><br>Depending on the size of your history, it may take some time to load.", "clearHistoryConfirmed");
+    };
+
+    $scope.clearHistoryConfirmed = function() {
+        $scope.is_empty = true;
+        $scope.show_page_arrow_left_icon = false;
+        $scope.show_page_arrow_right_icon = false;
+        $scope.url_blocked = undefined;
+        $scope.page_number = 0;
+        $scope.page = $scope.url_blocked;
+
+        $scope.successModal("Your history has been cleared.");
+
+        chrome.runtime.sendMessage({type: "clear-url_blocked"});
+    };
 
     // I will try to find a better solution for all these different modals later (there will be more)
 
-    $scope.alertModal = function(message) {
-        $scope.show_modal_alert_icon = true;
+    $scope.confirmModal = function(message, functionVariable, parameterVariable) {
+        $scope.show_modal_confirm_icon = true;
+        $scope.show_modal_alert_icon = false;
+        $scope.function = functionVariable;
+        $scope.parameter = parameterVariable;
+        $scope.show_modal_success_icon = false;
         $scope.show_modal_message_class = true;
+        $scope.show_modal_confirm_button = true;
+        $scope.show_modal_close_button = false;
+        $scope.modal("PLEASE CONFIRM", message, "text-black");
+    };
+
+    $scope.alertModal = function(message) {
+        $scope.show_modal_confirm_icon = false;
+        $scope.show_modal_alert_icon = true;
+        $scope.show_modal_success_icon = false;
+        $scope.show_modal_message_class = true;
+        $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("ALERT", message, "text-info-emphasis");
+    };
+
+    $scope.successModal = function(message) {
+        $scope.show_modal_confirm_icon = false;
+        $scope.show_modal_alert_icon = false;
+        $scope.show_modal_success_icon = true;
+        $scope.show_modal_message_class = true;
+        $scope.show_modal_confirm_button = false;
+        $scope.show_modal_close_button = true;
+        $scope.modal("SUCCESS", message, "text-success");
     };
 
     $scope.modal = function(title, message, modalClass) {

@@ -39,7 +39,7 @@
               <input type="text" class="form-control text-center" value="#" title="Number of times blocked" disabled/>
             </div>
             <div class="pattern-input-three">
-              <input type="text" class="form-control text-center" value="Timestamp/last blocked" title="Timestamp/last blocked" disabled/>
+              <input type="text" class="form-control text-center" value="Timestamp/last blocked" title="Timestamp/last blocked (local time)" disabled/>
             </div>
           </div>
           <div>
@@ -49,7 +49,7 @@
             <h2 class="patterns-empty-text text-danger text-center" ng-if="is_empty">
               <img src="images/misc/bug.svg" width="50"/>
               <br>
-              <u>The extension has not blocked any website yet. <br>Therefore, history is empty.</u>
+              <u>The extension has not blocked any website yet.<br>Therefore, history is empty.</u>
             </h2>
             <table class="table table-hover">
               <tr ng-repeat="(key, value) in page">
@@ -121,12 +121,11 @@
           <div>
             <hr>
           </div>
-          <!-- to be implemented clearPatterns() -->
           <div class="d-grid gap-2">
-            <button class="btn btn-warning" ng-click="clearPatterns()" title="Clear your patterns">
+            <button class="btn btn-warning" ng-click="clearHistory()" title="Clear your history">
               <img class="mb-1" src="images/misc/x-octagon.svg"/>
               &nbsp;
-              Clear Patterns
+              Clear History
             </button>
           </div>
           <div>
@@ -149,15 +148,20 @@
         <div class="modal-dialog modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title"><u><b>{{modalTitle}}</b></u></h4>
-              &nbsp;&nbsp;
-              <img class="mb-1" src="images/misc/exclamation-octagon.svg" width="23" ng-if="show_modal_alert_icon"/>
+              <h4 class="modal-title">
+                <u><b>{{modalTitle}}</b></u>
+                <img class="mb-1" src="images/misc/exclamation-octagon.svg" width="23" ng-if="show_modal_alert_icon"/>
+                <img class="mb-1" src="images/misc/patch-question.svg" width="23" ng-if="show_modal_confirm_icon"/>
+                <img class="mb-1" src="images/misc/check2-circle.svg" width="23" ng-if="show_modal_success_icon"/>
+              </h4>
               <button type="button" class="btn-close" data-bs-dismiss="modal" title="CLOSE ALERT"></button>
             </div>
             <div class="modal-body">
               <h5 ng-class="modalClass" ng-if="show_modal_message_class" ng-bind-html="modalMessage"></h5>
             </div>
             <div class="modal-footer">
+              <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[function](parameter)" title="YES">YES</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" ng-if="show_modal_confirm_button" title="NO">NO</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-if="show_modal_close_button" title="CLOSE ALERT">CLOSE</button>
             </div>
           </div>

@@ -229,4 +229,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.type === "reload-background-script") {
     window.location.reload();
   }
+
+  if (request.type === "clear-url_blocked") {
+    url_blocked = [{}];
+    chrome.storage.local.set({'url_blocked': url_blocked}, function() {
+      
+    });
+  }
 });
