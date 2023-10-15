@@ -7,6 +7,8 @@ app.controller('HistoryController', function($scope) {
 
     $scope.url_blocked = $scope.backgroundPage.url_blocked;
 
+    $scope.max_page = $scope.url_blocked.length;
+
     $scope.page_number = 0;
 
     $scope.page = $scope.url_blocked[$scope.page_number];
@@ -78,6 +80,20 @@ app.controller('HistoryController', function($scope) {
         $scope.checkArrowIcons();
     };
 
+    $scope.decreaseMaxPageNumber = function() {
+        $scope.page_number = 0;
+        $scope.page = $scope.url_blocked[$scope.page_number];
+
+        $scope.checkArrowIcons();
+    };
+
+    $scope.increaseMaxPageNumber = function() {
+        $scope.page_number = $scope.max_page - 1;
+        $scope.page = $scope.url_blocked[$scope.page_number];
+
+        $scope.checkArrowIcons();
+    };
+
     $scope.checkArrowIcons = function() {
         if ($scope.page_number === 0) {
             $scope.show_page_arrow_left_icon = false;
@@ -106,6 +122,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_page_arrow_right_icon = false;
         $scope.url_blocked = undefined;
         $scope.page_number = 0;
+        $scope.max_page = 1;
         $scope.page = $scope.url_blocked;
 
         $scope.successModal("Your history has been cleared.");

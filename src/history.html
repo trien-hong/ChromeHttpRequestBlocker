@@ -77,14 +77,20 @@
           </div>
           <div class="paging text-center">
             <h5 class="my-0 py-0">
+              <a class="btn btn-primary" role="button" title="Go to page 1" ng-if="show_page_arrow_left_icon" ng-click="decreaseMaxPageNumber()">
+                <img class="mb-1" src="images/misc/chevron-double-left.svg"/>
+              </a>
               <a class="btn btn-primary" role="button" title="Decrease page number" ng-if="show_page_arrow_left_icon" ng-click="decreasePageNumber()">
                 <img class="mb-1" src="images/misc/arrow-left.svg"/>
               </a>
               &nbsp;
-              Page #<u>{{page_number + 1}}</u>
+              Page: <u title="Current page">{{page_number + 1}}</u> / <u title="Maximum page(s)">{{max_page}}</u>
               &nbsp;
               <a class="btn btn-primary" role="button" title="Increase page number" ng-if="show_page_arrow_right_icon" ng-click="increasePageNumber()">
                 <img class="mb-1" src="images/misc/arrow-right.svg"/>
+              </a>
+              <a class="btn btn-primary" role="button" title="Go to page {{max_page}}" ng-if="show_page_arrow_right_icon" ng-click="increaseMaxPageNumber()">
+                <img class="mb-1" src="images/misc/chevron-double-right.svg"/>
               </a>
             </h5>
           </div>
