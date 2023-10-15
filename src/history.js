@@ -93,7 +93,11 @@ app.controller('HistoryController', function($scope) {
     };
 
     $scope.clearHistory = function() {
-        $scope.confirmModal("Are you sure you want to clear your history?<br><br>Depending on the size of your history, it may take some time to load.", "clearHistoryConfirmed");
+        if ($scope.is_empty === true) {
+            $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to clear.<br><br>History will only update when a URL is blocked.");
+        } else {
+            $scope.confirmModal("Are you sure you want to clear your history?<br><br>Depending on the size of your history, it may take some time to load.", "clearHistoryConfirmed");
+        }
     };
 
     $scope.clearHistoryConfirmed = function() {
@@ -114,9 +118,10 @@ app.controller('HistoryController', function($scope) {
     $scope.confirmModal = function(message, functionVariable, parameterVariable) {
         $scope.show_modal_confirm_icon = true;
         $scope.show_modal_alert_icon = false;
+        $scope.show_modal_success_icon = false;
+        $scope.show_modal_error_icon = false;
         $scope.function = functionVariable;
         $scope.parameter = parameterVariable;
-        $scope.show_modal_success_icon = false;
         $scope.show_modal_message_class = true;
         $scope.show_modal_confirm_button = true;
         $scope.show_modal_close_button = false;
@@ -127,6 +132,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_confirm_icon = false;
         $scope.show_modal_alert_icon = true;
         $scope.show_modal_success_icon = false;
+        $scope.show_modal_error_icon = false;
         $scope.show_modal_message_class = true;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
@@ -137,10 +143,22 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_confirm_icon = false;
         $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = true;
+        $scope.show_modal_error_icon = false;
         $scope.show_modal_message_class = true;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("SUCCESS", message, "text-success");
+    };
+
+    $scope.errorModal = function(message) {
+        $scope.show_modal_confirm_icon = false;
+        $scope.show_modal_alert_icon = false;
+        $scope.show_modal_success_icon = false;
+        $scope.show_modal_error_icon = true;
+        $scope.show_modal_message_class = true;
+        $scope.show_modal_confirm_button = false;
+        $scope.show_modal_close_button = true;
+        $scope.modal("ERROR", message, "text-danger");
     };
 
     $scope.modal = function(title, message, modalClass) {

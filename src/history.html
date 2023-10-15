@@ -17,7 +17,7 @@
           <h2 class="header-text"><img class="logo" src="images/extension_icons/icon-128.png" width="60" height="60"/><b style="padding-left: 2.25em;">HTTP Request Blocker</b></h2>
         </div>
         <div>
-          <h3 class="header-text nav-underline">
+          <h3 class="header-text">
             <b><u>History Page</u></b>
           </h3>
         </div>
@@ -66,7 +66,7 @@
                     <input type="text" class="form-control text-center" ng-model="value[0]" title="Number of times blocked" disabled/>
                   </div>
                   <div class="pattern-input-three">
-                    <input type="text" class="form-control text-center" ng-model="value[1]" title="Timestamp/last blocked" disabled/>
+                    <input type="text" class="form-control text-center" ng-model="value[1]" title="Timestamp/last blocked (local time)" disabled/>
                   </div>
                 </td>
               </tr>
@@ -153,6 +153,7 @@
                 <img class="mb-1" src="images/misc/exclamation-octagon.svg" width="23" ng-if="show_modal_alert_icon"/>
                 <img class="mb-1" src="images/misc/patch-question.svg" width="23" ng-if="show_modal_confirm_icon"/>
                 <img class="mb-1" src="images/misc/check2-circle.svg" width="23" ng-if="show_modal_success_icon"/>
+                <img class="mb-1" src="images/misc/bug.svg" width="23" ng-if="show_modal_error_icon"/>
               </h4>
               <button type="button" class="btn-close" data-bs-dismiss="modal" title="CLOSE ALERT"></button>
             </div>
