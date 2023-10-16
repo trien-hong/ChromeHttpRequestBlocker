@@ -7,7 +7,11 @@ app.controller('HistoryController', function($scope) {
 
     $scope.url_blocked = $scope.backgroundPage.url_blocked;
 
-    $scope.max_page = $scope.url_blocked.length;
+    if (Object.keys($scope.url_blocked[$scope.url_blocked.length - 1]).length === 0 && $scope.url_blocked.length !== 1) {
+        $scope.max_page = $scope.url_blocked.length - 1;
+    } else {
+        $scope.max_page = $scope.url_blocked.length;
+    }
 
     $scope.page_number = 0;
 
@@ -20,8 +24,8 @@ app.controller('HistoryController', function($scope) {
     } else {
         $scope.is_empty = false;
         $scope.show_page_arrow_left_icon = false;
-        
-        if ($scope.page_number === $scope.url_blocked.length - 1) {
+
+        if ($scope.page_number === $scope.max_page || $scope.page_number === $scope.max_page - 1) {
             $scope.show_page_arrow_right_icon = false;
         } else {
             $scope.show_page_arrow_right_icon = true;
@@ -101,7 +105,7 @@ app.controller('HistoryController', function($scope) {
             $scope.show_page_arrow_left_icon = true;
         }
 
-        if ($scope.page_number === $scope.url_blocked.length - 1) {
+        if ($scope.page_number === $scope.max_page || $scope.page_number === $scope.max_page - 1) {
             $scope.show_page_arrow_right_icon = false;
         } else {
             $scope.show_page_arrow_right_icon = true;
