@@ -26,7 +26,7 @@
       <div class="content">
         <div class="vr"></div>
         <div class="content-patterns">
-          <div class="content-patterns-header">
+          <div class="content-patterns-header bg-light py-2 px-2 border border-2 border-secondary">
             <div title="Icon">
               <button class="btn btn-info" disabled>
                 Icon
@@ -36,7 +36,7 @@
               <input type="text" class="form-control" value="Exact URL of what was blocked" title="Exact URL of what was blocked" disabled/>
             </div>
             <div class="pattern-input-two">
-              <input type="text" class="form-control text-center" value="#" title="Number of times blocked" disabled/>
+              <u><input type="text" class="form-control text-center" value="#" title="Number of times blocked" disabled/></u>
             </div>
             <div class="pattern-input-three">
               <input type="text" class="form-control text-center" value="Timestamp/last blocked" title="Timestamp/last blocked (local time)" disabled/>
@@ -63,7 +63,7 @@
                     <input type="text" class="form-control" ng-model="key" title="Exact URL of what was blocked" disabled/>
                   </div>
                   <div class="pattern-input-two">
-                    <input type="text" class="form-control text-center" ng-model="value[0]" title="Number of times blocked" disabled/>
+                    <u><input type="text" class="form-control text-center" ng-model="value[0]" title="Number of times blocked" disabled/></u>
                   </div>
                   <div class="pattern-input-three">
                     <input type="text" class="form-control text-center" ng-model="value[1]" title="Timestamp/last blocked (local time)" disabled/>
@@ -128,6 +128,16 @@
             <hr>
           </div>
           <div class="d-grid gap-2">
+            <button class="btn btn-primary" ng-click="searchHistory()" title="Search your history">
+              <img class="mb-1" src="images/misc/search.svg"/>
+              &nbsp;
+              Search History
+            </button>
+          </div>
+          <div>
+            <hr>
+          </div>
+          <div class="d-grid gap-2">
             <button class="btn btn-warning" ng-click="clearHistory()" title="Clear your history">
               <img class="mb-1" src="images/misc/x-octagon.svg"/>
               &nbsp;
@@ -156,6 +166,7 @@
             <div class="modal-header">
               <h4 class="modal-title">
                 <u><b>{{modalTitle}}</b></u>
+                <img class="mb-1" src="images/misc/keyboard.svg" width="33" ng-if="show_modal_input_icon"/>
                 <img class="mb-1" src="images/misc/exclamation-octagon.svg" width="23" ng-if="show_modal_alert_icon"/>
                 <img class="mb-1" src="images/misc/patch-question.svg" width="23" ng-if="show_modal_confirm_icon"/>
                 <img class="mb-1" src="images/misc/check2-circle.svg" width="23" ng-if="show_modal_success_icon"/>
@@ -165,10 +176,15 @@
             </div>
             <div class="modal-body">
               <h5 ng-class="modalClass" ng-if="show_modal_message_class" ng-bind-html="modalMessage"></h5>
+              <div class="form-group" ng-if="show_modal_input">
+                <label for="searchHistoryInput" class="col-form-label"><h6>{{modalMessage}}</h6></label>
+                <input type="text" class="form-control" id="searchHistoryInput" placeholder="ex. https://www.google.com/, https://test.com/holder.js?v=3, ..." title="Enter only one at a time"/>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[function](parameter)" title="YES">YES</button>
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal" ng-if="show_modal_confirm_button" title="NO">NO</button>
+              <button type="button" class="btn btn-primary" ng-if="show_modal_search_history_button" ng-click="searchHistoryInput()" title="SEARCH HISTORY">SEARCH HISTORY</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-if="show_modal_close_button" title="CLOSE ALERT">CLOSE</button>
             </div>
           </div>

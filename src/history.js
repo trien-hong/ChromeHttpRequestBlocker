@@ -112,9 +112,46 @@ app.controller('HistoryController', function($scope) {
         }
     };
 
+    $scope.searchHistory = function() {
+        $('#searchHistoryInput').val('');
+
+        if ($scope.is_empty === true) {
+            $scope.errorModal("Your history seems to be empty. Therefore, there was nothing to search.<br><br>History will only update when a URL is blocked.");
+        } else {
+            $scope.inputModal("SEARCH HISTORY", "Please enter the exact URL in which you want to search for.");
+        }
+    };
+
+    $scope.searchHistoryInput = function() {
+        var input = $('#searchHistoryInput').val();
+        var found = false;
+        var index = 0;
+
+        if (input === "") {
+            $scope.errorModal("Sorry, your input was empty (\"\").<br><br>Please try a different input.");
+        } else {
+            for (var i = 0; i < $scope.max_page; i++) {
+                if ($scope.url_blocked[i][input] !== undefined) {
+                    found = true;
+                    index = i + 1;
+                    break;
+                }
+            }
+
+            if (found === true) {
+                $scope.successModal("A match was found on page " + index + ".<br><br>If you were not already on page " + index + ", you have been taken there automatically.");
+                $scope.page_number = index - 1;
+                $scope.page = $scope.url_blocked[$scope.page_number];
+                $scope.checkArrowIcons();
+            } else {
+                $scope.errorModal("Sorry, your input of \"<u>" + input + "</u>\", was not found in your history.<br><br>Please try a different input.");
+            }
+        }
+    };
+
     $scope.clearHistory = function() {
         if ($scope.is_empty === true) {
-            $scope.errorModal("Your patterns seems to be empty. Therefore, there was nothing to clear.<br><br>History will only update when a URL is blocked.");
+            $scope.errorModal("Your history seems to be empty. Therefore, there was nothing to clear.<br><br>History will only update when a URL is blocked.");
         } else {
             $scope.confirmModal("Are you sure you want to clear your history?<br><br>Depending on the size of your history, it may take some time to load.", "clearHistoryConfirmed");
         }
@@ -136,47 +173,73 @@ app.controller('HistoryController', function($scope) {
 
     // I will try to find a better solution for all these different modals later (there will be more)
 
+    $scope.inputModal = function(title, message) {
+        $scope.show_modal_input_icon = true;
+        $scope.show_modal_confirm_icon = false;
+        $scope.show_modal_alert_icon = false;
+        $scope.show_modal_success_icon = false;
+        $scope.show_modal_error_icon = false;
+        $scope.show_modal_input = true;
+        $scope.show_modal_message_class = false;
+        $scope.show_modal_search_history_button = true;
+        $scope.show_modal_confirm_button = false;
+        $scope.show_modal_close_button = true;
+        $scope.modal(title, message, "text-black");
+    };
+
     $scope.confirmModal = function(message, functionVariable, parameterVariable) {
+        $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = true;
         $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = false;
         $scope.function = functionVariable;
         $scope.parameter = parameterVariable;
+        $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
+        $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = true;
         $scope.show_modal_close_button = false;
         $scope.modal("PLEASE CONFIRM", message, "text-black");
     };
 
     $scope.alertModal = function(message) {
+        $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = false;
         $scope.show_modal_alert_icon = true;
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = false;
+        $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
+        $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("ALERT", message, "text-info-emphasis");
     };
 
     $scope.successModal = function(message) {
+        $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = false;
         $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = true;
         $scope.show_modal_error_icon = false;
+        $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
+        $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("SUCCESS", message, "text-success");
     };
 
     $scope.errorModal = function(message) {
+        $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = false;
         $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = true;
+        $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
+        $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("ERROR", message, "text-danger");
