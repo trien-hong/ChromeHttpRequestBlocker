@@ -18,9 +18,6 @@ chrome.contextMenus.removeAll(function() {
 
             save(patterns, function() {
               alert("Your site, \"" + website + "\" has been added. Page will reload shortly.");
-
-              is_empty = false;
-
               chrome.tabs.reload();
             });
           } else {
@@ -49,8 +46,6 @@ chrome.contextMenus.removeAll(function() {
           patterns.push(pattern);
 
           save(patterns, function() {
-            is_empty = false;
-
             alert("Your site, \"" + website + "\" has been added.");
           });
         } else {
@@ -74,8 +69,6 @@ chrome.contextMenus.removeAll(function() {
           patterns.push(pattern);
 
           save(patterns, function() {
-            is_empty = false;
-
             alert("Your site, \"" + data.selectionText + "\" has been added.");
           });
         } else {
@@ -176,12 +169,6 @@ load(function(p) {
   total_blocked = total_blocked;
 
   url_blocked = url_blocked;
-
-  if (patterns.length === 0) {
-    is_empty = true;
-  } else {
-    is_empty = false;
-  }
 
   chrome.storage.local.get('total_blocked', function(data) {
     // initial value of total_blocked

@@ -14,13 +14,17 @@ app.controller('OptionsController', function($scope) {
 
     $scope.button_is_pause_color = $scope.backgroundPage.button_is_pause_color;
 
-    $scope.is_pause = $scope.backgroundPage.is_pause;
-
-    $scope.is_empty = $scope.backgroundPage.is_empty;
-
     $scope.total_blocked = $scope.backgroundPage.total_blocked;
 
-    chrome.storage.local.get("is_pause", function(data) {
+    if ($scope.patterns.length === 0) {
+        $scope.is_empty = true;
+    } else {
+        $scope.is_empty = false;
+    }
+
+    $scope.is_pause = $scope.backgroundPage.is_pause;
+
+    chrome.storage.local.get('is_pause', function(data) {
         var is_pause = data.is_pause;
 
         $scope.pause = function() {
@@ -63,11 +67,12 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.resetTotalBlockedConfirmed = function() {
-        chrome.storage.local.set({'total_blocked': 0}, function() {
+        $scope.total_blocked = 0;
+
+        chrome.storage.local.set({'total_blocked': $scope.total_blocked}, function() {
 
         });
 
-        $scope.total_blocked = 0;
         $scope.successModal("Your total blocked requests has been reset. It is now 0.");
 
         chrome.runtime.sendMessage({type: "reload-background-script"});
@@ -79,7 +84,6 @@ app.controller('OptionsController', function($scope) {
                 index: $scope.patterns.length,
                 pattern: ''
             });
-
             $scope.scrollDown();
             $scope.is_empty = false;
         } else {
@@ -130,7 +134,7 @@ app.controller('OptionsController', function($scope) {
                     $scope.patterns.splice(i, 1);
                     i--;
                 } else {
-                    // If the pattern does not contain a prefix, it'll be added here along with a suffix
+                    // If the pattern does not contain a prefix ("*://*."), it'll be added here along with a suffix ("/*")
                     $scope.patterns[i].pattern = completePattern;
                     removedEmptyElements.push(completePattern);
                 }
@@ -276,9 +280,9 @@ app.controller('OptionsController', function($scope) {
                     }
 
                     $scope.is_empty = false;
+
                     $scope.save("Your new patterns has been imported. If the file contains any duplicate patterns, it will not be added beyond the first.");
                 }
-
                 reader.readAsBinaryString(file);
             } else {
                 $scope.errorModal("The file you've uploaded doesn't seem to be a text file.<br><br>Please try a different file or try again.");
