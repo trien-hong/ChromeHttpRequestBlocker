@@ -1,5 +1,10 @@
+// Number of request blocked
 var total_blocked = 0;
+// Array of objects containing every single blocked URL as the key and
+// number blocked along with a timestamp of when it was last blocked in the form of an array as the value
 var url_blocked = [{}];
+// Object containing the number of blocked request for a specific day
+var total_blocked_per_day = {};
 
 chrome.contextMenus.removeAll(function() {
   chrome.contextMenus.create({
@@ -79,8 +84,11 @@ chrome.contextMenus.removeAll(function() {
 });
 
 function blockRequest(details) {
-  increaseUrlBlocked(details);
+  var timeStamp = new Date();
+
+  increaseUrlBlocked(details, timeStamp);
   increaseTotalBlocked();
+  increaseBlockedToday(timeStamp);
 
   console.log("Blocked #" + total_blocked + ": " + details.url);
 
@@ -89,9 +97,7 @@ function blockRequest(details) {
   };
 }
 
-function increaseUrlBlocked(details) {
-  var timeStamp = new Date();
-
+function increaseUrlBlocked(details, timeStamp) {
   // pagination/paging
   // each element in the array will contain an object with max length of 100
   for (var i = 0; i < url_blocked.length; i++) {
@@ -118,6 +124,20 @@ function increaseTotalBlocked() {
   total_blocked = total_blocked + 1;
 
   chrome.storage.local.set({'total_blocked': total_blocked}, function() {
+
+  });
+}
+
+function increaseBlockedToday(timeStamp) {
+  var date = timeStamp.getMonth() + 1 + "/" + timeStamp.getDate() + "/" + timeStamp.getFullYear();
+
+  if (total_blocked_per_day[date] === undefined) {
+    total_blocked_per_day[date] = 1;
+  } else {
+    total_blocked_per_day[date] = total_blocked_per_day[date] + 1;
+  }
+
+  chrome.storage.local.set({'total_blocked_per_day': total_blocked_per_day}, function() {
 
   });
 }
@@ -170,6 +190,8 @@ load(function(p) {
 
   url_blocked = url_blocked;
 
+  total_blocked_per_day = total_blocked_per_day;
+
   chrome.storage.local.get('total_blocked', function(data) {
     // initial value of total_blocked
     if (data.total_blocked === undefined) {
@@ -193,6 +215,19 @@ load(function(p) {
     } else {
       // if url_blocked contains a value that's not undefined
       url_blocked = data.url_blocked;
+    }
+  });
+
+  chrome.storage.local.get('total_blocked_per_day', function(data) {
+    // initial value of total_blocked_per_day
+    if (data.total_blocked_per_day === undefined) {
+      // if total_blocked_per_day is undefined
+      chrome.storage.local.set({'total_blocked_per_day': total_blocked_per_day}, function() {
+  
+      });
+    } else {
+      // if total_blocked_per_day contains a value that's not undefined
+      total_blocked_per_day = data.total_blocked_per_day;
     }
   });
 

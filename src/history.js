@@ -32,11 +32,19 @@ app.controller('HistoryController', function($scope) {
         }
     }
 
+    var timeStamp = new Date();
+
+    if ($scope.backgroundPage.total_blocked_per_day[timeStamp.getMonth() + 1 + "/" + timeStamp.getDate() + "/" + timeStamp.getFullYear()] === undefined) {
+        $scope.total_blocked_today = 0;
+    } else {
+        $scope.total_blocked_today = $scope.backgroundPage.total_blocked_per_day[timeStamp.getMonth() + 1 + "/" + timeStamp.getDate() + "/" + timeStamp.getFullYear()];
+    }
+
     $scope.button_is_pause_color = $scope.backgroundPage.button_is_pause_color;
 
     $scope.is_pause = $scope.backgroundPage.is_pause;
 
-    chrome.storage.local.get("is_pause", function(data) {
+    chrome.storage.local.get('is_pause', function(data) {
         var is_pause = data.is_pause;
 
         $scope.pause = function() {
