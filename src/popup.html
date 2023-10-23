@@ -11,7 +11,7 @@
     <link href="static/popup-style.css" rel="stylesheet">
   </head>
   <body ng-app="RequestBlockerApp">
-    <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 500px; height: 500px">
+    <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 500px; height: 550px">
       <div class="header pt-3">
         <div>
           <img class="mb-1" src="images/extension_icons/icon-128.png" width="45" height="45"/>
@@ -27,11 +27,13 @@
         <hr/>
       </div>
       <div class="text-center">
-        <div>
+        <div title="Icon">
           <button class="btn btn-info" disabled>
-            <img class="mb-1" src="https://s2.googleusercontent.com/s2/favicons?domain={{website}}" width="25px" height="25px">
+            <img src="https://s2.googleusercontent.com/s2/favicons?domain={{website}}" width="25px" height="25px">
           </button>
-          <h2 class="website"><u>{{website}}</u><h2>
+        </div>
+        <div class="bg-light px-2 border border-2 border-secondary rounded mt-2" title="Current Site: {{website}}">
+          <h3 class="website py-1"><u>{{website}}</u><h3>
         </div>
       </div>
       <div>
@@ -54,7 +56,13 @@
         <hr/>
       </div>
       <div class="total_number_blocked text-center">
-        <h3>Total Blocked Request(s): <u class="text-danger">{{total_blocked}}</u>&nbsp;<img src="images/misc/shield-fill-x.svg" width="30"/><h3>
+        <h3>Total Blocked Today: <u class="text-danger">{{total_blocked_today}}</u>&nbsp;<img class="mb-2" src="images/misc/shield-fill-x.svg" width="30"/><h3>
+      </div>
+      <div>
+        <hr/>
+      </div>
+      <div class="total_number_blocked text-center">
+        <h3>Total Blocked Request(s): <u class="text-danger">{{total_blocked}}</u>&nbsp;<img class="mb-2" src="images/misc/shield-fill-x.svg" width="30"/><h3>
       </div>
       <div>
         <hr/>
@@ -95,7 +103,7 @@
               </h4>
               <button type="button" class="btn-close" data-bs-dismiss="modal" title="CLOSE ALERT"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body text-break">
               <h5 ng-class="modalClass" ng-bind-html="modalMessage"></h5>
             </div>
             <div class="modal-footer">

@@ -10,7 +10,7 @@ app.service('currentSite', function() {
             if (url !== undefined) {
                 url = url.replace("www.", "").split("/")[2];
             } else {
-                url = "Sorry, not a valid website.";
+                url = undefined;
             }
 
             callback(url);
@@ -32,14 +32,23 @@ app.controller('PopupController', function($scope, currentSite) {
 
     $scope.is_pause = $scope.backgroundPage.is_pause;
 
+    var timeStamp = new Date();
+
+    if ($scope.backgroundPage.total_blocked_per_day[timeStamp.getMonth() + 1 + "/" + timeStamp.getDate() + "/" + timeStamp.getFullYear()] === undefined) {
+        $scope.total_blocked_today = 0;
+    } else {
+        $scope.total_blocked_today = $scope.backgroundPage.total_blocked_per_day[timeStamp.getMonth() + 1 + "/" + timeStamp.getDate() + "/" + timeStamp.getFullYear()];
+    }
+
     $scope.total_blocked = $scope.backgroundPage.total_blocked;
 
-    currentSite.getUrl(function (url) {
+    currentSite.getUrl(function(url) {
         $scope.website = url;
         
         var checkPattern = obj => obj.pattern === "*://*." + url + "/*";
 
-        if (url === "Sorry, not a valid website.") {
+        if (url === undefined) {
+            $scope.website = "Sorry, not a valid website."
             $scope.currentSiteStatus = "You cannot add this site. It's not valid.";
             $scope.is_blocked = false;
             $scope.is_not_blocked = true;
@@ -116,7 +125,7 @@ app.controller('PopupController', function($scope, currentSite) {
         });
     };
 
-    chrome.storage.local.get("is_pause", function(data) {
+    chrome.storage.local.get('is_pause', function(data) {
         var is_pause = data.is_pause;
 
         $scope.pause = function() {
@@ -142,7 +151,7 @@ app.controller('PopupController', function($scope, currentSite) {
                 $scope.alertModal("Extension is now <u>UNPAUSED</u>. All patterns will be blocked.");
             }
 
-            chrome.storage.local.get("is_pause", function(data) {
+            chrome.storage.local.get('is_pause', function(data) {
                 is_pause = data.is_pause;
             });
 
