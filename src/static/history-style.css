@@ -106,14 +106,15 @@ hr {
     background-color: #C4EBC4;
 }
 
-.modal-body {
-    word-wrap: break-word;
-}
-
 tr {
     border: 2px solid gray;
 }
 
 td {
     border-bottom: none;
+}
+
+.dygraph-legend {
+    margin-top: 510px;
+    margin-left: -170px;
 }

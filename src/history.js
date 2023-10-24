@@ -179,9 +179,59 @@ app.controller('HistoryController', function($scope) {
         chrome.runtime.sendMessage({type: "clear-url_blocked"});
     };
 
-    // I will try to find a better solution for all these different modals later (there will be more)
+    $scope.viewGraph = function() {
+        if (Object.keys($scope.backgroundPage.total_blocked_per_day).length === 0) {
+            $scope.errorModal("Your \"total blocked per day seems\" to be empty. Therefore, there was no graph to draw.<br><br>You can only view a graph if the extension has blocked a URL.");
+        } else {
+            var graph_data = [];
+
+            for (const [key, value] of Object.entries($scope.backgroundPage.total_blocked_per_day)) {
+                var insert_graph_data = [];
+                insert_graph_data.push(new Date(key));
+                insert_graph_data.push(value);
+                graph_data.push(insert_graph_data);
+            }
+    
+            draw_line_graph = new Dygraph(
+                document.getElementById("line_graph"),
+                graph_data, {
+                    height: 500,
+                    width: 430,
+                    colors: ['#A33434'],
+                    fillGraph: true,
+                    fillAlpha: 0.3,
+                    showRangeSelector: true,
+                    labels: ['Date', 'Blocked #'],
+                    title: 'Line Graph',
+                    titleHeight: 30,
+                }
+            );
+
+            $scope.graphModal("Total Blocked Per Day History");
+        }
+    }
+
+    // I will try to find a better solution for all these different modals later (there may be more)
+
+    $scope.graphModal = function(title, message) {
+        $scope.show_modal_bar_chart_icon = true;
+        $scope.show_modal_input_icon = false;
+        $scope.show_modal_confirm_icon = false;
+        $scope.show_modal_alert_icon = false;
+        $scope.show_modal_success_icon = false;
+        $scope.show_modal_error_icon = false;
+        $scope.show_modal_input = false;
+        $scope.show_modal_message_class = false;
+        var line_graph = document.getElementById("line_graph");
+        line_graph.style.display = "block";
+        $scope.show_modal_search_history_button = false;
+        $scope.show_modal_confirm_button = false;
+        $scope.show_modal_close_button = true;
+        $scope.modal(title, message, "text-black");
+    }
 
     $scope.inputModal = function(title, message) {
+        $scope.show_modal_bar_chart_icon = false;
         $scope.show_modal_input_icon = true;
         $scope.show_modal_confirm_icon = false;
         $scope.show_modal_alert_icon = false;
@@ -189,6 +239,8 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_error_icon = false;
         $scope.show_modal_input = true;
         $scope.show_modal_message_class = false;
+        var line_graph = document.getElementById("line_graph");
+        line_graph.style.display = "none";
         $scope.show_modal_search_history_button = true;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
@@ -196,6 +248,7 @@ app.controller('HistoryController', function($scope) {
     };
 
     $scope.confirmModal = function(message, functionVariable, parameterVariable) {
+        $scope.show_modal_bar_chart_icon = false;
         $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = true;
         $scope.show_modal_alert_icon = false;
@@ -205,6 +258,8 @@ app.controller('HistoryController', function($scope) {
         $scope.parameter = parameterVariable;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
+        var line_graph = document.getElementById("line_graph");
+        line_graph.style.display = "none";
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = true;
         $scope.show_modal_close_button = false;
@@ -212,6 +267,7 @@ app.controller('HistoryController', function($scope) {
     };
 
     $scope.alertModal = function(message) {
+        $scope.show_modal_bar_chart_icon = false;
         $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = false;
         $scope.show_modal_alert_icon = true;
@@ -219,6 +275,8 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_error_icon = false;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
+        var line_graph = document.getElementById("line_graph");
+        line_graph.style.display = "none";
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
@@ -226,6 +284,7 @@ app.controller('HistoryController', function($scope) {
     };
 
     $scope.successModal = function(message) {
+        $scope.show_modal_bar_chart_icon = false;
         $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = false;
         $scope.show_modal_alert_icon = false;
@@ -233,6 +292,8 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_error_icon = false;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
+        var line_graph = document.getElementById("line_graph");
+        line_graph.style.display = "none";
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
@@ -240,6 +301,7 @@ app.controller('HistoryController', function($scope) {
     };
 
     $scope.errorModal = function(message) {
+        $scope.show_modal_bar_chart_icon = false;
         $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = false;
         $scope.show_modal_alert_icon = false;
@@ -247,6 +309,8 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_error_icon = true;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
+        var line_graph = document.getElementById("line_graph");
+        line_graph.style.display = "none";
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;

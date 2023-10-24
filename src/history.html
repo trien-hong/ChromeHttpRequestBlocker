@@ -7,6 +7,8 @@
     <script src="lib/bootstrap/bootstrap.min.js"></script>
     <script src="lib/angular/angular.min.js"></script>
     <script src="lib/angular/angular-sanitize.min.js"></script>
+    <link rel="stylesheet" href="lib/dygraph/dygraph.css" />
+    <script src="lib/dygraph/dygraph.min.js"></script>
     <script src="history.js"></script>
     <link href="static/history-style.css" rel="stylesheet"/>
   </head>
@@ -147,6 +149,16 @@
           <div>
             <hr>
           </div>
+          <div class="d-grid gap-2">
+            <button class="btn btn-info" ng-click="viewGraph()" title="View a graph of your blocked per day history">
+              <img class="mb-1" src="images/misc/bar-chart-line.svg"/>
+              &nbsp;
+              View Graph
+            </button>
+          </div>
+          <div>
+            <hr>
+          </div>
           <div class="text-center">
             <p>
               <img class="mb-1" src="images/misc/git.svg"/>
@@ -171,11 +183,12 @@
         </div>
       </div>
       <div class="modal fade" id="modal">
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">
                 <u><b>{{modalTitle}}</b></u>
+                <img class="mb-1" src="images/misc/bar-chart-line.svg" width="33" ng-if="show_modal_bar_chart_icon"/>
                 <img class="mb-1" src="images/misc/keyboard.svg" width="33" ng-if="show_modal_input_icon"/>
                 <img class="mb-1" src="images/misc/exclamation-octagon.svg" width="23" ng-if="show_modal_alert_icon"/>
                 <img class="mb-1" src="images/misc/patch-question.svg" width="23" ng-if="show_modal_confirm_icon"/>
@@ -184,12 +197,13 @@
               </h4>
               <button type="button" class="btn-close" data-bs-dismiss="modal" title="CLOSE ALERT"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body text-break">
               <h5 ng-class="modalClass" ng-if="show_modal_message_class" ng-bind-html="modalMessage"></h5>
               <div class="form-group" ng-if="show_modal_input">
                 <label for="searchHistoryInput" class="col-form-label"><h6>{{modalMessage}}</h6></label>
                 <input type="text" class="form-control" id="searchHistoryInput" placeholder="ex. https://www.google.com/, https://test.com/holder.js?v=3, ..." title="Enter only one at a time"/>
               </div>
+              <div id="line_graph"></div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[function](parameter)" title="YES">YES</button>
