@@ -184,36 +184,67 @@ app.controller('HistoryController', function($scope) {
             $scope.errorModal("Your \"total blocked per day seems\" to be empty. Therefore, there was no graph to draw.<br><br>You can only view a graph if the extension has blocked a URL.");
         } else {
             var graph_data = [];
+            var starting_highlight = undefined;
+            var ending_highlight = undefined;
+            var highest = 0;
 
             for (const [key, value] of Object.entries($scope.backgroundPage.total_blocked_per_day)) {
                 var insert_graph_data = [];
                 insert_graph_data.push(new Date(key));
                 insert_graph_data.push(value);
                 graph_data.push(insert_graph_data);
+                
+                if (value > highest) {
+                    var start_date = new Date(key);
+                    var end_date = new Date(key);
+
+                    starting_highlight = start_date.setHours(start_date.getHours() - 3);
+                    ending_highlight = end_date.setHours(end_date.getHours() + 3);
+                    highest = value;
+                }
             }
     
             draw_line_graph = new Dygraph(
                 document.getElementById("line_graph"),
                 graph_data, {
                     height: 500,
-                    width: 430,
+                    width: 500,
                     colors: ['#A33434'],
                     fillGraph: true,
-                    fillAlpha: 0.3,
+                    fillAlpha: 0.4,
+                    underlayCallback: function(canvas, area, g) {
+                        // Used to highlight the day (+/- 3 hours) with the most blocked URL
+                        // If there's only one key/day, it won't show any highlights
+                        // You need at least two keys/days for highlight to show
+                        highlight_highest_point();
+
+                        function highlight_highest_point() {
+                            if (Object.keys($scope.backgroundPage.total_blocked_per_day).length >= 1) {
+                                var bottom_left = g.toDomCoords(new Date(starting_highlight));
+                                var top_right = g.toDomCoords(new Date(ending_highlight));
+                
+                                var left = bottom_left[0];
+                                var right = top_right[0];
+                
+                                canvas.fillStyle = "#369C53";
+                                canvas.fillRect(left, area.y, right - left, area.h);
+                            }
+                        }
+                    },
                     showRangeSelector: true,
                     labels: ['Date', 'Blocked #'],
-                    title: 'Line Graph',
+                    title: 'Blocked Per Day - Line Graph',
                     titleHeight: 30,
                 }
             );
 
-            $scope.graphModal("Total Blocked Per Day History");
+            $scope.graphModal();
         }
     }
 
     // I will try to find a better solution for all these different modals later (there may be more)
 
-    $scope.graphModal = function(title, message) {
+    $scope.graphModal = function(message) {
         $scope.show_modal_bar_chart_icon = true;
         $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = false;
@@ -227,7 +258,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal(title, message, "text-black");
+        $scope.modal("Graph", message, "text-black");
     }
 
     $scope.inputModal = function(title, message) {

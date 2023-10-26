@@ -114,7 +114,11 @@ td {
     border-bottom: none;
 }
 
+#line_graph {
+    margin-left: -30px;
+}
+
 .dygraph-legend {
-    margin-top: 510px;
-    margin-left: -170px;
+    margin-top: 512px;
+    margin-left: -215px;
 }

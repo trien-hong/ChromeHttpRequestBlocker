@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "HTTP Request Blocker",
     "short_name": "HTTPRequestBlocker",
-    "version": "1.6.4",
+    "version": "1.6.5",
     "description": "This extension blocks HTTP Request based on configurable URL patterns.",
     "author": "Cristian Lupașcu",
     "homepage_url": "https://github.com/clupasq/ChromeHttpRequestBlocker",
@@ -33,5 +33,8 @@
             "128": "images/extension_icons/icon-128.png"
         },
         "default_popup": "popup.html"
-    }
+    },
+    "web_accessible_resources": [
+        "history.html"
+    ]
 }
