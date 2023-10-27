@@ -258,4 +258,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       
     });
   }
+
+  if (request.type === "clear-total_blocked_per_day") {
+    total_blocked_per_day = {};
+    chrome.storage.local.set({'total_blocked_per_day': total_blocked_per_day}, function() {
+      
+    });
+  }
 });

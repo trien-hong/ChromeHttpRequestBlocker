@@ -161,7 +161,7 @@ app.controller('HistoryController', function($scope) {
         if ($scope.is_empty === true) {
             $scope.errorModal("Your history seems to be empty. Therefore, there was nothing to clear.<br><br>History will only update when a URL is blocked.");
         } else {
-            $scope.confirmModal("Are you sure you want to clear your history?<br><br>Depending on the size of your history, it may take some time to load.", "clearHistoryConfirmed");
+            $scope.confirmModal("Are you sure you want to clear your history? This will not affect your graph/total blocked per day.<br><br>Depending on the size of your history, it may take some time to load.", "clearHistoryConfirmed");
         }
     };
 
@@ -242,6 +242,18 @@ app.controller('HistoryController', function($scope) {
         }
     }
 
+    $scope.clearGraph = function() {
+        $scope.confirmModal("Are you sure you want to clear your graph?<br><br>Clearing your graph will clear all data associated with total blocked per day. This will not affect your history.", "clearGraphConfirmed");
+    }
+
+    $scope.clearGraphConfirmed = function() {
+        $scope.total_blocked_today = 0;
+        
+        chrome.runtime.sendMessage({type: "clear-total_blocked_per_day"});
+
+        $scope.successModal("All data assocated with total blocked per day has been cleared.");
+    }
+
     // I will try to find a better solution for all these different modals later (there may be more)
 
     $scope.graphModal = function(message) {
@@ -255,6 +267,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_message_class = false;
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "block";
+        $scope.show_modal_clear_graph_button = true;
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
@@ -272,6 +285,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_message_class = false;
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "none";
+        $scope.show_modal_clear_graph_button = false;
         $scope.show_modal_search_history_button = true;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
@@ -291,6 +305,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_message_class = true;
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "none";
+        $scope.show_modal_clear_graph_button = false;
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = true;
         $scope.show_modal_close_button = false;
@@ -308,6 +323,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_message_class = true;
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "none";
+        $scope.show_modal_clear_graph_button = false;
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
@@ -325,6 +341,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_message_class = true;
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "none";
+        $scope.show_modal_clear_graph_button = false;
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
@@ -342,6 +359,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_message_class = true;
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "none";
+        $scope.show_modal_clear_graph_button = false;
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
