@@ -208,7 +208,7 @@ app.controller('HistoryController', function($scope) {
                 document.getElementById("line_graph"),
                 graph_data, {
                     height: 500,
-                    width: 500,
+                    width: 480,
                     colors: ['#A33434'],
                     fillGraph: true,
                     fillAlpha: 0.4,
@@ -233,8 +233,10 @@ app.controller('HistoryController', function($scope) {
                     },
                     showRangeSelector: true,
                     labels: ['Date', 'Blocked #'],
+                    xlabel: "<b>Day(s)</b>",
+                    ylabel: "<b>Blocked #</br>",
                     title: 'Blocked Per Day - Line Graph',
-                    titleHeight: 30,
+                    titleHeight: 30
                 }
             );
 
