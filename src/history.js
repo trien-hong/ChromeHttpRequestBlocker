@@ -231,9 +231,12 @@ app.controller('HistoryController', function($scope) {
                             }
                         }
                     },
+                    pointClickCallback: function(e, point) {
+                        alert("The extension blocked a total of " + point["yval"] + " requests on " + new Date(point["xval"]).toLocaleString('default', { month: 'long' }) + " " + new Date(point["xval"]).getDate() + ", " + new Date(point["xval"]).getFullYear() + ".");
+                    },
                     showRangeSelector: true,
                     labels: ['Date', 'Blocked #'],
-                    xlabel: "<b>Day(s)</b>",
+                    xlabel: "<b>Day</b>",
                     ylabel: "<b>Blocked #</br>",
                     title: 'Blocked Per Day - Line Graph',
                     titleHeight: 30
