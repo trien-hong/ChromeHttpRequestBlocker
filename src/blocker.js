@@ -22,11 +22,11 @@ chrome.contextMenus.removeAll(function() {
             patterns.push(pattern);
 
             save(patterns, function() {
-              alert("Your site, \"" + website + "\" has been added. Page will reload shortly.");
+              alert("Your site, \"" + website + "\", has been added. Page will reload shortly.");
               chrome.tabs.reload();
             });
           } else {
-            alert("Your site, \"" + website + "\" is already in your patterns. \n\nTherefore, the website will not be added again.");
+            alert("Your site, \"" + website + "\", is already in your patterns. \n\nTherefore, the website will not be added again.");
           }
         } else {
           alert("This site you are trying to add doesn't seem to be a valid website.");
@@ -51,10 +51,10 @@ chrome.contextMenus.removeAll(function() {
           patterns.push(pattern);
 
           save(patterns, function() {
-            alert("Your site, \"" + website + "\" has been added.");
+            alert("Your site, \"" + website + "\", has been added.");
           });
         } else {
-          alert("Your site, \"" + website + "\" is already in your patterns. \n\nTherefore, the website will not be added again.");
+          alert("Your site, \"" + website + "\", is already in your patterns. \n\nTherefore, the website will not be added again.");
         }
       } else {
         alert("This site you are trying to add doesn't seem to be a valid website.");
@@ -74,10 +74,10 @@ chrome.contextMenus.removeAll(function() {
           patterns.push(pattern);
 
           save(patterns, function() {
-            alert("Your site, \"" + data.selectionText + "\" has been added.");
+            alert("Your site, \"" + data.selectionText + "\", has been added.");
           });
         } else {
-          alert("Your site, \"" + data.selectionText + "\" is already in your patterns. \n\nTherefore, the website will not be added again.");
+          alert("Your site, \"" + data.selectionText + "\", is already in your patterns. \n\nTherefore, the website will not be added again.");
         }
       }
   });

@@ -212,7 +212,7 @@ app.controller('HistoryController', function($scope) {
                 document.getElementById("line_graph"),
                 graph_data, {
                     height: 500,
-                    width: 480,
+                    width: 775,
                     colors: ['#A33434'],
                     fillGraph: true,
                     fillAlpha: 0.4,
@@ -281,7 +281,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal("Graph", message, "text-black");
+        $scope.modal("modal-lg", "Graph", message, "text-black");
     };
 
     $scope.inputModal = function(title, message) {
@@ -300,7 +300,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_search_history_button = true;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal(title, message, "text-black");
+        $scope.modal("modal-default", title, message, "text-black");
     };
 
     $scope.confirmModal = function(message, confirmFunctionVariable, confirmParameterVariable) {
@@ -321,7 +321,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = true;
         $scope.show_modal_close_button = false;
-        $scope.modal("PLEASE CONFIRM", message, "text-black");
+        $scope.modal("modal-default", "PLEASE CONFIRM", message, "text-black");
     };
 
     $scope.alertModal = function(message) {
@@ -340,7 +340,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal("ALERT", message, "text-info-emphasis");
+        $scope.modal("modal-default", "ALERT", message, "text-info-emphasis");
     };
 
     $scope.successModal = function(message) {
@@ -359,7 +359,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal("SUCCESS", message, "text-success");
+        $scope.modal("modal-default", "SUCCESS", message, "text-success");
     };
 
     $scope.errorModal = function(message, errorFunctionVariable, errorParameterVariable) {
@@ -384,10 +384,11 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal("ERROR", message, "text-danger");
+        $scope.modal("modal-default", "ERROR", message, "text-danger");
     };
 
-    $scope.modal = function(title, message, modalClass) {
+    $scope.modal = function(size, title, message, modalClass) {
+        $scope.modalSize = size;
         $scope.modalTitle = title;
         $scope.modalMessage = message;
         $scope.modalClass = modalClass;
