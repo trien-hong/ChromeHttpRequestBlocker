@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HTTP Request Blocker</title>
-    <script src="lib/jquery/jquery.min.js"></script>
-    <link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <script src="lib/bootstrap/bootstrap.min.js"></script>
-    <script src="lib/angular/angular.min.js"></script>
-    <script src="lib/angular/angular-sanitize.min.js"></script>
-    <script src="popup.js"></script>
-    <link href="static/popup-style.css" rel="stylesheet">
+    <title>HTTP Request Blocker | Popup</title>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="static/popup-style.css">
+    <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="popup.js"></script>
   </head>
   <body ng-app="RequestBlockerApp">
     <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 500px; height: 550px">
@@ -95,7 +95,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">
-                <u><b>{{modalTitle}}</b></u>
+                <b><u>{{modalTitle}}</u></b>
                 <img class="mb-1" src="images/misc/patch-question.svg" width="23" ng-if="show_modal_confirm_icon"/>
                 <img class="mb-1" src="images/misc/exclamation-octagon.svg" width="23" ng-if="show_modal_alert_icon"/>
                 <img class="mb-1" src="images/misc/check2-circle.svg" width="23" ng-if="show_modal_success_icon"/>
@@ -107,7 +107,7 @@
               <h5 ng-class="modalClass" ng-bind-html="modalMessage"></h5>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[function](parameter)" title="YES">YES</button>
+              <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[confirm_function](confirm_parameter)" title="YES">YES</button>
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal" ng-if="show_modal_confirm_button" title="NO">NO</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-if="show_modal_close_button" title="CLOSE ALERT">CLOSE</button>
             </div>
