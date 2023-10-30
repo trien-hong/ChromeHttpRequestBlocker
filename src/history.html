@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HTTP Request Blocker</title>
-    <script src="lib/jquery/jquery.min.js"></script>
-    <link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <script src="lib/bootstrap/bootstrap.min.js"></script>
-    <script src="lib/angular/angular.min.js"></script>
-    <script src="lib/angular/angular-sanitize.min.js"></script>
-    <link rel="stylesheet" href="lib/dygraph/dygraph.css" />
-    <script src="lib/dygraph/dygraph.min.js"></script>
-    <script src="history.js"></script>
-    <link href="static/history-style.css" rel="stylesheet"/>
+    <title>HTTP Request Blocker | History</title>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/dygraph/dygraph.css" />
+    <link rel="stylesheet" type="text/css" href="static/history-style.css"/>
+    <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="lib/dygraph/dygraph.min.js"></script>
+    <script type="text/javascript" src="history.js"></script>
   </head>
   <body ng-app="RequestBlockerApp">
     <div class="container" ng-controller="HistoryController" ng-init="init()" style="width: 1250px;">
@@ -187,7 +187,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">
-                <u><b>{{modalTitle}}</b></u>
+                <b><u>{{modalTitle}}</u></b>
                 <img class="mb-1" src="images/misc/bar-chart-line.svg" width="33" ng-if="show_modal_bar_chart_icon"/>
                 <img class="mb-1" src="images/misc/keyboard.svg" width="33" ng-if="show_modal_input_icon"/>
                 <img class="mb-1" src="images/misc/exclamation-octagon.svg" width="23" ng-if="show_modal_alert_icon"/>
@@ -206,7 +206,8 @@
               <div id="line_graph"></div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[function](parameter)" title="YES">YES</button>
+              <button type="button" class="btn btn-primary" ng-if="show_modal_go_back_button" ng-click="this[error_function](error_parameter)" title="GO BACK">GO BACK</button>
+              <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[confirm_function](confirm_parameter)" title="YES">YES</button>
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal" ng-if="show_modal_confirm_button" title="NO">NO</button>
               <button type="button" class="btn btn-warning" ng-if="show_modal_clear_graph_button" ng-click="clearGraph()" title="CLEAR GRAPH">CLEAR GRAPH</button>
               <button type="button" class="btn btn-primary" ng-if="show_modal_search_history_button" ng-click="searchHistoryInput()" title="SEARCH HISTORY">SEARCH HISTORY</button>

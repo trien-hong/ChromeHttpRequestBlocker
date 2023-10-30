@@ -37,7 +37,7 @@ app.controller('OptionsController', function($scope) {
                 $scope.is_pause = "Unpause Extension";
                 $scope.button_is_pause_color = "btn-success";
                 
-                $scope.alertModal("Extension is now <u>PAUSED</u>. All patterns will not be blocked.");
+                $scope.alertModal("Extension is now <b><u>PAUSED</u></b>.<br><br>All patterns will not be blocked.");
             } else {
                 // extension is currently on pause (is not blocking sites)
                 // user wants to UNPAUSE extension
@@ -47,10 +47,10 @@ app.controller('OptionsController', function($scope) {
                 $scope.is_pause = "Pause Extension";
                 $scope.button_is_pause_color = "btn-danger";
                 
-                $scope.alertModal("Extension is now <u>UNPAUSED</u>. All patterns will be blocked.");
+                $scope.alertModal("Extension is now <b><u>UNPAUSED</u></b>.<br><br>All patterns will be blocked.");
             }
 
-            chrome.storage.local.get("is_pause", function(data) {
+            chrome.storage.local.get('is_pause', function(data) {
                 is_pause = data.is_pause;
             });
 
@@ -224,9 +224,9 @@ app.controller('OptionsController', function($scope) {
         if (object !== undefined) {
             $scope.confirmModal("A match was found at index " + object.index + " with the pattern \"<u>" + object.pattern + "</u>\".<br><br>Are you sure you want to remove it?", "searchAndRemoveInputConfirmed", object);
         } else if (input === "") {
-            $scope.errorModal("Sorry, your input was empty (\"\").<br><br>Please try a different input.");
+            $scope.errorModal("Sorry, your input was empty (\"\").<br><br>Please try a different input.", "searchAndRemove");
         } else {
-            $scope.errorModal("Sorry, your input of \"<u>" + input + "</u>\" could not be found.<br><br>Please try a different input.");
+            $scope.errorModal("Sorry, your input of \"<u>" + input + "</u>\" could not be found.<br><br>Please try a different input.", "searchAndRemove");
         }
     };
 
@@ -312,22 +312,24 @@ app.controller('OptionsController', function($scope) {
         $scope.show_modal_error_icon = false;
         $scope.show_modal_input = true;
         $scope.show_modal_message_class = false;
+        $scope.show_modal_go_back_button = false;
         $scope.show_modal_search_remove_button = true;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal(title, message, "text-black");
     };
 
-    $scope.confirmModal = function(message, functionVariable, parameterVariable) {
+    $scope.confirmModal = function(message, confirmFunctionVariable, confirmParameterVariable) {
         $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = true;
         $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = false;
-        $scope.function = functionVariable;
-        $scope.parameter = parameterVariable;
+        $scope.confirm_function = confirmFunctionVariable;
+        $scope.confirm_parameter = confirmParameterVariable;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
+        $scope.show_modal_go_back_button = false;
         $scope.show_modal_search_remove_button = false;
         $scope.show_modal_confirm_button = true;
         $scope.show_modal_close_button = false;
@@ -342,6 +344,7 @@ app.controller('OptionsController', function($scope) {
         $scope.show_modal_error_icon = false;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
+        $scope.show_modal_go_back_button = false;
         $scope.show_modal_search_remove_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
@@ -356,13 +359,14 @@ app.controller('OptionsController', function($scope) {
         $scope.show_modal_error_icon = false;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
+        $scope.show_modal_go_back_button = false;
         $scope.show_modal_search_remove_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("SUCCESS", message, "text-success");
     };
 
-    $scope.errorModal = function(message) {
+    $scope.errorModal = function(message, errorFunctionVariable, errorParameterVariable) {
         $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = false;
         $scope.show_modal_alert_icon = false;
@@ -370,6 +374,13 @@ app.controller('OptionsController', function($scope) {
         $scope.show_modal_error_icon = true;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
+        if (errorFunctionVariable === undefined) {
+            $scope.show_modal_go_back_button = false;
+        } else {
+            $scope.show_modal_go_back_button = true;
+            $scope.error_function = errorFunctionVariable;
+            $scope.error_parameter = errorParameterVariable;
+        }
         $scope.show_modal_search_remove_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;

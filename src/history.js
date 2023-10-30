@@ -57,7 +57,7 @@ app.controller('HistoryController', function($scope) {
                 $scope.is_pause = "Unpause Extension";
                 $scope.button_is_pause_color = "btn-success";
                 
-                $scope.alertModal("Extension is now <u>PAUSED</u>. All patterns will not be blocked.");
+                $scope.alertModal("Extension is now <b><u>PAUSED</u></b>.<br><br>All patterns will not be blocked.");
             } else {
                 // extension is currently on pause (is not blocking sites)
                 // user wants to UNPAUSE extension
@@ -67,10 +67,10 @@ app.controller('HistoryController', function($scope) {
                 $scope.is_pause = "Pause Extension";
                 $scope.button_is_pause_color = "btn-danger";
                 
-                $scope.alertModal("Extension is now <u>UNPAUSED</u>. All patterns will be blocked.");
+                $scope.alertModal("Extension is now <b><u>UNPAUSED</u></b>.<br><br>All patterns will be blocked.");
             }
 
-            chrome.storage.local.get("is_pause", function(data) {
+            chrome.storage.local.get('is_pause', function(data) {
                 is_pause = data.is_pause;
             });
 
@@ -79,6 +79,7 @@ app.controller('HistoryController', function($scope) {
     });
 
     $scope.decreasePageNumber = function() {
+        // Decrease page number by 1
         $scope.page_number = $scope.page_number - 1;
         $scope.page = $scope.url_blocked[$scope.page_number];
 
@@ -86,6 +87,7 @@ app.controller('HistoryController', function($scope) {
     };
 
     $scope.increasePageNumber = function() {
+        // Increase page number by 1
         $scope.page_number = $scope.page_number + 1;
         $scope.page = $scope.url_blocked[$scope.page_number];
 
@@ -93,6 +95,7 @@ app.controller('HistoryController', function($scope) {
     };
 
     $scope.decreaseMaxPageNumber = function() {
+        // Go to page 0
         $scope.page_number = 0;
         $scope.page = $scope.url_blocked[$scope.page_number];
 
@@ -100,6 +103,7 @@ app.controller('HistoryController', function($scope) {
     };
 
     $scope.increaseMaxPageNumber = function() {
+        // Go to the max page
         $scope.page_number = $scope.max_page - 1;
         $scope.page = $scope.url_blocked[$scope.page_number];
 
@@ -124,7 +128,7 @@ app.controller('HistoryController', function($scope) {
         $('#searchHistoryInput').val('');
 
         if ($scope.is_empty === true) {
-            $scope.errorModal("Your history seems to be empty. Therefore, there was nothing to search.<br><br>History will only update when a URL is blocked.");
+            $scope.errorModal("Your history seems to be empty. Therefore, there was nothing to search.<br><br>History will only update when a URL/request is blocked.");
         } else {
             $scope.inputModal("SEARCH HISTORY", "Please enter the exact URL in which you want to search for.");
         }
@@ -136,7 +140,7 @@ app.controller('HistoryController', function($scope) {
         var index = 0;
 
         if (input === "") {
-            $scope.errorModal("Sorry, your input was empty (\"\").<br><br>Please try a different input.");
+            $scope.errorModal("Sorry, your input was empty (\"\").<br><br>Please try a different input.", "searchHistory");
         } else {
             for (var i = 0; i < $scope.max_page; i++) {
                 if ($scope.url_blocked[i][input] !== undefined) {
@@ -152,14 +156,14 @@ app.controller('HistoryController', function($scope) {
                 $scope.page = $scope.url_blocked[$scope.page_number];
                 $scope.checkArrowIcons();
             } else {
-                $scope.errorModal("Sorry, your input of \"<u>" + input + "</u>\", was not found in your history.<br><br>Please try a different input.");
+                $scope.errorModal("Sorry, your input of \"<u>" + input + "</u>\", was not found in your history.<br><br>Please try a different input.", "searchHistory");
             }
         }
     };
 
     $scope.clearHistory = function() {
         if ($scope.is_empty === true) {
-            $scope.errorModal("Your history seems to be empty. Therefore, there was nothing to clear.<br><br>History will only update when a URL is blocked.");
+            $scope.errorModal("Your history seems to be empty. Therefore, there was nothing to clear.<br><br>History will only update when a URL/request is blocked.");
         } else {
             $scope.confirmModal("Are you sure you want to clear your history? This will not affect your graph/total blocked per day.<br><br>Depending on the size of your history, it may take some time to load.", "clearHistoryConfirmed");
         }
@@ -245,11 +249,11 @@ app.controller('HistoryController', function($scope) {
 
             $scope.graphModal();
         }
-    }
+    };
 
     $scope.clearGraph = function() {
         $scope.confirmModal("Are you sure you want to clear your graph?<br><br>Clearing your graph will clear all data associated with total blocked per day. This will not affect your history.", "clearGraphConfirmed");
-    }
+    };
 
     $scope.clearGraphConfirmed = function() {
         $scope.total_blocked_today = 0;
@@ -257,7 +261,7 @@ app.controller('HistoryController', function($scope) {
         chrome.runtime.sendMessage({type: "clear-total_blocked_per_day"});
 
         $scope.successModal("All data assocated with total blocked per day has been cleared.");
-    }
+    };
 
     // I will try to find a better solution for all these different modals later (there may be more)
 
@@ -272,12 +276,13 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_message_class = false;
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "block";
+        $scope.show_modal_go_back_button = false;
         $scope.show_modal_clear_graph_button = true;
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("Graph", message, "text-black");
-    }
+    };
 
     $scope.inputModal = function(title, message) {
         $scope.show_modal_bar_chart_icon = false;
@@ -290,6 +295,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_message_class = false;
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "none";
+        $scope.show_modal_go_back_button = false;
         $scope.show_modal_clear_graph_button = false;
         $scope.show_modal_search_history_button = true;
         $scope.show_modal_confirm_button = false;
@@ -297,19 +303,20 @@ app.controller('HistoryController', function($scope) {
         $scope.modal(title, message, "text-black");
     };
 
-    $scope.confirmModal = function(message, functionVariable, parameterVariable) {
+    $scope.confirmModal = function(message, confirmFunctionVariable, confirmParameterVariable) {
         $scope.show_modal_bar_chart_icon = false;
         $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = true;
         $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = false;
-        $scope.function = functionVariable;
-        $scope.parameter = parameterVariable;
+        $scope.confirm_function = confirmFunctionVariable;
+        $scope.confirm_parameter = confirmParameterVariable;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "none";
+        $scope.show_modal_go_back_button = false;
         $scope.show_modal_clear_graph_button = false;
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = true;
@@ -328,6 +335,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_message_class = true;
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "none";
+        $scope.show_modal_go_back_button = false;
         $scope.show_modal_clear_graph_button = false;
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
@@ -346,6 +354,7 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_message_class = true;
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "none";
+        $scope.show_modal_go_back_button = false;
         $scope.show_modal_clear_graph_button = false;
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
@@ -353,7 +362,7 @@ app.controller('HistoryController', function($scope) {
         $scope.modal("SUCCESS", message, "text-success");
     };
 
-    $scope.errorModal = function(message) {
+    $scope.errorModal = function(message, errorFunctionVariable, errorParameterVariable) {
         $scope.show_modal_bar_chart_icon = false;
         $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = false;
@@ -362,6 +371,13 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_error_icon = true;
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
+        if (errorFunctionVariable === undefined) {
+            $scope.show_modal_go_back_button = false;
+        } else {
+            $scope.show_modal_go_back_button = true;
+            $scope.error_function = errorFunctionVariable;
+            $scope.error_parameter = errorParameterVariable;
+        }
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "none";
         $scope.show_modal_clear_graph_button = false;
