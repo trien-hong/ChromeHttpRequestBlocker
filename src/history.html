@@ -31,17 +31,17 @@
           <div class="content-patterns-header bg-light py-2 px-2 border border-2 border-secondary">
             <div title="Icon">
               <button class="btn btn-info" disabled>
-                Icon
+                <b>Icon</b>
               </button>
             </div>
             <div class="pattern-input-one">
-              <input type="text" class="form-control" value="Exact URL of what was blocked" title="Exact URL of what was blocked" disabled/>
+              <input type="text" class="form-control" value="Exact URL of what was blocked" title="Exact URL of what was blocked" style="font-weight: bold;" disabled/>
             </div>
             <div class="pattern-input-two">
-              <u><input type="text" class="form-control text-center" value="#" title="Number of times blocked" disabled/></u>
+              <u><input type="text" class="form-control text-center" value="#" title="Number of times blocked" style="font-weight: bold;" disabled/></u>
             </div>
             <div class="pattern-input-three">
-              <input type="text" class="form-control text-center" value="Timestamp/last blocked" title="Timestamp/last blocked (local time)" disabled/>
+              <input type="text" class="form-control text-center" value="Timestamp/last blocked" title="Timestamp/last blocked (local time)" style="font-weight: bold;" disabled/>
             </div>
           </div>
           <div>
@@ -82,13 +82,13 @@
               <a class="btn btn-primary" role="button" title="Go to page 1" ng-if="show_page_arrow_left_icon" ng-click="decreaseMaxPageNumber()">
                 <img class="mb-1" src="images/misc/chevron-double-left.svg"/>
               </a>
-              <a class="btn btn-primary" role="button" title="Decrease page number" ng-if="show_page_arrow_left_icon" ng-click="decreasePageNumber()">
+              <a class="btn btn-primary" role="button" title="Decrease page number by 1" ng-if="show_page_arrow_left_icon" ng-click="decreasePageNumber()">
                 <img class="mb-1" src="images/misc/arrow-left.svg"/>
               </a>
               &nbsp;
-              Page: <u title="Current page">{{page_number + 1}}</u> / <u title="Maximum page(s)">{{max_page}}</u>
+              Page: <b><u title="Current page">{{page_number + 1}}</u></b> / <b><u title="Maximum page(s)">{{max_page}}</u></b>
               &nbsp;
-              <a class="btn btn-primary" role="button" title="Increase page number" ng-if="show_page_arrow_right_icon" ng-click="increasePageNumber()">
+              <a class="btn btn-primary" role="button" title="Increase page number by 1" ng-if="show_page_arrow_right_icon" ng-click="increasePageNumber()">
                 <img class="mb-1" src="images/misc/arrow-right.svg"/>
               </a>
               <a class="btn btn-primary" role="button" title="Go to page {{max_page}}" ng-if="show_page_arrow_right_icon" ng-click="increaseMaxPageNumber()">
@@ -200,8 +200,8 @@
             <div class="modal-body text-break">
               <h5 ng-class="modalClass" ng-if="show_modal_message_class" ng-bind-html="modalMessage"></h5>
               <div class="form-group" ng-if="show_modal_input">
-                <label for="searchHistoryInput" class="col-form-label"><h6>{{modalMessage}}</h6></label>
-                <input type="text" class="form-control" id="searchHistoryInput" placeholder="ex. https://www.google.com/, https://test.com/holder.js?v=3, ..." title="Enter only one at a time"/>
+                <label for="searchHistoryInput" class="col-form-label"><h6>{{input_message}}</h6></label>
+                <input type="text" class="form-control" id="searchHistoryInput" placeholder="{{input_placeholder}}" title="Do not enter more than one at a time"/>
               </div>
               <div id="line_graph"></div>
             </div>

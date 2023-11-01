@@ -57,7 +57,9 @@ app.controller('HistoryController', function($scope) {
                 $scope.is_pause = "Unpause Extension";
                 $scope.button_is_pause_color = "btn-success";
                 
-                $scope.alertModal("Extension is now <b><u>PAUSED</u></b>.<br><br>All patterns will not be blocked.");
+                $scope.alertModal(
+                    "Extension is now <b><u>PAUSED</u></b>.<br><br>All patterns will not be blocked." // message
+                );
             } else {
                 // extension is currently on pause (is not blocking sites)
                 // user wants to UNPAUSE extension
@@ -67,7 +69,9 @@ app.controller('HistoryController', function($scope) {
                 $scope.is_pause = "Pause Extension";
                 $scope.button_is_pause_color = "btn-danger";
                 
-                $scope.alertModal("Extension is now <b><u>UNPAUSED</u></b>.<br><br>All patterns will be blocked.");
+                $scope.alertModal(
+                    "Extension is now <b><u>UNPAUSED</u></b>.<br><br>All patterns will be blocked." // message
+                );
             }
 
             chrome.storage.local.get('is_pause', function(data) {
@@ -128,9 +132,15 @@ app.controller('HistoryController', function($scope) {
         $('#searchHistoryInput').val('');
 
         if ($scope.is_empty === true) {
-            $scope.errorModal("Your history seems to be empty. Therefore, there was nothing to search.<br><br>History will only update when a URL/request is blocked.");
+            $scope.errorModal(
+                "Your history seems to be empty. Therefore, there was nothing to search.<br><br>History will only update when a URL/request is blocked." // message
+            );
         } else {
-            $scope.inputModal("SEARCH HISTORY", "Please enter the exact URL in which you want to search for.");
+            $scope.inputModal(
+                "SEARCH HISTORY", // title
+                "Please enter the EXACT URL in which you want to search for. Enter only one at a time.", // message
+                "ex. http://www.google-analytics.com/ga.js, https://test.com/ad.js?v=3, https://www.doubleclick.net/, etc." // placeholder
+            );
         }
     };
 
@@ -140,7 +150,10 @@ app.controller('HistoryController', function($scope) {
         var index = 0;
 
         if (input === "") {
-            $scope.errorModal("Sorry, your input was empty (\"\").<br><br>Please try a different input.", "searchHistory");
+            $scope.errorModal(
+                "Sorry, your input was empty (\"\").<br><br>Please try a different input.", // message
+                "searchHistory" // function
+            );
         } else {
             for (var i = 0; i < $scope.max_page; i++) {
                 if ($scope.url_blocked[i][input] !== undefined) {
@@ -151,21 +164,33 @@ app.controller('HistoryController', function($scope) {
             }
 
             if (found === true) {
-                $scope.successModal("A match was found on page " + index + ".<br><br>If you were not already on page " + index + ", you have been taken there automatically.");
                 $scope.page_number = index - 1;
                 $scope.page = $scope.url_blocked[$scope.page_number];
+
+                $scope.successModal(
+                    "A match was found on page " + index + ".<br><br>If you were not already on page " + index + ", you have been taken there automatically." // message
+                );
+
                 $scope.checkArrowIcons();
             } else {
-                $scope.errorModal("Sorry, your input of \"<u>" + input + "</u>\", was not found in your history.<br><br>Please try a different input.", "searchHistory");
+                $scope.errorModal(
+                    "Sorry, your input of \"<u>" + input + "</u>\", was not found in your history.<br><br>Please try a different input.", // message
+                    "searchHistory" // function
+                );
             }
         }
     };
 
     $scope.clearHistory = function() {
         if ($scope.is_empty === true) {
-            $scope.errorModal("Your history seems to be empty. Therefore, there was nothing to clear.<br><br>History will only update when a URL/request is blocked.");
+            $scope.errorModal(
+                "Your history seems to be empty. Therefore, there was nothing to clear.<br><br>History will only update when a URL/request is blocked." // message
+            );
         } else {
-            $scope.confirmModal("Are you sure you want to clear your history? This will not affect your graph/total blocked per day.<br><br>Depending on the size of your history, it may take some time to load.", "clearHistoryConfirmed");
+            $scope.confirmModal(
+                "Are you sure you want to clear your history? This will not affect your graph/total blocked per day.<br><br>Depending on the size of your history, it may take some time to load.", // message
+                "clearHistoryConfirmed" // function
+            );
         }
     };
 
@@ -178,14 +203,18 @@ app.controller('HistoryController', function($scope) {
         $scope.max_page = 1;
         $scope.page = $scope.url_blocked;
 
-        $scope.successModal("Your history has been cleared.");
+        $scope.successModal(
+            "Your history has been cleared." // message
+        );
 
         chrome.runtime.sendMessage({type: "clear-url_blocked"});
     };
 
     $scope.viewGraph = function() {
         if (Object.keys($scope.backgroundPage.total_blocked_per_day).length === 0) {
-            $scope.errorModal("Your \"total blocked per day seems\" to be empty. Therefore, there was no graph to draw.<br><br>You can only view a graph if the extension has blocked a URL.");
+            $scope.errorModal(
+                "Your \"total blocked per day seems\" to be empty. Therefore, there was no graph to draw.<br><br>You can only view a graph if the extension has blocked a URL." // message
+            );
         } else {
             var graph_data = [];
             var starting_highlight = undefined;
@@ -212,7 +241,7 @@ app.controller('HistoryController', function($scope) {
                 document.getElementById("line_graph"),
                 graph_data, {
                     height: 500,
-                    width: 775,
+                    width: 1100,
                     colors: ['#A33434'],
                     fillGraph: true,
                     fillAlpha: 0.4,
@@ -252,7 +281,10 @@ app.controller('HistoryController', function($scope) {
     };
 
     $scope.clearGraph = function() {
-        $scope.confirmModal("Are you sure you want to clear your graph?<br><br>Clearing your graph will clear all data associated with total blocked per day. This will not affect your history.", "clearGraphConfirmed");
+        $scope.confirmModal(
+            "Are you sure you want to clear your graph?<br><br>Clearing your graph will clear all data associated with total blocked per day. This will not affect your history.", // message
+            "clearGraphConfirmed" // function
+        );
     };
 
     $scope.clearGraphConfirmed = function() {
@@ -260,7 +292,9 @@ app.controller('HistoryController', function($scope) {
         
         chrome.runtime.sendMessage({type: "clear-total_blocked_per_day"});
 
-        $scope.successModal("All data assocated with total blocked per day has been cleared.");
+        $scope.successModal(
+            "All data assocated with total blocked per day has been cleared." // message
+        );
     };
 
     // I will try to find a better solution for all these different modals later (there may be more)
@@ -281,10 +315,10 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_search_history_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal("modal-lg", "Graph", message, "text-black");
+        $scope.modal("modal-xl", "Graph", message, "text-black");
     };
 
-    $scope.inputModal = function(title, message) {
+    $scope.inputModal = function(title, message, placeholder) {
         $scope.show_modal_bar_chart_icon = false;
         $scope.show_modal_input_icon = true;
         $scope.show_modal_confirm_icon = false;
@@ -292,6 +326,8 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = false;
         $scope.show_modal_input = true;
+        $scope.input_message = message;
+        $scope.input_placeholder = placeholder;
         $scope.show_modal_message_class = false;
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "none";
@@ -300,10 +336,11 @@ app.controller('HistoryController', function($scope) {
         $scope.show_modal_search_history_button = true;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal("modal-default", title, message, "text-black");
+        $scope.modal("modal-lg", title, message, "text-black");
     };
 
     $scope.confirmModal = function(message, confirmFunctionVariable, confirmParameterVariable) {
+        // Not all confirm modal will have a confirmParameterVariable
         $scope.show_modal_bar_chart_icon = false;
         $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = true;
@@ -363,6 +400,7 @@ app.controller('HistoryController', function($scope) {
     };
 
     $scope.errorModal = function(message, errorFunctionVariable, errorParameterVariable) {
+        // Not all error modal will have a errorParameterVariable
         $scope.show_modal_bar_chart_icon = false;
         $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = false;

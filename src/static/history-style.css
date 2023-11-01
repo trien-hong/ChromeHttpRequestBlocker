@@ -88,12 +88,12 @@ hr {
 }
 
 .pattern-input-two {
-    width: 15%;
+    width: 20%;
     padding-left: 7px;
 }
 
 .pattern-input-three {
-    width: 60%;
+    width: 56%;
     padding-left: 7px;
 }
 
@@ -120,5 +120,5 @@ td {
 
 .dygraph-legend {
     margin-top: 512px;
-    margin-left: -500px;
+    margin-left: -820px;
 }

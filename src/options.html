@@ -192,7 +192,7 @@
         </div>
       </div>
       <div class="modal fade" id="modal">
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog {{modalSize}}">
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">
@@ -208,8 +208,8 @@
             <div class="modal-body text-break">
               <h5 ng-class="modalClass" ng-if="show_modal_message_class" ng-bind-html="modalMessage"></h5>
               <div class="form-group" ng-if="show_modal_input">
-                <label for="searchAndRemoveInput" class="col-form-label"><h6>{{modalMessage}}</h6></label>
-                <input type="text" class="form-control" id="searchAndRemoveInput" placeholder="ex. google.com, https://test.com/placeholder.js?v=3, etc." title="Enter only one at a time"/>
+                <label for="searchAndRemoveInput" class="col-form-label"><h6>{{input_message}}</h6></label>
+                <input type="text" class="form-control" id="searchAndRemoveInput" placeholder="{{input_placeholder}}" title="Do not enter more than one at a time"/>
               </div>
             </div>
             <div class="modal-footer">

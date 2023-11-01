@@ -55,7 +55,9 @@ app.controller('PopupController', function($scope, currentSite) {
                 $scope.is_pause = "Unpause Extension";
                 $scope.button_is_pause_color = "btn-success";
                 
-                $scope.alertModal("Extension is now <b><u>PAUSED</u></b>.<br><br>All patterns will not be blocked.");
+                $scope.alertModal(
+                    "Extension is now <b><u>PAUSED</u></b>.<br><br>All patterns will not be blocked." // message
+                );
             } else {
                 // extension is currently on pause (is not blocking sites)
                 // user wants to UNPAUSE extension
@@ -65,7 +67,9 @@ app.controller('PopupController', function($scope, currentSite) {
                 $scope.is_pause = "Pause Extension";
                 $scope.button_is_pause_color = "btn-danger";
 
-                $scope.alertModal("Extension is now <b><u>UNPAUSED</u></b>.<br><br>All patterns will be blocked.");
+                $scope.alertModal(
+                    "Extension is now <b><u>UNPAUSED</u></b>.<br><br>All patterns will be blocked." // message
+                );
             }
 
             chrome.storage.local.get('is_pause', function(data) {
@@ -101,9 +105,14 @@ app.controller('PopupController', function($scope, currentSite) {
 
     $scope.addCurrentSite = function() {
         if ($scope.website === "Sorry, not a valid website.") {
-            $scope.errorModal("The site you are trying to add doesn't seem to be a valid website.<br><br>Please try a different website.");
+            $scope.errorModal(
+                "The site you are trying to add doesn't seem to be a valid website.<br><br>Please try a different website." // message
+            );
         } else {
-            $scope.confirmModal("Are you sure you want to block the current site, \"<u>" + $scope.website + "</u>\"?", "addCurrentSiteConfirmed");
+            $scope.confirmModal(
+                "Are you sure you want to block the current site, \"<u>" + $scope.website + "</u>\"?", // message
+                "addCurrentSiteConfirmed" // function
+            );
         }
     };
 
@@ -116,13 +125,19 @@ app.controller('PopupController', function($scope, currentSite) {
         $scope.currentSiteStatus = "The current site is in your patterns.";
         $scope.is_blocked = true;
         $scope.is_not_blocked = false;
-        $scope.successModal("The site, \"<u>" + $scope.website + "</u>\", has been added.<br><br>It is now blocked and the page will reload shortly.");
+
+        $scope.successModal(
+            "The site, \"<u>" + $scope.website + "</u>\", has been added.<br><br>It is now blocked and the page will reload shortly." // message
+        );
 
         $scope.save();
     };
 
     $scope.unblockCurrentSite = function() {
-        $scope.confirmModal("Are you sure you want to unblock the current site, \"<u>" + $scope.website + "</u>\"?", "unblockCurrentSiteConfirmed");
+        $scope.confirmModal(
+            "Are you sure you want to unblock the current site, \"<u>" + $scope.website + "</u>\"?", // message
+            "unblockCurrentSiteConfirmed" // function
+        );
     };
 
     $scope.unblockCurrentSiteConfirmed = function() {
@@ -136,7 +151,10 @@ app.controller('PopupController', function($scope, currentSite) {
         $scope.currentSiteStatus = "The current site is not in your patterns.";
         $scope.is_blocked = false;
         $scope.is_not_blocked = true;
-        $scope.successModal("The site, \"<u>" + $scope.website + "</u>\", has been removed.<br><br>It is now unblocked and the page will reload shortly.");
+        
+        $scope.successModal(
+            "The site, \"<u>" + $scope.website + "</u>\", has been removed.<br><br>It is now unblocked and the page will reload shortly." // message
+        );
 
         $scope.save();
     };
@@ -162,6 +180,7 @@ app.controller('PopupController', function($scope, currentSite) {
     // I will try to find a better solution for all these different modals later
 
     $scope.confirmModal = function(message, confirmFunctionVariable, confirmParameterVariable) {
+        // Not all confirm modal will have a confirmParameterVariable
         $scope.show_modal_confirm_icon = true;
         $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = false;
@@ -170,7 +189,7 @@ app.controller('PopupController', function($scope, currentSite) {
         $scope.confirm_parameter = confirmParameterVariable;
         $scope.show_modal_confirm_button = true;
         $scope.show_modal_close_button = false;
-        $scope.modal("PLEASE CONFIRM", message, "text-black");
+        $scope.modal("modal-default", "PLEASE CONFIRM", message, "text-black");
     };
 
     $scope.alertModal = function(message) {
@@ -180,7 +199,7 @@ app.controller('PopupController', function($scope, currentSite) {
         $scope.show_modal_error_icon = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal("ALERT", message, "text-info-emphasis");
+        $scope.modal("modal-default", "ALERT", message, "text-info-emphasis");
     };
 
     $scope.successModal = function(message) {
@@ -190,7 +209,7 @@ app.controller('PopupController', function($scope, currentSite) {
         $scope.show_modal_error_icon = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal("SUCCESS", message, "text-success");
+        $scope.modal("modal-default", "SUCCESS", message, "text-success");
     };
 
     $scope.errorModal = function(message) {
@@ -200,10 +219,11 @@ app.controller('PopupController', function($scope, currentSite) {
         $scope.show_modal_error_icon = true;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal("ERROR", message, "text-danger");
+        $scope.modal("modal-default", "ERROR", message, "text-danger");
     };
 
-    $scope.modal = function(title, message, modalClass) {
+    $scope.modal = function(size, title, message, modalClass) {
+        $scope.modalSize = size;
         $scope.modalTitle = title;
         $scope.modalMessage = message;
         $scope.modalClass = modalClass;
