@@ -217,9 +217,12 @@ app.controller('HistoryController', function($scope) {
             );
         } else {
             var graph_data = [];
-            var starting_highlight = undefined;
-            var ending_highlight = undefined;
+            var starting_highlight_highest_point = undefined;
+            var ending_highlight_highest_point = undefined;
+            var starting_highlight_lowest_point = undefined;
+            var ending_highlight_lowest_point = undefined;
             var highest = 0;
+            var lowest = Number.MAX_SAFE_INTEGER;
 
             for (const [key, value] of Object.entries($scope.backgroundPage.total_blocked_per_day)) {
                 var insert_graph_data = [];
@@ -231,9 +234,18 @@ app.controller('HistoryController', function($scope) {
                     var start_date = new Date(key);
                     var end_date = new Date(key);
 
-                    starting_highlight = start_date.setHours(start_date.getHours() - 3);
-                    ending_highlight = end_date.setHours(end_date.getHours() + 3);
+                    starting_highlight_highest_point = start_date.setHours(start_date.getHours() - 4);
+                    ending_highlight_highest_point = end_date.setHours(end_date.getHours() + 4);
                     highest = value;
+                }
+
+                if (value < lowest) {
+                    var start_date = new Date(key);
+                    var end_date = new Date(key);
+
+                    starting_highlight_lowest_point = start_date.setHours(start_date.getHours() - 4);
+                    ending_highlight_lowest_point = end_date.setHours(end_date.getHours() + 4);
+                    lowest = value;
                 }
             }
     
@@ -246,26 +258,52 @@ app.controller('HistoryController', function($scope) {
                     fillGraph: true,
                     fillAlpha: 0.4,
                     underlayCallback: function(canvas, area, g) {
-                        // Used to highlight the day (+/- 3 hours) with the most blocked URL
+                        // Used to highlight the day (+/- 4 hours) with the highest blocked URL/request
+                        // If there's only one key/day, it won't show any highlights
+                        // You need at least two keys/days for highlight to show
+                        highlight_lowest_point();
+
+                        function highlight_lowest_point() {
+                            if (Object.keys($scope.backgroundPage.total_blocked_per_day).length >= 1) {
+                                var bottom_left = g.toDomCoords(new Date(starting_highlight_lowest_point));
+                                var top_right = g.toDomCoords(new Date(ending_highlight_lowest_point));
+                
+                                var left = bottom_left[0];
+                                var right = top_right[0];
+                
+                                canvas.fillStyle = "#9DC8F3";
+                                canvas.fillRect(left, area.y, right - left, area.h);
+                            }
+                        }
+
+                        // Used to highlight the day (+/- 4 hours) with the lowest blocked URL/request
                         // If there's only one key/day, it won't show any highlights
                         // You need at least two keys/days for highlight to show
                         highlight_highest_point();
 
                         function highlight_highest_point() {
                             if (Object.keys($scope.backgroundPage.total_blocked_per_day).length >= 1) {
-                                var bottom_left = g.toDomCoords(new Date(starting_highlight));
-                                var top_right = g.toDomCoords(new Date(ending_highlight));
+                                var bottom_left = g.toDomCoords(new Date(starting_highlight_highest_point));
+                                var top_right = g.toDomCoords(new Date(ending_highlight_highest_point));
                 
                                 var left = bottom_left[0];
                                 var right = top_right[0];
                 
-                                canvas.fillStyle = "#369C53";
+                                canvas.fillStyle = "#9DF3A2";
                                 canvas.fillRect(left, area.y, right - left, area.h);
                             }
                         }
                     },
                     pointClickCallback: function(e, point) {
-                        alert("The extension blocked a total of " + point["yval"] + " requests on " + new Date(point["xval"]).toLocaleString('default', { month: 'long' }) + " " + new Date(point["xval"]).getDate() + ", " + new Date(point["xval"]).getFullYear() + ".");
+                        if (point["yval"] === lowest && point["yval"] === highest && lowest === highest) {
+                            alert("The extension blocked a total of " + point["yval"] + " requests on " + new Date(point["xval"]).toLocaleString('default', { month: 'long' }) + " " + new Date(point["xval"]).getDate() + ", " + new Date(point["xval"]).getFullYear() + ".\n\nThis day is also your lowest and highest (same) in terms of blocked requests.");
+                        } else if (point["yval"] === lowest) {
+                            alert("The extension blocked a total of " + point["yval"] + " requests on " + new Date(point["xval"]).toLocaleString('default', { month: 'long' }) + " " + new Date(point["xval"]).getDate() + ", " + new Date(point["xval"]).getFullYear() + ".\n\nThis day is also your lowest in terms of blocked requests.");
+                        } else if (point["yval"] === highest) {
+                            alert("The extension blocked a total of " + point["yval"] + " requests on " + new Date(point["xval"]).toLocaleString('default', { month: 'long' }) + " " + new Date(point["xval"]).getDate() + ", " + new Date(point["xval"]).getFullYear() + ".\n\nThis day is also your highest in terms of blocked requests.");
+                        } else {
+                            alert("The extension blocked a total of " + point["yval"] + " requests on " + new Date(point["xval"]).toLocaleString('default', { month: 'long' }) + " " + new Date(point["xval"]).getDate() + ", " + new Date(point["xval"]).getFullYear() + ".");
+                        }
                     },
                     showRangeSelector: true,
                     labels: ['Date', 'Blocked #'],
