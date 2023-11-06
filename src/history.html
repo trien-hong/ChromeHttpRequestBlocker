@@ -8,12 +8,12 @@
     <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="lib/angular/angular.min.js"></script>
     <script type="text/javascript" src="lib/angular/angular-sanitize.min.js"></script>
-    <script type="text/javascript" src="lib/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="lib/dygraph/dygraph.min.js"></script>
     <script type="text/javascript" src="history.js"></script>
   </head>
   <body ng-app="RequestBlockerApp">
-    <div class="container" ng-controller="HistoryController" ng-init="init()" style="width: 1250px;">
+    <div class="container" ng-controller="HistoryController" ng-init="init()" style="width: 1320px;">
       <div class="header">
         <div>
           <h2 class="header-text"><img class="logo" src="images/extension_icons/icon-128.png" width="60" height="60"/><b style="padding-left: 2.25em;">HTTP Request Blocker</b></h2>
@@ -34,13 +34,13 @@
                 <b>Icon</b>
               </button>
             </div>
-            <div class="pattern-input-one">
+            <div class="pattern-url">
               <input type="text" class="form-control" value="Exact URL of what was blocked" title="Exact URL of what was blocked" style="font-weight: bold;" disabled/>
             </div>
-            <div class="pattern-input-two">
+            <div class="pattern-number-blocked">
               <u><input type="text" class="form-control text-center" value="#" title="Number of times blocked" style="font-weight: bold;" disabled/></u>
             </div>
-            <div class="pattern-input-three">
+            <div class="pattern-timestamp">
               <input type="text" class="form-control text-center" value="Timestamp/last blocked" title="Timestamp/last blocked (local time)" style="font-weight: bold;" disabled/>
             </div>
           </div>
@@ -61,13 +61,13 @@
                       <img class="mb-1" src="https://s2.googleusercontent.com/s2/favicons?domain={{key}}">
                     </button>
                   </div>
-                  <div class="pattern-input-one">
+                  <div class="pattern-url">
                     <input type="text" class="form-control" ng-model="key" title="Exact URL of what was blocked" disabled/>
                   </div>
-                  <div class="pattern-input-two">
+                  <div class="pattern-number-blocked">
                     <u><input type="text" class="form-control text-center" ng-model="value[0]" title="Number of times blocked" disabled/></u>
                   </div>
-                  <div class="pattern-input-three">
+                  <div class="pattern-timestamp">
                     <input type="text" class="form-control text-center" ng-model="value[1]" title="Timestamp/last blocked (local time)" disabled/>
                   </div>
                 </td>
@@ -78,23 +78,35 @@
             <hr>
           </div>
           <div class="paging text-center">
-            <h5 class="my-0 py-0">
-              <a class="btn btn-primary" role="button" title="Go to page 1" ng-if="show_page_arrow_left_icon" ng-click="decreaseMaxPageNumber()">
-                <img class="mb-1" src="images/misc/chevron-double-left.svg"/>
-              </a>
-              <a class="btn btn-primary" role="button" title="Decrease page number by 1" ng-if="show_page_arrow_left_icon" ng-click="decreasePageNumber()">
-                <img class="mb-1" src="images/misc/arrow-left.svg"/>
-              </a>
-              &nbsp;
-              Page: <b><u title="Current page">{{page_number + 1}}</u></b> / <b><u title="Maximum page(s)">{{max_page}}</u></b>
-              &nbsp;
-              <a class="btn btn-primary" role="button" title="Increase page number by 1" ng-if="show_page_arrow_right_icon" ng-click="increasePageNumber()">
-                <img class="mb-1" src="images/misc/arrow-right.svg"/>
-              </a>
-              <a class="btn btn-primary" role="button" title="Go to page {{max_page}}" ng-if="show_page_arrow_right_icon" ng-click="increaseMaxPageNumber()">
-                <img class="mb-1" src="images/misc/chevron-double-right.svg"/>
-              </a>
-            </h5>
+            <div>
+              <h5 class="my-0 py-0">
+                <a class="btn btn-primary" role="button" title="Go to page 1" ng-if="show_page_arrow_left_icon" ng-click="decreaseMaxPageNumber()">
+                  <img class="mb-1" src="images/misc/chevron-double-left.svg"/>
+                </a>
+                <a class="btn btn-primary" role="button" title="Decrease page number by 1" ng-if="show_page_arrow_left_icon" ng-click="decreasePageNumber()">
+                  <img class="mb-1" src="images/misc/arrow-left.svg"/>
+                </a>
+                &nbsp;
+                <b>Page: <u title="Current page">{{page_number + 1}}</u> / <u title="Maximum page(s)">{{max_page}}</u></b>
+                &nbsp;
+                <a class="btn btn-primary" role="button" title="Increase page number by 1" ng-if="show_page_arrow_right_icon" ng-click="increasePageNumber()">
+                  <img class="mb-1" src="images/misc/arrow-right.svg"/>
+                </a>
+                <a class="btn btn-primary" role="button" title="Go to page {{max_page}}" ng-if="show_page_arrow_right_icon" ng-click="increaseMaxPageNumber()">
+                  <img class="mb-1" src="images/misc/chevron-double-right.svg"/>
+                </a>
+              </h5>
+            </div>
+            <div>
+              <div class="dropdown" data-bs-theme="dark">
+                <a class="btn btn-primary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Go to a specific page">
+                  Go to Page...
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-item" ng-repeat="pageNumber in pageRange()" title="Go to Page #{{pageNumber}}" ng-click="dropdownMenuGoToPage(pageNumber)">Page #{{pageNumber}}</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
         <div class="vr"></div>
@@ -174,12 +186,12 @@
       <hr class="hr-bar-bottom"/>
       <div class="footer">
         <div>
-          <h2 class="footer-text">
+          <h3 class="footer-text">
             <b>
               Total Blocked Today: <u class="text-danger">{{total_blocked_today}}</u>
-              <img class="mb-1" src="images/misc/shield-fill-x.svg" width="35"/>
+              <img class="mb-2" src="images/misc/shield-fill-x.svg" width="30"/>
             </b>
-          <h2>
+          <h3>
         </div>
       </div>
       <div class="modal fade" id="modal">

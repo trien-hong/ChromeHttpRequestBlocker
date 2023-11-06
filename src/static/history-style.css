@@ -69,11 +69,11 @@ hr {
     border-style: solid;
     padding: 1em;
     background-color: #C4EBC4;
-    width: 825px;
+    width: 895px;
 }
 
 .patterns {
-    height: 450px;
+    height: 506px;
 }
 
 .pattern {
@@ -82,19 +82,32 @@ hr {
     justify-content: space-between;
 }
 
-.pattern-input-one {
+.pattern-url {
     width: 100%;
     padding-left: 7px;
 }
 
-.pattern-input-two {
-    width: 20%;
+.pattern-number-blocked {
+    width: 15%;
     padding-left: 7px;
 }
 
-.pattern-input-three {
-    width: 56%;
+.pattern-timestamp {
+    width: 50%;
     padding-left: 7px;
+}
+
+.paging {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.dropdown-menu {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    max-height: 195px;
+    overflow-y: auto;
 }
 
 .content-buttons {

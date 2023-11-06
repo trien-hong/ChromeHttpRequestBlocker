@@ -82,6 +82,30 @@ app.controller('HistoryController', function($scope) {
         }
     });
 
+    $scope.pageRange = function() {
+        var input = [];
+
+        for (var i = 1; i <= $scope.max_page; i++) {
+            input.push(i);
+        }
+
+        return input;
+    };
+
+    $scope.dropdownMenuGoToPage = function(index) {
+        // Go to a specific page number
+        if ($scope.page_number === index - 1) {
+            $scope.alertModal(
+                "You are already on page " + index + "." // message
+            );
+        } else {
+            $scope.page_number = index - 1;
+            $scope.page = $scope.url_blocked[$scope.page_number];
+        }
+
+        $scope.checkArrowIcons();
+    };
+
     $scope.decreasePageNumber = function() {
         // Decrease page number by 1
         $scope.page_number = $scope.page_number - 1;
@@ -167,14 +191,14 @@ app.controller('HistoryController', function($scope) {
                 $scope.page_number = index - 1;
                 $scope.page = $scope.url_blocked[$scope.page_number];
 
-                $scope.successModal(
-                    "A match was found on page " + index + ".<br><br>If you were not already on page " + index + ", you have been taken there automatically." // message
-                );
-
                 $scope.checkArrowIcons();
+
+                $scope.successModal(
+                    "Your input of, \"<u>" + input + ",</u>\" had a match and was found on page " + index + ".<br><br>If you were not already on page " + index + ", you have been taken there automatically." // message
+                );
             } else {
                 $scope.errorModal(
-                    "Sorry, your input of \"<u>" + input + "</u>\", was not found in your history.<br><br>Please try a different input.", // message
+                    "Sorry, your input of, \"<u>" + input + "</u>\", was not found in your history.<br><br>Please try a different input.", // message
                     "searchHistory" // function
                 );
             }

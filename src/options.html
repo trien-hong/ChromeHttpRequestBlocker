@@ -11,7 +11,7 @@
     <script type="text/javascript" src="options.js"></script>
   </head>
   <body ng-app="RequestBlockerApp">
-    <div class="container" ng-controller="OptionsController" ng-init="init()" style="width: 1250px;">
+    <div class="container" ng-controller="OptionsController" ng-init="init()" style="width: 1320px;">
       <div class="header">
         <div>
           <h2 class="header-text"><img class="logo" src="images/extension_icons/icon-128.png" width="60" height="60"/><b style="padding-left: 2.25em;">HTTP Request Blocker</b></h2>
@@ -61,18 +61,18 @@
               <u>Your patterns seems to be empty.<br>Try adding some patterns first.</u>
             </h2>
             <table class="table table-hover">
-              <tr ng-repeat="u in patterns">
+              <tr ng-repeat="i in patterns">
                 <td class="pattern">
                   <div title="Icon">
                     <button class="btn btn-info" disabled>
-                      <img class="mb-1" src="https://s2.googleusercontent.com/s2/favicons?domain={{u.pattern.substring(6, u.pattern.length-2)}}">
+                      <img class="mb-1" src="https://s2.googleusercontent.com/s2/favicons?domain={{i.pattern.substring(6, i.pattern.length-2)}}">
                     </button>
                   </div>
                   <div class="pattern-input">
-                    <input type="text" class="form-control" ng-model="u.pattern" title="Add/Edit Pattern"/>
+                    <input type="text" class="form-control" ng-model="i.pattern" title="Add/Edit Pattern"/>
                   </div>
                   <div>
-                    <button type="button" class="btn btn-danger" ng-click="removeByIndex(u)" title="Delete Pattern">
+                    <button type="button" class="btn btn-danger" ng-click="removeByIndex(i)" title="Delete Pattern">
                       <img class="mb-1" src="images/misc/trash.svg" width="16"/>
                     </button>
                   </div>
@@ -183,12 +183,12 @@
       <hr class="hr-bar-bottom"/>
       <div class="footer">
         <div>
-          <h2 class="footer-text">
+          <h3 class="footer-text">
             <b>
               Total Blocked Request(s): <u class="text-danger">{{total_blocked}}</u>
-              <img class="mb-1" src="images/misc/shield-fill-x.svg" width="35"/>
+              <img class="mb-1" src="images/misc/shield-fill-x.svg" width="30"/>
             </b>
-          <h2>
+          <h3>
         </div>
       </div>
       <div class="modal fade" id="modal">
