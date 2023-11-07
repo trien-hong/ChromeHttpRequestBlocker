@@ -78,9 +78,16 @@
             <hr>
           </div>
           <div class="paging text-center">
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary" ng-click="modalPageNumber()" title="Input a specific page number">
+                <img class="mb-1" src="images/misc/file-earmark.svg"/>
+                &nbsp;
+                Input Page
+              </button>
+            </div>
             <div>
               <h5 class="my-0 py-0">
-                <a class="btn btn-primary" role="button" title="Go to page 1" ng-if="show_page_arrow_left_icon" ng-click="decreaseMaxPageNumber()">
+                <a class="btn btn-primary" role="button" title="Go to page 1" ng-if="show_page_arrow_left_icon" ng-click="firstPageNumber()">
                   <img class="mb-1" src="images/misc/chevron-double-left.svg"/>
                 </a>
                 <a class="btn btn-primary" role="button" title="Decrease page number by 1" ng-if="show_page_arrow_left_icon" ng-click="decreasePageNumber()">
@@ -92,18 +99,18 @@
                 <a class="btn btn-primary" role="button" title="Increase page number by 1" ng-if="show_page_arrow_right_icon" ng-click="increasePageNumber()">
                   <img class="mb-1" src="images/misc/arrow-right.svg"/>
                 </a>
-                <a class="btn btn-primary" role="button" title="Go to page {{max_page}}" ng-if="show_page_arrow_right_icon" ng-click="increaseMaxPageNumber()">
+                <a class="btn btn-primary" role="button" title="Go to page {{max_page}}" ng-if="show_page_arrow_right_icon" ng-click="lastPageNumber()">
                   <img class="mb-1" src="images/misc/chevron-double-right.svg"/>
                 </a>
               </h5>
             </div>
             <div>
               <div class="dropdown" data-bs-theme="dark">
-                <a class="btn btn-primary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Go to a specific page">
+                <a class="btn btn-primary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Go to a specific page number">
                   Go to Page...
                 </a>
                 <ul class="dropdown-menu">
-                  <li class="dropdown-item" ng-repeat="pageNumber in pageRange()" title="Go to Page #{{pageNumber}}" ng-click="dropdownMenuGoToPage(pageNumber)">Page #{{pageNumber}}</li>
+                  <li class="dropdown-item" ng-repeat="pageNumber in pageRange()" title="Go to Page #{{pageNumber}}" ng-click="dropdownMenuPageNumber(pageNumber)">Page #{{pageNumber}}</li>
                 </ul>
               </div>
             </div>
@@ -212,8 +219,8 @@
             <div class="modal-body text-break">
               <h5 ng-class="modalClass" ng-if="show_modal_message_class" ng-bind-html="modalMessage"></h5>
               <div class="form-group" ng-if="show_modal_input">
-                <label for="searchHistoryInput" class="col-form-label"><h6>{{input_message}}</h6></label>
-                <input type="text" class="form-control" id="searchHistoryInput" placeholder="{{input_placeholder}}" title="Do not enter more than one at a time"/>
+                <label for="input" class="col-form-label"><h6>{{input_message}}</h6></label>
+                <input type="text" class="form-control" id="input" placeholder="{{input_placeholder}}" title="Do not enter more than one at a time"/>
               </div>
               <div id="line_graph"></div>
             </div>
@@ -222,7 +229,7 @@
               <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[confirm_function](confirm_parameter)" title="YES">YES</button>
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal" ng-if="show_modal_confirm_button" title="NO">NO</button>
               <button type="button" class="btn btn-warning" ng-if="show_modal_clear_graph_button" ng-click="clearGraph()" title="CLEAR GRAPH">CLEAR GRAPH</button>
-              <button type="button" class="btn btn-primary" ng-if="show_modal_search_history_button" ng-click="searchHistoryInput()" title="SEARCH HISTORY">SEARCH HISTORY</button>
+              <button type="button" class="btn btn-primary" ng-if="show_modal_input_button" ng-click="this[input_function](input_parameter)" title="{{modalTitle}}">{{modalTitle}}</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-if="show_modal_close_button" title="CLOSE ALERT">CLOSE</button>
             </div>
           </div>

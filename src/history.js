@@ -92,8 +92,70 @@ app.controller('HistoryController', function($scope) {
         return input;
     };
 
-    $scope.dropdownMenuGoToPage = function(index) {
-        // Go to a specific page number
+    $scope.modalPageNumber = function() {
+        // Go to a specific page number via input modal
+        $('#input').val('');
+
+        if ($scope.max_page === 1) {
+            $scope.alertModal(
+                "There is currently only 1 page." // message
+            );
+        } else {
+            $scope.inputModal(
+                "INPUT PAGE NUMBER", // title
+                "Please enter the page number you want to go to. You can only enter between (inclusive) 1 and " + $scope.max_page + ".", // message
+                "ex. 1, 2, 3, etc.", // placeholder
+                "modalPageNumberInput" // function
+            );
+        }
+    };
+
+    $scope.modalPageNumberInput = function() {
+        var input = $('#input').val();
+
+        if (input === "") {
+            // Empty string
+            $scope.errorModal(
+                "Sorry, your input was empty (\"\").<br><br>You can only enter between 1 and " + $scope.max_page + " (inclusive).", // message
+                "modalPageNumber" // function
+            );
+        } else if (!/^-?\d+$/.test(input)) {
+            // Not a number (including decimals)
+            $scope.errorModal(
+                "Your input of, \"<u>" + input + "</u>\", doesn't seem to be a valid number.<br><br>You can only enter between 1 and " + $scope.max_page + " (inclusive).", // message
+                "modalPageNumber" // function
+            );
+        } else if (input <= 0) {
+            // A negative number
+            $scope.errorModal(
+                "Your input of, \"<u>" + input + "</u>\", is a negative number.<br><br>You can only enter between 1 and " + $scope.max_page + " (inclusive).", // message
+                "modalPageNumber" // function
+            );
+        } else if (input > $scope.max_page) {
+            // Number greater than max page
+            $scope.errorModal(
+                "Your input of, \"<u>" + input + "</u>\", is greater than the maxium page number.<br><br>You can only enter between 1 and " + $scope.max_page + " (inclusive).", // message
+                "modalPageNumber" // function
+            );
+        } else if ($scope.page_number === parseInt(input - 1)) {
+            // Page number is already the same as input
+            $scope.alertModal(
+                "You are already on page " + input + "." // message
+            );
+        } else {
+            $scope.page_number = parseInt(input - 1);
+            $scope.page = $scope.url_blocked[$scope.page_number];
+            
+            $scope.checkArrowIcons();
+
+            $scope.alertModal(
+                "You are now on page " + input + "." // message
+            );
+        }
+    };
+
+    $scope.dropdownMenuPageNumber = function(index) {
+        // Go to a specific page number via dropdown menu
         if ($scope.page_number === index - 1) {
             $scope.alertModal(
                 "You are already on page " + index + "." // message
@@ -101,9 +163,13 @@ app.controller('HistoryController', function($scope) {
         } else {
             $scope.page_number = index - 1;
             $scope.page = $scope.url_blocked[$scope.page_number];
-        }
 
-        $scope.checkArrowIcons();
+            $scope.checkArrowIcons();
+
+            $scope.alertModal(
+                "You are now on page " + index + "." // message
+            );
+        }
     };
 
     $scope.decreasePageNumber = function() {
@@ -122,7 +188,7 @@ app.controller('HistoryController', function($scope) {
         $scope.checkArrowIcons();
     };
 
-    $scope.decreaseMaxPageNumber = function() {
+    $scope.firstPageNumber = function() {
         // Go to page 0
         $scope.page_number = 0;
         $scope.page = $scope.url_blocked[$scope.page_number];
@@ -130,7 +196,7 @@ app.controller('HistoryController', function($scope) {
         $scope.checkArrowIcons();
     };
 
-    $scope.increaseMaxPageNumber = function() {
+    $scope.lastPageNumber = function() {
         // Go to the max page
         $scope.page_number = $scope.max_page - 1;
         $scope.page = $scope.url_blocked[$scope.page_number];
@@ -153,7 +219,7 @@ app.controller('HistoryController', function($scope) {
     };
 
     $scope.searchHistory = function() {
-        $('#searchHistoryInput').val('');
+        $('#input').val('');
 
         if ($scope.is_empty === true) {
             $scope.errorModal(
@@ -163,13 +229,14 @@ app.controller('HistoryController', function($scope) {
             $scope.inputModal(
                 "SEARCH HISTORY", // title
                 "Please enter the EXACT URL in which you want to search for. Enter only one at a time.", // message
-                "ex. http://www.google-analytics.com/ga.js, https://test.com/ad.js?v=3, https://www.doubleclick.net/, etc." // placeholder
+                "ex. http://www.google-analytics.com/ga.js, https://test.com/ad.js?v=3, https://www.doubleclick.net/, etc.", // placeholder
+                "searchHistoryInput" // function
             );
         }
     };
 
     $scope.searchHistoryInput = function() {
-        var input = $('#searchHistoryInput').val();
+        var input = $('#input').val();
         var found = false;
         var index = 0;
 
@@ -222,9 +289,9 @@ app.controller('HistoryController', function($scope) {
         $scope.is_empty = true;
         $scope.show_page_arrow_left_icon = false;
         $scope.show_page_arrow_right_icon = false;
-        $scope.url_blocked = undefined;
         $scope.page_number = 0;
         $scope.max_page = 1;
+        $scope.url_blocked = undefined;
         $scope.page = $scope.url_blocked;
 
         $scope.successModal(
@@ -374,28 +441,31 @@ app.controller('HistoryController', function($scope) {
         line_graph.style.display = "block";
         $scope.show_modal_go_back_button = false;
         $scope.show_modal_clear_graph_button = true;
-        $scope.show_modal_search_history_button = false;
+        $scope.show_modal_input_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
-        $scope.modal("modal-xl", "Graph", message, "text-black");
+        $scope.modal("modal-xl", "GRAPH", message, "text-black");
     };
 
-    $scope.inputModal = function(title, message, placeholder) {
+    $scope.inputModal = function(title, message, placeholder, inputFunctionVariable, inputParameterVariable) {
+        // Not all input modal will have an inputParameterVariable
         $scope.show_modal_bar_chart_icon = false;
         $scope.show_modal_input_icon = true;
         $scope.show_modal_confirm_icon = false;
         $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = false;
-        $scope.show_modal_input = true;
         $scope.input_message = message;
         $scope.input_placeholder = placeholder;
+        $scope.input_function = inputFunctionVariable;
+        $scope.input_parameter = inputParameterVariable;
+        $scope.show_modal_input = true;
         $scope.show_modal_message_class = false;
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "none";
         $scope.show_modal_go_back_button = false;
         $scope.show_modal_clear_graph_button = false;
-        $scope.show_modal_search_history_button = true;
+        $scope.show_modal_input_button = true;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("modal-lg", title, message, "text-black");
@@ -417,7 +487,7 @@ app.controller('HistoryController', function($scope) {
         line_graph.style.display = "none";
         $scope.show_modal_go_back_button = false;
         $scope.show_modal_clear_graph_button = false;
-        $scope.show_modal_search_history_button = false;
+        $scope.show_modal_input_button = false;
         $scope.show_modal_confirm_button = true;
         $scope.show_modal_close_button = false;
         $scope.modal("modal-default", "PLEASE CONFIRM", message, "text-black");
@@ -436,7 +506,7 @@ app.controller('HistoryController', function($scope) {
         line_graph.style.display = "none";
         $scope.show_modal_go_back_button = false;
         $scope.show_modal_clear_graph_button = false;
-        $scope.show_modal_search_history_button = false;
+        $scope.show_modal_input_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("modal-default", "ALERT", message, "text-info-emphasis");
@@ -455,7 +525,7 @@ app.controller('HistoryController', function($scope) {
         line_graph.style.display = "none";
         $scope.show_modal_go_back_button = false;
         $scope.show_modal_clear_graph_button = false;
-        $scope.show_modal_search_history_button = false;
+        $scope.show_modal_input_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("modal-default", "SUCCESS", message, "text-success");
@@ -481,7 +551,7 @@ app.controller('HistoryController', function($scope) {
         var line_graph = document.getElementById("line_graph");
         line_graph.style.display = "none";
         $scope.show_modal_clear_graph_button = false;
-        $scope.show_modal_search_history_button = false;
+        $scope.show_modal_input_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("modal-default", "ERROR", message, "text-danger");
