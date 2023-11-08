@@ -122,7 +122,7 @@
             </button>
           </div>
           <div class="d-grid gap-2">
-            <button class="btn btn-primary" ng-click="save()" title="Save your newly added/edited site(s)">
+            <button class="btn btn-primary" ng-click="save()" title="Save your recent changes">
               <img class="mb-1" src="images/misc/save2.svg"/>
               &nbsp;
               Save Patterns
@@ -191,6 +191,31 @@
           <h3>
         </div>
       </div>
+      <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <img src="images/extension_icons/icon-16.png" class="rounded me-2">
+            <strong class="me-auto">{{toastTitle}}</strong>
+            <b><u><small>{{toastSubtitle}}</small></u></b>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" title="Close alert"></button>
+          </div>
+          <div class="toast-body">
+            <b><p ng-bind-html="toastMessage"></p></b>
+            <div ng-if="show_toast_save_button">
+              <div>
+                <hr>
+              </div>
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary" ng-click="save()" title="Save your recent changes">
+                  <img class="mb-1" src="images/misc/save2.svg"/>
+                  &nbsp;
+                  Save Patterns
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="modal fade" id="modal">
         <div class="modal-dialog {{modalSize}}">
           <div class="modal-content">
@@ -208,15 +233,15 @@
             <div class="modal-body text-break">
               <h5 ng-class="modalClass" ng-if="show_modal_message_class" ng-bind-html="modalMessage"></h5>
               <div class="form-group" ng-if="show_modal_input">
-                <label for="searchAndRemoveInput" class="col-form-label"><h6>{{input_message}}</h6></label>
-                <input type="text" class="form-control" id="searchAndRemoveInput" placeholder="{{input_placeholder}}" title="Do not enter more than one at a time"/>
+                <label for="input" class="col-form-label"><h6>{{input_message}}</h6></label>
+                <input type="text" class="form-control" id="input" placeholder="{{input_placeholder}}" title="Do not enter more than one at a time"/>
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" ng-if="show_modal_go_back_button" ng-click="this[error_function](error_parameter)" title="GO BACK">GO BACK</button>
               <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[confirm_function](confirm_parameter)" title="YES">YES</button>
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal" ng-if="show_modal_confirm_button" title="NO">NO</button>
-              <button type="button" class="btn btn-primary" ng-if="show_modal_search_remove_button" ng-click="searchAndRemoveInput()" title="SEARCH & REMOVE">SEARCH & REMOVE</button>
+              <button type="button" class="btn btn-primary" ng-if="show_modal_input_button" ng-click="this[input_function](input_parameter)" title="{{modalTitle}}">{{modalTitle}}</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-if="show_modal_close_button" title="CLOSE ALERT">CLOSE</button>
             </div>
           </div>

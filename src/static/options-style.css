@@ -104,3 +104,11 @@ tr {
 td {
     border-bottom: none;
 }
+
+.toast-header {
+    background-color: wheat;
+}
+
+.toast-body {
+    background-color: wheat;
+}

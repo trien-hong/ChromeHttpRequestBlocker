@@ -115,6 +115,10 @@ app.controller('OptionsController', function($scope) {
         if ($scope.patterns.length === 0) {
             $scope.is_empty = true;
         }
+
+        $scope.deleteToast(
+            "You have removed, \"<u>" + patternToRemove.pattern + "</u>\", from your patterns.<br><br>You can save now or later. Just please don't forget to save!" // message
+        );
     };
 
     $scope.save = function(msg) {
@@ -222,7 +226,7 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.searchAndRemove = function() {
-        $('#searchAndRemoveInput').val('');
+        $('#input').val('');
 
         if ($scope.patterns.length === 0) {
             $scope.errorModal(
@@ -232,13 +236,14 @@ app.controller('OptionsController', function($scope) {
             $scope.inputModal(
                 "SEARCH & REMOVE", // title
                 "Please enter the pattern (without \"*://*.\" & \"/*\") in which you want to remove. Enter only one at a time.", // message
-                "ex. adbrain.com, 12.34.56.78, ads.twitter.com, www.youtube.com, https://test.com/ad.js?v=3, etc." // placeholder
+                "ex. adbrain.com, 12.34.56.78, ads.twitter.com, www.youtube.com, https://test.com/ad.js?v=3, etc.", // placeholder
+                "searchAndRemoveInput" // function
             );
         }
     };
 
     $scope.searchAndRemoveInput = function() {
-        var input = $('#searchAndRemoveInput').val();
+        var input = $('#input').val();
         
         if (input.substring(0, 8) === "https://" || input.substring(0, 7) === "http://") {
             var object = $scope.patterns.find(patterns => patterns.pattern === input);
@@ -259,7 +264,7 @@ app.controller('OptionsController', function($scope) {
             );
         } else {
             $scope.errorModal(
-                "Sorry, your input of \"<u>" + input + "</u>\" could not be found.<br><br>Please try a different input.", // message
+                "Sorry, your input of, \"<u>" + input + "</u>\", could not be found.<br><br>Please try a different input.", // message
                 "searchAndRemove" // function
             );
         }
@@ -349,20 +354,35 @@ app.controller('OptionsController', function($scope) {
         objDiv.scrollTo({top: objDiv.scrollHeight, behavior: "smooth"});
     };
 
+    $scope.deleteToast = function(message) {
+        $scope.show_toast_save_button = true;
+        $scope.toast("HTTP Request Blocker", "Just now", message);
+    };
+
+    $scope.toast = function(title, subtitle, message) {
+        $scope.toastTitle = title;
+        $scope.toastSubtitle = subtitle;
+        $scope.toastMessage = message;
+        $('#modal').modal('hide');
+        $('#toast').toast('show');
+    };
+
     // I will try to find a better solution for all these different modals later
     
-    $scope.inputModal = function(title, message, placeholder) {
+    $scope.inputModal = function(title, message, placeholder, inputFunctionVariable, inputParameterVariable) {
         $scope.show_modal_input_icon = true;
         $scope.show_modal_confirm_icon = false;
         $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = false;
-        $scope.show_modal_input = true;
         $scope.input_message = message;
         $scope.input_placeholder = placeholder;
+        $scope.input_function = inputFunctionVariable;
+        $scope.input_parameter = inputParameterVariable;
+        $scope.show_modal_input = true;
         $scope.show_modal_message_class = false;
         $scope.show_modal_go_back_button = false;
-        $scope.show_modal_search_remove_button = true;
+        $scope.show_modal_input_button = true;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("modal-lg", title, message, "text-black");
@@ -380,7 +400,7 @@ app.controller('OptionsController', function($scope) {
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
         $scope.show_modal_go_back_button = false;
-        $scope.show_modal_search_remove_button = false;
+        $scope.show_modal_input_button = false;
         $scope.show_modal_confirm_button = true;
         $scope.show_modal_close_button = false;
         $scope.modal("modal-default", "PLEASE CONFIRM", message, "text-black");
@@ -395,7 +415,7 @@ app.controller('OptionsController', function($scope) {
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
         $scope.show_modal_go_back_button = false;
-        $scope.show_modal_search_remove_button = false;
+        $scope.show_modal_input_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("modal-default", "ALERT", message, "text-info-emphasis");
@@ -410,7 +430,7 @@ app.controller('OptionsController', function($scope) {
         $scope.show_modal_input = false;
         $scope.show_modal_message_class = true;
         $scope.show_modal_go_back_button = false;
-        $scope.show_modal_search_remove_button = false;
+        $scope.show_modal_input_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("modal-default", "SUCCESS", message, "text-success");
@@ -432,7 +452,7 @@ app.controller('OptionsController', function($scope) {
             $scope.error_function = errorFunctionVariable;
             $scope.error_parameter = errorParameterVariable;
         }
-        $scope.show_modal_search_remove_button = false;
+        $scope.show_modal_input_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("modal-default", "ERROR", message, "text-danger");
@@ -443,6 +463,7 @@ app.controller('OptionsController', function($scope) {
         $scope.modalTitle = title;
         $scope.modalMessage = message;
         $scope.modalClass = modalClass;
+        $('#toast').toast('hide');
         $('#modal').modal('show');
     };
 });
