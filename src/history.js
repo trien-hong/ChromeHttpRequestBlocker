@@ -83,13 +83,13 @@ app.controller('HistoryController', function($scope) {
     });
 
     $scope.pageRange = function() {
-        var input = [];
+        var pages = [];
 
         for (var i = 1; i <= $scope.max_page; i++) {
-            input.push(i);
+            pages.push(i);
         }
 
-        return input;
+        return pages;
     };
 
     $scope.modalPageNumber = function() {
@@ -97,7 +97,7 @@ app.controller('HistoryController', function($scope) {
         $('#input').val('');
 
         if ($scope.max_page === 1) {
-            $scope.alertModal(
+            $scope.alertToast(
                 "There is currently only 1 page." // message
             );
         } else {
@@ -139,8 +139,8 @@ app.controller('HistoryController', function($scope) {
             );
         } else if ($scope.page_number === parseInt(input - 1)) {
             // Page number is already the same as input
-            $scope.alertModal(
-                "You are already on page " + input + "." // message
+            $scope.alertToast(
+                "You are already on page <u>" + input + "</u>." // message
             );
         } else {
             $scope.page_number = parseInt(input - 1);
@@ -148,27 +148,51 @@ app.controller('HistoryController', function($scope) {
             
             $scope.checkArrowIcons();
 
-            $scope.alertModal(
-                "You are now on page " + input + "." // message
-            );
+            if ($scope.page_number === 0) {
+                $scope.alertToast(
+                    "You are now on page <u>" + parseInt($scope.page_number + 1) + "</u>. This is the first page." // message
+                );
+            } else if ($scope.page_number === $scope.max_page - 1) {
+                $scope.alertToast(
+                    "You are now on page <u>" + parseInt($scope.page_number + 1) + "</u>. This is the last page." // message
+                );
+            } else {
+                $scope.alertToast(
+                    "You are now on page <u>" + parseInt($scope.page_number + 1) + "</u>." // message
+                );
+            }
         }
     };
 
     $scope.dropdownMenuPageNumber = function(index) {
         // Go to a specific page number via dropdown menu
-        if ($scope.page_number === index - 1) {
-            $scope.alertModal(
-                "You are already on page " + index + "." // message
+        if ($scope.max_page === 1) {
+            $scope.alertToast(
+                "There is currently only <u>1</u> page." // message
+            );
+        } else if ($scope.page_number === index - 1) {
+            $scope.alertToast(
+                "You are already on page <u>" + index + "</u>." // message
             );
         } else {
             $scope.page_number = index - 1;
             $scope.page = $scope.url_blocked[$scope.page_number];
 
             $scope.checkArrowIcons();
-
-            $scope.alertModal(
-                "You are now on page " + index + "." // message
-            );
+ 
+            if ($scope.page_number === 0) {
+                $scope.alertToast(
+                    "You are now on page <u>" + index + "</u>. This is the first page." // message
+                );
+            } else if ($scope.page_number === $scope.max_page - 1) {
+                $scope.alertToast(
+                    "You are now on page <u>" + index + "</u>. This is the last page." // message
+                );
+            } else {
+                $scope.alertToast(
+                    "You are now on page <u>" + index + "</u>." // message
+                );
+            }
         }
     };
 
@@ -178,6 +202,20 @@ app.controller('HistoryController', function($scope) {
         $scope.page = $scope.url_blocked[$scope.page_number];
 
         $scope.checkArrowIcons();
+
+        if ($scope.page_number === 0) {
+            $scope.alertToast(
+                "You are now on page <u>" + parseInt($scope.page_number + 1) + "</u>. This is the first page." // message
+            );
+        } else if ($scope.page_number === $scope.max_page - 1) {
+            $scope.alertToast(
+                "You are now on page <u>" + parseInt($scope.page_number + 1) + "</u>. This is the last page." // message
+            );
+        } else {
+            $scope.alertToast(
+                "You are now on page <u>" + parseInt($scope.page_number + 1) + "</u>." // message
+            );
+        }
     };
 
     $scope.increasePageNumber = function() {
@@ -186,22 +224,44 @@ app.controller('HistoryController', function($scope) {
         $scope.page = $scope.url_blocked[$scope.page_number];
 
         $scope.checkArrowIcons();
+
+        if ($scope.page_number === 0) {
+            $scope.alertToast(
+                "You are now on page <u>" + parseInt($scope.page_number + 1) + "</u>. This is the first page." // message
+            );
+        } else if ($scope.page_number === $scope.max_page - 1) {
+            $scope.alertToast(
+                "You are now on page <u>" + parseInt($scope.page_number + 1) + "</u>. This is the last page." // message
+            );
+        } else {
+            $scope.alertToast(
+                "You are now on page <u>" + parseInt($scope.page_number + 1) + "</u>." // message
+            );
+        }
     };
 
     $scope.firstPageNumber = function() {
-        // Go to page 0
+        // Go to page 0 (first page)
         $scope.page_number = 0;
         $scope.page = $scope.url_blocked[$scope.page_number];
 
         $scope.checkArrowIcons();
+
+        $scope.alertToast(
+            "You are now on page <u>" + parseInt($scope.page_number + 1) + "</u>. This is the first page." // message
+        );
     };
 
     $scope.lastPageNumber = function() {
-        // Go to the max page
+        // Go to the max page (last page)
         $scope.page_number = $scope.max_page - 1;
         $scope.page = $scope.url_blocked[$scope.page_number];
 
         $scope.checkArrowIcons();
+
+        $scope.alertToast(
+            "You are now on page <u>" + parseInt($scope.page_number + 1) + "</u>. This is the last page." // message
+        );
     };
 
     $scope.checkArrowIcons = function() {
@@ -426,6 +486,18 @@ app.controller('HistoryController', function($scope) {
         );
     };
 
+    $scope.alertToast = function(message) {
+        $scope.toast("HTTP Request Blocker", "Just now", message);
+    };
+
+    $scope.toast = function(title, subtitle, message) {
+        $scope.toastTitle = title;
+        $scope.toastSubtitle = subtitle;
+        $scope.toastMessage = message;
+        $('#modal').modal('hide');
+        $('#toast').toast('show');
+    };
+
     // I will try to find a better solution for all these different modals later (there may be more)
 
     $scope.graphModal = function(message) {
@@ -562,6 +634,7 @@ app.controller('HistoryController', function($scope) {
         $scope.modalTitle = title;
         $scope.modalMessage = message;
         $scope.modalClass = modalClass;
+        $('#toast').toast('hide');
         $('#modal').modal('show');
     };
 });

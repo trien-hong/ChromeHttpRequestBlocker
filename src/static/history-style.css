@@ -135,3 +135,11 @@ td {
     margin-top: 512px;
     margin-left: -820px;
 }
+
+.toast-header {
+    background-color: wheat;
+}
+
+.toast-body {
+    background-color: wheat;
+}
