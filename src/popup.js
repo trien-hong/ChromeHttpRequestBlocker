@@ -32,10 +32,14 @@ app.controller('PopupController', function($scope, currentSite) {
 
     var timeStamp = new Date();
 
-    if ($scope.backgroundPage.total_blocked_per_day[timeStamp.getMonth() + 1 + "/" + timeStamp.getDate() + "/" + timeStamp.getFullYear()] === undefined) {
+    $scope.total_blocked_per_day = $scope.backgroundPage.total_blocked_per_day;
+
+    if ($scope.total_blocked_per_day.length === 0) {
         $scope.total_blocked_today = 0;
+    } else if ($scope.total_blocked_per_day[$scope.total_blocked_per_day.length - 1]["date"] === timeStamp.getMonth() + 1 + "/" + timeStamp.getDate() + "/" + timeStamp.getFullYear()) {
+        $scope.total_blocked_today = $scope.total_blocked_per_day[$scope.total_blocked_per_day.length - 1]["blocked_number"];
     } else {
-        $scope.total_blocked_today = $scope.backgroundPage.total_blocked_per_day[timeStamp.getMonth() + 1 + "/" + timeStamp.getDate() + "/" + timeStamp.getFullYear()];
+        $scope.total_blocked_today = 0;
     }
 
     $scope.total_blocked = $scope.backgroundPage.total_blocked;

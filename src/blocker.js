@@ -3,8 +3,9 @@ var total_blocked = 0;
 // Array of objects containing every single blocked URL as the key and
 // number blocked along with a timestamp of when it was last blocked in the form of an array as the value
 var url_blocked = [{}];
-// Object containing the number of blocked request for a specific day
-var total_blocked_per_day = {};
+// Array containing the number of blocked request for a specific day
+// It's really an array of objects when increaseBlockedToday() is called as it pushes an objects
+var total_blocked_per_day = [];
 
 chrome.contextMenus.removeAll(function() {
   chrome.contextMenus.create({
@@ -131,10 +132,28 @@ function increaseTotalBlocked() {
 function increaseBlockedToday(timeStamp) {
   var date = timeStamp.getMonth() + 1 + "/" + timeStamp.getDate() + "/" + timeStamp.getFullYear();
 
-  if (total_blocked_per_day[date] === undefined) {
-    total_blocked_per_day[date] = 1;
+  // my reasoning for using array of objects rather than just object is that
+  // the keys using date is a bit different despite the order in which it's added
+  // JavaScript objects keys are not ordered and that's a problem for this
+  // when iterating through the object 11/12/2023 will come BEFORE 11/2/2023
+  // when I go to plot the graph there are errors in it because of that
+
+  if (total_blocked_per_day.length === 0) {
+    var object = {
+        "date": date,
+        "blocked_number": 1
+    };
+    
+    total_blocked_per_day.push(object);
+  } else if (total_blocked_per_day[total_blocked_per_day.length - 1]["date"] !== date) {
+    var object = {
+      "date": date,
+      "blocked_number": 1
+    };
+    
+    total_blocked_per_day.push(object);
   } else {
-    total_blocked_per_day[date] = total_blocked_per_day[date] + 1;
+      total_blocked_per_day[total_blocked_per_day.length - 1]["blocked_number"] = total_blocked_per_day[total_blocked_per_day.length - 1]["blocked_number"] + 1;
   }
 
   chrome.storage.local.set({'total_blocked_per_day': total_blocked_per_day}, function() {
@@ -260,7 +279,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   }
 
   if (request.type === "clear-total_blocked_per_day") {
-    total_blocked_per_day = {};
+    total_blocked_per_day = [];
     chrome.storage.local.set({'total_blocked_per_day': total_blocked_per_day}, function() {
       
     });

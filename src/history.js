@@ -34,10 +34,14 @@ app.controller('HistoryController', function($scope) {
 
     var timeStamp = new Date();
 
-    if ($scope.backgroundPage.total_blocked_per_day[timeStamp.getMonth() + 1 + "/" + timeStamp.getDate() + "/" + timeStamp.getFullYear()] === undefined) {
+    $scope.total_blocked_per_day = $scope.backgroundPage.total_blocked_per_day;
+
+    if ($scope.total_blocked_per_day.length === 0) {
         $scope.total_blocked_today = 0;
+    } else if ($scope.total_blocked_per_day[$scope.total_blocked_per_day.length - 1]["date"] === timeStamp.getMonth() + 1 + "/" + timeStamp.getDate() + "/" + timeStamp.getFullYear()) {
+        $scope.total_blocked_today = $scope.total_blocked_per_day[$scope.total_blocked_per_day.length - 1]["blocked_number"];
     } else {
-        $scope.total_blocked_today = $scope.backgroundPage.total_blocked_per_day[timeStamp.getMonth() + 1 + "/" + timeStamp.getDate() + "/" + timeStamp.getFullYear()];
+        $scope.total_blocked_today = 0;
     }
 
     $scope.button_is_pause_color = $scope.backgroundPage.button_is_pause_color;
@@ -362,9 +366,9 @@ app.controller('HistoryController', function($scope) {
     };
 
     $scope.viewGraph = function() {
-        if (Object.keys($scope.backgroundPage.total_blocked_per_day).length === 0) {
+        if ($scope.total_blocked_per_day.length === 0) {
             $scope.errorModal(
-                "Your \"total blocked per day seems\" to be empty. Therefore, there was no graph to draw.<br><br>You can only view a graph if the extension has blocked a URL." // message
+                "Your \"total blocked per day seems\" to be empty or recently cleared. Therefore, there was no graph to draw.<br><br>You can only view a graph if the extension has blocked a URL." // message
             );
         } else {
             var graph_data = [];
@@ -375,28 +379,28 @@ app.controller('HistoryController', function($scope) {
             var highest = 0;
             var lowest = Number.MAX_SAFE_INTEGER;
 
-            for (const [key, value] of Object.entries($scope.backgroundPage.total_blocked_per_day)) {
+            for (var i = 0; i < $scope.total_blocked_per_day.length; i++) {
                 var insert_graph_data = [];
-                insert_graph_data.push(new Date(key));
-                insert_graph_data.push(value);
+                insert_graph_data.push(new Date($scope.total_blocked_per_day[i]["date"]));
+                insert_graph_data.push($scope.total_blocked_per_day[i]["blocked_number"]);
                 graph_data.push(insert_graph_data);
                 
-                if (value > highest) {
-                    var start_date = new Date(key);
-                    var end_date = new Date(key);
+                if ($scope.total_blocked_per_day[i]["blocked_number"] > highest) {
+                    var start_date = new Date($scope.total_blocked_per_day[i]["date"]);
+                    var end_date = new Date($scope.total_blocked_per_day[i]["date"]);
 
                     starting_highlight_highest_point = start_date.setHours(start_date.getHours() - 4);
                     ending_highlight_highest_point = end_date.setHours(end_date.getHours() + 4);
-                    highest = value;
+                    highest = $scope.total_blocked_per_day[i]["blocked_number"];
                 }
 
-                if (value < lowest) {
-                    var start_date = new Date(key);
-                    var end_date = new Date(key);
+                if ($scope.total_blocked_per_day[i]["blocked_number"] < lowest) {
+                    var start_date = new Date($scope.total_blocked_per_day[i]["date"]);
+                    var end_date = new Date($scope.total_blocked_per_day[i]["date"]);
 
                     starting_highlight_lowest_point = start_date.setHours(start_date.getHours() - 4);
                     ending_highlight_lowest_point = end_date.setHours(end_date.getHours() + 4);
-                    lowest = value;
+                    lowest = $scope.total_blocked_per_day[i]["blocked_number"];
                 }
             }
     
@@ -415,7 +419,7 @@ app.controller('HistoryController', function($scope) {
                         highlight_lowest_point();
 
                         function highlight_lowest_point() {
-                            if (Object.keys($scope.backgroundPage.total_blocked_per_day).length >= 1) {
+                            if ($scope.total_blocked_per_day.length >= 2) {
                                 var bottom_left = g.toDomCoords(new Date(starting_highlight_lowest_point));
                                 var top_right = g.toDomCoords(new Date(ending_highlight_lowest_point));
                 
@@ -433,7 +437,7 @@ app.controller('HistoryController', function($scope) {
                         highlight_highest_point();
 
                         function highlight_highest_point() {
-                            if (Object.keys($scope.backgroundPage.total_blocked_per_day).length >= 1) {
+                            if ($scope.total_blocked_per_day.length >= 2) {
                                 var bottom_left = g.toDomCoords(new Date(starting_highlight_highest_point));
                                 var top_right = g.toDomCoords(new Date(ending_highlight_highest_point));
                 
@@ -478,7 +482,8 @@ app.controller('HistoryController', function($scope) {
 
     $scope.clearGraphConfirmed = function() {
         $scope.total_blocked_today = 0;
-        
+        $scope.total_blocked_per_day = [];
+
         chrome.runtime.sendMessage({type: "clear-total_blocked_per_day"});
 
         $scope.successModal(
