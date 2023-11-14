@@ -46,7 +46,7 @@ I'm made a lot of changes and updates from the original repository. So much so t
         </li>
         <li>Before adding patterns via popup, context menu, & options.html (manually) it will check for existing patterns first before adding or saving</li>
         <li>When saving manually, the extension will check for empty ("") patterns and remove them before saving</li>
-        <li>Within options.html page simply add a site like `google.com` is all you have to do
+        <li>Added options page and within options.html page simply add a site like `google.com` is all you have to do
             <ul>
                 <li>In the background, when you click save, the extension will automatically add in the correct patterns to be able to block request</li>
                 <li>The patterns are <code>*://*.</code> for prefix and <code>/*</code> for suffix</li>
@@ -61,13 +61,100 @@ I'm made a lot of changes and updates from the original repository. So much so t
                             <li>For example, blocking <code>google.com</code> will also block <code>ads.google.com</code></li>
                         </ul>
                 </ul>
+                <li>You can now add exact URLs manually
+                    <ul>
+                        <li>For example, <code>https://www.linkedin.com/learning/</code> or <code>https://www.youtube.com/watch?v=uICUlqWXGB0</code></li>
+                        <li>To do... I still need to check for duplicates and be able to remove them inline since I don't want to refresh the page</li>
+                        <li>For now, just know that it won't remove duplicates for exact URLs (you can remove them manually though)</li>
+                    </ul>
+                </li>
+                <li>Extension's options.html page now contains most of the utilities in terms of viewing, exporting, clearing, uploading, removing patterns, etc.</li>
+                <li>Extension now keeps track of the number of times it has blocked a pattern
+                    <ul>
+                        <li>Added ability to reset the number back to 0</li>
+                    </ul>
+                </li>
+                <li>Added .map files for AngularJS & Bootstrap</li>
+                <li>Added a way to export your patterns as a simple text (.txt) file
+                    <ul>
+                        <li>Added check to see if there are any patterns before exporting</li>
+                        <li>I suggest you don't edit the text file unless you know what you're doing</li>
+                            <ul>
+                                <li>As editing the text file may lead to errors</li>
+                            </ul>
+                    </ul>
+                </li>
+                <li>Added a way to import that same text file
+                    <ul>
+                        <li>Added confirmation as importing will replace the existing patterns</li>
+                        <li>Added check to see if the uploaded file is indeed a text file</li>
+                        <li>Added an example file (patternsExport_05-03-2023.txt) that contains 997 patterns in which the user can import to start off with</li>
+                    </ul>
+                </li>
+                <li>Added a pause feature to temporarily not block sites (clicking it again will unpause and vice versa)</li>
+                <li>Added a search & remove button which allows you to input a specific pattern (ex. google.com, https://test.com/placeholder.js?v=3, etc.)
+                    <ul>
+                        <li>Added check to see if the input exist and if it exist it'll be removed</li>
+                    </ul>
+                </li>
+                <li>Added a way to clear your entire pattterns
+                    <ul>
+                        <li>Added confirmation to see if the user really wants to clear their entire patterns</li>
+                    </ul>
+                </li>
             </ul>
         </li>
-        <li>You can now add exact URLs manually
+        <li>Extension's popup now does a few things
             <ul>
-                <li>For example, <code>https://www.linkedin.com/learning/</code> or <code>https://www.youtube.com/watch?v=uICUlqWXGB0</code></li>
-                <li>To do... I still need to check for duplicates and be able to remove them inline since I don't want to refresh the page</li>
-                <li>For now, just know that it won't remove duplicates for exact URLs (you can remove them manually though)</li>
+                <li>It shows the current site along with it's favicon (if it has one)</li>
+                <li>Shows if the current site is or is not in your patterns</li>
+                <li>You can now add the current site within extension's popup to block it</li>
+                    <ul>
+                        <li>Added check to see if it's a valid website first</li>
+                    </ul>
+                <li>It shows the total number blocked today</li>
+                <li>It shows the total number of blocked patterns</li>
+                <li>Extension's popup also includes a pause/unpause button, options button, & GitHub repo button</li>
+            </ul>
+        </li>
+        <li>Added a history page
+            <ul>
+                <li>Each request that is blocked will now be logged into history
+                    <ul>
+                        <li>Each request has a fav icon (if it has one)</li>
+                        <li>An exact URL of what was blocked</li>
+                        <li>The number of items it has been blocked</li>
+                        <li>A timestamp/last blocked (local time)</li>
+                    </ul>
+                </li>
+                <li>Implemented pagination/paging to history
+                    <ul>
+                        <li>Added Input Page button (user can input a page number)</li>
+                        <li>Added Go to Page dropdown button (will have all the available pages in scrollable format)</li>
+                        <li>Each page within history will contain at most 100 objects</li>
+                        <li>Logic is an array of objects</li>
+                        <li>Each index in the array is a "page"</li>
+                        <li>Iternate through the array and check if the URL is in the object
+                            <ul>
+                                <li>Update timestamp and increment counter if found</li>
+                                <li>If not found conitnue until you do or add at the last page/index if not found</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Added a total blocked today (will count the number of times a request was blocked)</li>
+                <li>Added a search history button</li>
+                <li>Added a clear history button</li>
+                <li>Added a view graph button
+                    <ul>
+                        <li>Added Dygraph for data visualization</li>
+                        <li>This graph will show the day (x-axis) and blocked # (y-axis)</li>
+                        <li>Added highlight for the lowest blocked day</li>
+                        <li>Added highlight for the highest blocked day</li>
+                        <li>Clicking on a point will show an alert</li>
+                        <li>Added ability to lcear the graph</li>
+                    </ul>
+                </li>
             </ul>
         </li>
         <li>Context menu will now appear when you right click over certain elements
@@ -81,61 +168,16 @@ I'm made a lot of changes and updates from the original repository. So much so t
                 </ul>
             </ul>
         </li>
-        <li>Extension's popup now does a few things
-            <ul>
-                <li>It shows the current site along with it's favicon (if it has one)</li>
-                <li>Shows if the current site is or is not in your patterns</li>
-                <li>You can now add the current site within extension's popup to block it</li>
-                    <ul>
-                        <li>Added check to see if it's a valid website first</li>
-                    </ul>
-                <li>It shows the total number of blocked patterns</li>
-                <li>Extension's popup also includes a pause/unpause button, options button, & GitHub repo button</li>
-            </ul>
-        </li>
-        <li>Extension's options.html page now contains most of the utilities in terms of viewing, exporting, clearing, uploading, removing patterns, etc.</li>
-        <li>Extension now keeps track of the number of times it has blocked a pattern
-            <ul>
-                <li>Added ability to reset the number back to 0</li>
-            </ul>
-        </li>
-        <li>Added .map files for AngularJS & Bootstrap</li>
-        <li>Added a way to export your patterns as a simple text (.txt) file
-            <ul>
-                <li>Added check to see if there are any patterns before exporting</li>
-                <li>I suggest you don't edit the text file unless you know what you're doing</li>
-                    <ul>
-                        <li>As editing the text file may lead to errors</li>
-                    </ul>
-            </ul>
-        </li>
-        <li>Added a way to import that same text file
-            <ul>
-                <li>Added confirmation as importing will replace the existing patterns</li>
-                <li>Added check to see if the uploaded file is indeed a text file</li>
-                <li>Added an example file (patternsExport_05-03-2023.txt) that contains 997 patterns in which the user can import to start off with</li>
-            </ul>
-        </li>
-        <li>Added a pause feature to temporarily not block sites (clicking it again will unpause and vice versa)</li>
-        <li>Added a search & remove button which allows you to input a specific pattern (ex. google.com, https://test.com/placeholder.js?v=3, etc.)
-            <ul>
-                <li>Added check to see if the input exist and if it exist it'll be removed</li>
-            </ul>
-        </li>
-        <li>Added a way to clear your entire pattterns
-            <ul>
-                <li>Added confirmation to see if the user really wants to clear their entire patterns</li>
-            </ul>
-        </li>
         <li>Change some of the styling, layout, and added other minor features
             <ul>
                 <li>Updated Bootstrap to v5.3.2</li>
+                <li>Certain actions will show a toast alert</li>
                 <li>Removed glyphicons files in favor of Bootstrap icons</li>
                 <li>When patterns are empty, a simple message is displayed on the screen leting the user know</li>
                 <li>Moved some of the custom CSS to a seperate file</li>
                 <li>All confirmations are done through modal rather than JavaScript's confirm</li>
+                <li>Added graph, input, confirm, alert, auccess, and error modal</li>
                 <li>Added favicons for each pattern (if it has one)</li>
-                <li>Added alert and confirm modal</li>
                 <li>Added dyanmic colors to pause button</li>
                 <li>Added a scroll up and scroll down button</li>
                 <li>Added titles when hovering over certain elements</li>
@@ -205,7 +247,7 @@ Example of Valid Patterns (when adding manually)
             <ul>
                 <li>Some websites like <code>www.youtube.com</code>, <code>www.instagram.com</code>, <code>www.google.com</code>, etc. still have <code>www</code> included</li>
                 <li>Blocking <code>www.w3schools.com</code> should be okay as going to <code>w3schools.com</code> will redirect you to <code>www.w3schools.com</code></li>
-                <li>However, I do recommend that you just block the domain/second-level domain instead.</li>
+                <li>However, I do recommend that you just block the domain/second-level domain instead</li>
             </ul>
         </li>
         <li><code>ouo.press/images/b1.png</code>
@@ -242,16 +284,35 @@ Images
     <br>
     <a href="https://imgur.com/a/yaMN7y7" target="_blank">Imgur link</a>
     <br>
-    <h3>NEW images</h3>
-    <img src="https://i.imgur.com/Dg4SImW.png">
-    <img src="https://i.imgur.com/Jq2scex.png">
-    <img src="https://i.imgur.com/WTvI8w7.png">
-    <img src="https://i.imgur.com/OSLBh34.png">
-    <img src="https://i.imgur.com/PpvjhXT.png">
-    <img src="https://i.imgur.com/13veyqp.png">
-    <img src="https://i.imgur.com/7Sx5FQt.png">
-    <img src="https://i.imgur.com/FaMbajQ.png">
-    <h3>OLD/ORIGINAL images | there was no options or history page to begin with</h3>
+    <h3>NEW images (contains options, popup, and history page)</h3>
+    <img src="https://i.imgur.com/w183idG.png">
+    <img src="https://i.imgur.com/Qx2VQ0L.png">
+    <img src="https://i.imgur.com/mU2BnZG.png">
+    <img src="https://i.imgur.com/gxclBE2.png">
+    <img src="https://i.imgur.com/ReXYJcA.png">
+    <img src="https://i.imgur.com/vhadjpz.png">
+    <img src="https://i.imgur.com/QtC2ij1.png">
+    <img src="https://i.imgur.com/DhyV3RC.png">
+    <img src="https://i.imgur.com/SSlbfh0.png">
+    <img src="https://i.imgur.com/twpgdby.png">
+    <img src="https://i.imgur.com/tZuW7AE.png">
+    <img src="https://i.imgur.com/ZVnhoCl.png">
+    <img src="https://i.imgur.com/oArX3Pa.png">
+    <img src="https://i.imgur.com/6nUWENy.png">
+    <img src="https://i.imgur.com/wMwSriV.png">
+    <img src="https://i.imgur.com/kS7cHyR.png">
+    <img src="https://i.imgur.com/2SRUC1S.png">
+    <img src="https://i.imgur.com/ZH5LKR1.png">
+    <img src="https://i.imgur.com/YwSfkec.png">
+    <img src="https://i.imgur.com/Y4WWnqx.png">
+    <img src="https://i.imgur.com/ivq2JRY.png">
+    <img src="https://i.imgur.com/ToLJ50H.png">
+    <img src="https://i.imgur.com/4rfctuB.png">
+    <img src="https://i.imgur.com/Z1xV1zg.png">
+    <img src="https://i.imgur.com/jmKpj6k.png">
+    <img src="https://i.imgur.com/hs1Lhqg.png">
+    <img src="https://i.imgur.com/H04H1wj.png">
+    <h3>OLD/ORIGINAL images (there was no options or history page to begin with)</h3>
     <img src="https://i.imgur.com/WTyicC6.png">
     <img src="https://i.imgur.com/wXMKDmJ.png">
 </details>
