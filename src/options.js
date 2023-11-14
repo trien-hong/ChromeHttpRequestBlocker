@@ -105,7 +105,7 @@ app.controller('OptionsController', function($scope) {
         }
     };
 
-    $scope.removeByIndex = function(patternToRemove) {
+    $scope.removeByIndex = function(patternToRemove, showToast) {
         var index = $scope.patterns.indexOf(patternToRemove);
 
         if (index > -1) {
@@ -116,9 +116,11 @@ app.controller('OptionsController', function($scope) {
             $scope.is_empty = true;
         }
 
-        $scope.deleteToast(
-            "You have removed, \"<u>" + patternToRemove.pattern + "</u>\", from your patterns.<br><br>You can save now or later. Just please don't forget to save!" // message
-        );
+        if (showToast === undefined || showToast !== false) {
+            $scope.deleteToast(
+                "You have removed, \"<u>" + patternToRemove.pattern + "</u>\", from your patterns.<br><br>You can save now or later. Just please don't forget to save!" // message
+            );
+        }
     };
 
     $scope.save = function(msg) {
@@ -271,7 +273,7 @@ app.controller('OptionsController', function($scope) {
     };
 
     $scope.searchAndRemoveInputConfirmed = function(pattern) {
-        $scope.removeByIndex(pattern);
+        $scope.removeByIndex(pattern, false);
         $scope.save("Your pattern, \"<u>" + pattern.pattern + "</u>\", has been removed at index " + pattern.index + ".");
     };
 
