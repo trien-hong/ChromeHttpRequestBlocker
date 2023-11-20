@@ -107,8 +107,8 @@ app.controller('HistoryController', function($scope) {
         } else {
             $scope.inputModal(
                 "INPUT PAGE NUMBER", // title
-                "Please enter the page number you want to go to. You can only enter between (inclusive) 1 and " + $scope.max_page + ".", // message
-                "ex. 1, 2, 3, etc.", // placeholder
+                "Please enter the page number you want to go to. You can only enter between 1 and " + $scope.max_page + "(all inclusive).", // message
+                "ex. 1, 2, 3, 4, ..., and last page number", // placeholder
                 "modalPageNumberInput" // function
             );
         }
@@ -129,13 +129,19 @@ app.controller('HistoryController', function($scope) {
                 "Your input of, \"<u>" + input + "</u>\", doesn't seem to be a valid number.<br><br>You can only enter between 1 and " + $scope.max_page + " (inclusive).", // message
                 "modalPageNumber" // function
             );
-        } else if (input <= 0) {
+        } else if (parseInt(input) === 0) {
+            // Input is 0
+            $scope.errorModal(
+                "You cannot enter a page number that is 0.<br><br>You can only enter between 1 and " + $scope.max_page + " (inclusive).", // message
+                "modalPageNumber" // function
+            );
+        } else if (parseInt(input) < 0) {
             // A negative number
             $scope.errorModal(
                 "Your input of, \"<u>" + input + "</u>\", is a negative number.<br><br>You can only enter between 1 and " + $scope.max_page + " (inclusive).", // message
                 "modalPageNumber" // function
             );
-        } else if (input > $scope.max_page) {
+        } else if (parseInt(input) > $scope.max_page) {
             // Number greater than max page
             $scope.errorModal(
                 "Your input of, \"<u>" + input + "</u>\", is greater than the maxium page number.<br><br>You can only enter between 1 and " + $scope.max_page + " (inclusive).", // message
@@ -609,7 +615,7 @@ app.controller('HistoryController', function($scope) {
     };
 
     $scope.errorModal = function(message, errorFunctionVariable, errorParameterVariable) {
-        // Not all error modal will have a errorParameterVariable
+        // Not all error modal will have an errorParameterVariable
         $scope.show_modal_bar_chart_icon = false;
         $scope.show_modal_input_icon = false;
         $scope.show_modal_confirm_icon = false;
