@@ -326,6 +326,30 @@ Example of Valid Patterns (when adding manually)
     </ul>
 </details>
 
+https://<i></i>adblock-tester.com/
+===========================
+There's a website, [https://adblock-tester.com/](https://adblock-tester.com/), where you can test the extension. This website will make requests and see if the requests fails to load (blocked by the extension).
+
+![https://adblock-tester.com/](https://i.imgur.com/e8h5Kcx.png)
+
+<details>
+    <summary><b>In order to get a score of 97/100, you will need to block some specific request.</b></summary>
+    <br>
+    <ul>
+        <li>The extension doesn't know what to block. Unless you tell it what to block.</li>
+        <li><code>sentry-cdn.com</code></li>
+        <li><code>ymatuhin.ru</code></li>
+        <li><code>pagead2.googlesyndication.com</code></li>
+        <li><code>yandex.ru</code></li>
+        <li><code>googletagmanager.com</code></li>
+        <li><code>hotjar.com</code></li>
+        <li><code>d2wy8f7a9ursnm.cloudfront.net/v4/bugsnag.min.js</code></li>
+        <li><code>adblock-tester.com/banners/pr_advertising_ads_banner.swf</code></li>
+        <li><code>adblock-tester.com/banners/pr_advertising_ads_banner.gif</code></li>
+        <li><code>adblock-tester.com/banners/pr_advertising_ads_banner.png</code></li>
+    </ul>
+</details>
+
 Images
 ======
 <details>
