@@ -80,8 +80,7 @@
           <div class="paging text-center">
             <div class="d-grid gap-2">
               <button class="btn btn-primary" ng-click="modalPageNumber()" title="Input a specific page number">
-                <img class="mb-1" src="images/misc/file-earmark.svg"/>
-                &nbsp;
+                <img class="mb-1 me-2" src="images/misc/file-earmark.svg"/>
                 Input Page
               </button>
             </div>
@@ -90,13 +89,11 @@
                 <a class="btn btn-primary" role="button" title="Go to page 1" ng-if="show_page_arrow_left_icon" ng-click="firstPageNumber()">
                   <img class="mb-1" src="images/misc/chevron-double-left.svg"/>
                 </a>
-                <a class="btn btn-primary" role="button" title="Decrease page number by 1" ng-if="show_page_arrow_left_icon" ng-click="decreasePageNumber()">
+                <a class="btn btn-primary me-2" role="button" title="Decrease page number by 1" ng-if="show_page_arrow_left_icon" ng-click="decreasePageNumber()">
                   <img class="mb-1" src="images/misc/arrow-left.svg"/>
                 </a>
-                &nbsp;
                 <b>Page: <u title="Current page">{{page_number + 1}}</u> / <u title="Maximum page(s)">{{max_page}}</u></b>
-                &nbsp;
-                <a class="btn btn-primary" role="button" title="Increase page number by 1" ng-if="show_page_arrow_right_icon" ng-click="increasePageNumber()">
+                <a class="btn btn-primary ms-2" role="button" title="Increase page number by 1" ng-if="show_page_arrow_right_icon" ng-click="increasePageNumber()">
                   <img class="mb-1" src="images/misc/arrow-right.svg"/>
                 </a>
                 <a class="btn btn-primary" role="button" title="Go to page {{max_page}}" ng-if="show_page_arrow_right_icon" ng-click="lastPageNumber()">
@@ -120,8 +117,7 @@
         <div class="content-buttons">
           <div class="d-grid gap-2">
             <a class="btn btn-light" target="_blank" rel="noopener noreferrer" href="https://github.com/trien-hong/ChromeHttpRequestBlocker" role="button" title="Extension's repository">
-              <img class="mb-1" src="images/misc/github.svg"/>
-              &nbsp;
+              <img class="mb-1 me-2" src="images/misc/github.svg"/>
               GitHub Repo
             </a>
           </div>
@@ -130,8 +126,7 @@
           </div>
           <div class="d-grid gap-2">
             <a class="btn btn-secondary" href="options.html" role="button" title="Options page">
-              <img class="mb-1" src="images/misc/gear.svg"/>
-              &nbsp;
+              <img class="mb-1 me-2" src="images/misc/gear.svg"/>
               Options Page
             </a>
           </div>
@@ -140,8 +135,7 @@
           </div>
           <div class="d-grid gap-2">
             <button class="btn {{button_is_pause_color}}" title="{{is_pause}}" ng-click="pause()">
-              <img class="mb-1" src="images/misc/pause-circle.svg"/>
-              &nbsp;
+              <img class="mb-1 me-2" src="images/misc/pause-circle.svg"/>
               {{is_pause}}
             </button>
           </div>
@@ -150,8 +144,7 @@
           </div>
           <div class="d-grid gap-2">
             <button class="btn btn-primary" ng-click="searchHistory()" title="Search your history">
-              <img class="mb-1" src="images/misc/search.svg"/>
-              &nbsp;
+              <img class="mb-1 me-2" src="images/misc/search.svg"/>
               Search History
             </button>
           </div>
@@ -160,8 +153,7 @@
           </div>
           <div class="d-grid gap-2">
             <button class="btn btn-warning" ng-click="clearHistory()" title="Clear your history">
-              <img class="mb-1" src="images/misc/x-octagon.svg"/>
-              &nbsp;
+              <img class="mb-1 me-2" src="images/misc/x-octagon.svg"/>
               Clear History
             </button>
           </div>
@@ -170,8 +162,7 @@
           </div>
           <div class="d-grid gap-2">
             <button class="btn btn-info" ng-click="viewGraph()" title="View a graph of your blocked per day history">
-              <img class="mb-1" src="images/misc/bar-chart-line.svg"/>
-              &nbsp;
+              <img class="mb-1 me-2" src="images/misc/bar-chart-line.svg"/>
               View Graph
             </button>
           </div>
@@ -180,11 +171,9 @@
           </div>
           <div class="text-center">
             <p>
-              <img class="mb-1" src="images/misc/git.svg"/>
-              &nbsp;
+              <img class="mb-1 me-2" src="images/misc/git.svg"/>
               <b>Extension's Version | v{{extension_version}}</b>
-              &nbsp;
-              <img class="mb-1" src="images/misc/git.svg"/>
+              <img class="mb-1 me-2" src="images/misc/git.svg"/>
             </p>
           </div>
         </div>

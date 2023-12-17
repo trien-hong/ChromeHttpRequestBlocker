@@ -42,13 +42,11 @@
       <div class="text-center">
         <h3>{{currentSiteStatus}}</h3>
         <button class="btn btn-primary" ng-click="addCurrentSite()" ng-if="is_not_blocked" title="Block the current site">
-          <img class="mb-1" src="images/misc/plus-circle.svg"/>
-          &nbsp;
+          <img class="mb-1 me-2" src="images/misc/plus-circle.svg"/>
           Add Current Site
         </button>
         <button class="btn btn-primary" ng-click="unblockCurrentSite()" ng-if="is_blocked" title="Unblock the current site">
-          <img class="mb-1" src="images/misc/x-circle.svg"/>
-          &nbsp;
+          <img class="mb-1 me-2" src="images/misc/x-circle.svg"/>
           Unblock Current Site
         </button>
       </div>
@@ -56,13 +54,13 @@
         <hr/>
       </div>
       <div class="total_number_blocked text-center">
-        <h3>Total Blocked Today: <u class="text-danger">{{total_blocked_today}}</u>&nbsp;<img class="mb-2" src="images/misc/shield-fill-x.svg" width="30"/><h3>
+        <h3>Total Blocked Today: <u class="text-danger">{{total_blocked_today}}</u><img class="mb-2 ms-2" src="images/misc/shield-fill-x.svg" width="30"/><h3>
       </div>
       <div>
         <hr/>
       </div>
       <div class="total_number_blocked text-center">
-        <h3>Total Blocked Request(s): <u class="text-danger">{{total_blocked}}</u>&nbsp;<img class="mb-2" src="images/misc/shield-fill-x.svg" width="30"/><h3>
+        <h3>Total Blocked Request(s): <u class="text-danger">{{total_blocked}}</u><img class="mb-2 ms-2" src="images/misc/shield-fill-x.svg" width="30"/><h3>
       </div>
       <div>
         <hr/>
@@ -70,22 +68,19 @@
       <div class="content-buttons pb-3">
         <div>
           <button class="btn {{button_is_pause_color}}" title="{{is_pause}}" ng-click="pause()">
-            <img class="mb-1" src="images/misc/pause-circle.svg"/>
-            &nbsp;
+            <img class="mb-1 me-2" src="images/misc/pause-circle.svg"/>
             {{is_pause}}
           </button>
         </div>
         <div>
           <a class="btn btn-secondary" target="_blank" rel="noopener noreferrer" href="options.html" role="button" title="Options page">
-            <img class="mb-1" src="images/misc/gear.svg"/>
-            &nbsp;
+            <img class="mb-1 me-2" src="images/misc/gear.svg"/>
             Options
           </a>
         </div>
         <div>
           <a class="btn btn-light" target="_blank" rel="noopener noreferrer" href="https://github.com/trien-hong/ChromeHttpRequestBlocker" role="button" title="Extension's repository">
-            <img class="mb-1" src="images/misc/github.svg"/>
-            &nbsp;
+            <img class="mb-1 me-2" src="images/misc/github.svg"/>
             GitHub Repo
           </a>
         </div>
