@@ -102,6 +102,7 @@
               <h5 ng-class="modalClass" ng-bind-html="modalMessage"></h5>
             </div>
             <div class="modal-footer">
+              <button type="button" class="btn btn-secondary me-auto" data-bs-dismiss="modal" ng-if="show_modal_refresh_page_button" ng-click="refreshPage()" title="REFRESH PAGE">REFRESH PAGE</button>
               <button type="button" class="btn btn-success" ng-if="show_modal_confirm_button" ng-click="this[confirm_function](confirm_parameter)" title="YES">YES</button>
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal" ng-if="show_modal_confirm_button" title="NO">NO</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ng-if="show_modal_close_button" title="CLOSE ALERT">CLOSE</button>

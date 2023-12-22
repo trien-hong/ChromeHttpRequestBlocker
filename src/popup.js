@@ -181,6 +181,12 @@ app.controller('PopupController', function($scope, currentSite) {
         });
     };
 
+    $scope.refreshPage = function() {
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.reload();
+        });
+    };
+
     // I will try to find a better solution for all these different modals later
 
     $scope.confirmModal = function(message, confirmFunctionVariable, confirmParameterVariable) {
@@ -191,6 +197,7 @@ app.controller('PopupController', function($scope, currentSite) {
         $scope.show_modal_error_icon = false;
         $scope.confirm_function = confirmFunctionVariable;
         $scope.confirm_parameter = confirmParameterVariable;
+        $scope.show_modal_refresh_page_button = false;
         $scope.show_modal_confirm_button = true;
         $scope.show_modal_close_button = false;
         $scope.modal("modal-default", "PLEASE CONFIRM", message, "text-black");
@@ -201,6 +208,7 @@ app.controller('PopupController', function($scope, currentSite) {
         $scope.show_modal_alert_icon = true;
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = false;
+        $scope.show_modal_refresh_page_button = true;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("modal-default", "ALERT", message, "text-info-emphasis");
@@ -211,6 +219,7 @@ app.controller('PopupController', function($scope, currentSite) {
         $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = true;
         $scope.show_modal_error_icon = false;
+        $scope.show_modal_refresh_page_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("modal-default", "SUCCESS", message, "text-success");
@@ -221,6 +230,7 @@ app.controller('PopupController', function($scope, currentSite) {
         $scope.show_modal_alert_icon = false;
         $scope.show_modal_success_icon = false;
         $scope.show_modal_error_icon = true;
+        $scope.show_modal_refresh_page_button = false;
         $scope.show_modal_confirm_button = false;
         $scope.show_modal_close_button = true;
         $scope.modal("modal-default", "ERROR", message, "text-danger");
